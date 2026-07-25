@@ -1,6 +1,6 @@
 # KWin AutoScroll
 
-KWin AutoScroll is a binary effect for KDE Plasma 6 Wayland. It adds
+KWin AutoScroll is a work in progress binary effect for KDE Plasma 6 Wayland. It adds
 Windows-style continuous scrolling: middle-click in an application, move the
 pointer away from the anchor, and the distance and direction control scrolling
 speed.
