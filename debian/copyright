@@ -1,0 +1,23 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: kwin-autoscroll
+Source: https://github.com/elecxyz/Kwin_AutoScroll
+
+Files: *
+Copyright: 2026 KWin AutoScroll contributors
+License: GPL-2+
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation, either version 2 of the License, or (at your option) any later
+ version.
+ .
+ On Debian systems, the complete text of version 2 of the GNU General Public
+ License can be found in /usr/share/common-licenses/GPL-2.
+
+Files: .gitignore
+Copyright: 2026 KWin AutoScroll contributors
+License: CC0-1.0
+ To the extent possible under law, the author has waived all copyright and
+ related or neighboring rights to this file.
+ .
+ On Debian systems, the complete text of the CC0 1.0 Universal license can be
+ found in /usr/share/common-licenses/CC0-1.0.

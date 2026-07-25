@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+# SPDX-License-Identifier: GPL-2.0-or-later
+File=autoscroll.kcfg
+ClassName=AutoScrollConfig
+NameSpace=AutoScroll
+Singleton=false
+Mutators=true

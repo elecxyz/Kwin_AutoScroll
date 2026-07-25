@@ -1,0 +1,33 @@
+# Maintainer: KWin AutoScroll contributors
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+pkgname=kwin-autoscroll
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Windows-style middle-click continuous scrolling for KWin'
+arch=('x86_64')
+url='https://github.com/elecxyz/Kwin_AutoScroll'
+license=('GPL-2.0-or-later')
+depends=('kwin=6.7.3' 'gcc-libs' 'glibc' 'kcmutils' 'kconfig'
+         'kcoreaddons' 'qt6-base' 'qt6-svg')
+makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'vulkan-headers')
+source=("${pkgname}-${pkgver}.tar.xz")
+sha256sums=('SKIP')
+
+build() {
+  cmake -S "${pkgname}-${pkgver}" -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_TESTING=ON
+  cmake --build build
+}
+
+check() {
+  ctest --test-dir build --output-on-failure
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install build
+  install -Dm644 "${pkgname}-${pkgver}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

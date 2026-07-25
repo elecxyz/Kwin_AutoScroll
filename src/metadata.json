@@ -1,0 +1,16 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "KWin AutoScroll contributors"
+            }
+        ],
+        "Category": "Accessibility",
+        "Description": "Windows-style continuous scrolling activated with a middle click",
+        "EnabledByDefault": false,
+        "License": "GPL-2.0-or-later",
+        "Name": "Auto Scroll",
+        "Version": "0.1.0"
+    },
+    "X-KDE-ConfigModule": "kwin_autoscroll_config"
+}

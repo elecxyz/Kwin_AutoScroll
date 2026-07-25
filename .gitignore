@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+# SPDX-License-Identifier: CC0-1.0
+
+# CMake, Ninja, and test output
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/Testing/
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt
+build.ninja
+.ninja_deps
+.ninja_log
+compile_commands.json
+*_autogen/
+*.gcda
+*.gcno
+*.profraw
+*.profdata
+
+# Generated Qt/KDE files when an in-source build is attempted
+ui_*.h
+moc_*.cpp
+qrc_*.cpp
+*.moc
+autoscrollconfig.cpp
+autoscrollconfig.h
+
+# Release and package output
+/dist/
+/*.tar
+/*.tar.*
+/*.zip
+/*.deb
+/*.dsc
+/*.changes
+/*.buildinfo
+/packaging/arch/pkg/
+/packaging/arch/src/
+/packaging/arch/*.pkg.tar.*
+/packaging/arch/*.tar.*
+/debian/.debhelper/
+/debian/kwin-autoscroll/
+/debian/files
+/debian/*.substvars
+/obj-*/
+
+# Editors and local tooling
+/.cache/
+/.clangd/
+/.idea/
+/.vscode/
+*.kdev4
+*.kate-swp
+*.swp
+*.swo
+*~
+
+# Runtime diagnostics
+*.log
+core
+core.*

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile arg="true"/>
+    <group name="Effect-autoscroll">
+        <entry name="DeadZone" type="Int">
+            <default>24</default>
+            <min>4</min>
+            <max>64</max>
+        </entry>
+        <entry name="MaximumSpeed" type="Int">
+            <default>800</default>
+            <min>200</min>
+            <max>4000</max>
+        </entry>
+        <entry name="AccelerationExponent" type="Double">
+            <default>1.6</default>
+            <min>0.5</min>
+            <max>3.0</max>
+        </entry>
+        <entry name="HorizontalScrolling" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="VisualFeedback" type="Bool">
+            <default>true</default>
+        </entry>
+    </group>
+</kcfg>

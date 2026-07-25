@@ -1,0 +1,35 @@
+Source: kwin-autoscroll
+Section: kde
+Priority: optional
+Maintainer: elecxyz <elecxyz@users.noreply.github.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake (>= 3.24),
+ extra-cmake-modules (>= 6.0),
+ ninja-build,
+ kwin-dev (>= 4:6.7.0),
+ libkf6config-dev,
+ libkf6configwidgets-dev,
+ libkf6coreaddons-dev,
+ libkf6i18n-dev,
+ libkf6kcmutils-dev,
+ libkf6widgetsaddons-dev,
+ qt6-base-dev,
+ qt6-svg-dev,
+ libvulkan-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/elecxyz/Kwin_AutoScroll
+Vcs-Git: https://github.com/elecxyz/Kwin_AutoScroll.git
+Vcs-Browser: https://github.com/elecxyz/Kwin_AutoScroll
+
+Package: kwin-autoscroll
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ kwin-wayland (= ${kwin:Version})
+Description: Windows-style middle-click continuous scrolling for KWin
+ KWin AutoScroll is a Plasma 6 Wayland binary effect. A middle click creates
+ an anchor, and pointer distance and direction control continuous vertical and
+ horizontal scrolling.

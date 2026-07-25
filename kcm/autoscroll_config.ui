@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<ui version="4.0">
+ <class>AutoScrollConfigForm</class>
+ <widget class="QWidget" name="AutoScrollConfigForm">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="descriptionLabel">
+     <property name="text">
+      <string>Configure how pointer distance controls continuous scrolling.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="deadZoneLabel">
+       <property name="text"><string>Dead zone:</string></property>
+       <property name="buddy"><cstring>kcfg_DeadZone</cstring></property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="kcfg_DeadZone">
+       <property name="suffix"><string> px</string></property>
+       <property name="minimum"><number>4</number></property>
+       <property name="maximum"><number>64</number></property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="maximumSpeedLabel">
+       <property name="text"><string>Maximum speed:</string></property>
+       <property name="buddy"><cstring>kcfg_MaximumSpeed</cstring></property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="kcfg_MaximumSpeed">
+       <property name="suffix"><string> units/s</string></property>
+       <property name="minimum"><number>200</number></property>
+       <property name="maximum"><number>4000</number></property>
+       <property name="singleStep"><number>100</number></property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="accelerationLabel">
+       <property name="text"><string>Acceleration curve:</string></property>
+       <property name="buddy"><cstring>kcfg_AccelerationExponent</cstring></property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="kcfg_AccelerationExponent">
+       <property name="toolTip">
+        <string>Higher values make scrolling gentler near the anchor and steeper farther away.</string>
+       </property>
+       <property name="decimals"><number>1</number></property>
+       <property name="minimum"><double>0.500000000000000</double></property>
+       <property name="maximum"><double>3.000000000000000</double></property>
+       <property name="singleStep"><double>0.100000000000000</double></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_HorizontalScrolling">
+     <property name="text"><string>Enable horizontal scrolling</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="kcfg_VisualFeedback">
+     <property name="text"><string>Show the anchor and directional cursor</string></property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation"><enum>Qt::Vertical</enum></property>
+     <property name="sizeHint" stdset="0">
+      <size><width>20</width><height>40</height></size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

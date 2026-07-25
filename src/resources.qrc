@@ -1,0 +1,10 @@
+<!--
+SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<RCC>
+    <qresource prefix="/autoscroll">
+        <file alias="anchor.svg">assets/anchor.svg</file>
+        <file alias="direction.svg">assets/direction.svg</file>
+    </qresource>
+</RCC>
