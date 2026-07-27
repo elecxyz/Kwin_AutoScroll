@@ -23,15 +23,17 @@ QImage renderSvg(const QString &resource, qreal logicalSize, qreal scale,
   QImage image(QSize(pixelSize, pixelSize),
                QImage::Format_ARGB32_Premultiplied);
   image.fill(Qt::transparent);
-  image.setDevicePixelRatio(scale);
 
   QSvgRenderer renderer(resource);
-  QPainter painter(&image);
-  painter.setRenderHint(QPainter::Antialiasing);
-  painter.translate(pixelSize / 2.0, pixelSize / 2.0);
-  painter.rotate(rotation);
-  painter.translate(-pixelSize / 2.0, -pixelSize / 2.0);
-  renderer.render(&painter, QRectF(0, 0, pixelSize, pixelSize));
+  {
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.translate(pixelSize / 2.0, pixelSize / 2.0);
+    painter.rotate(rotation);
+    painter.translate(-pixelSize / 2.0, -pixelSize / 2.0);
+    renderer.render(&painter, QRectF(0, 0, pixelSize, pixelSize));
+  }
+  image.setDevicePixelRatio(scale);
   return image;
 }
 } // namespace
