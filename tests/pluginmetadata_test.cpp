@@ -33,7 +33,7 @@ void PluginMetadataTest::effectMetadata() {
   QVERIFY(!plugin.contains(QStringLiteral("Id")));
   QCOMPARE(plugin.value(QStringLiteral("EnabledByDefault")).toBool(), false);
   QCOMPARE(plugin.value(QStringLiteral("Version")).toString(),
-           QStringLiteral("0.1.0"));
+           QStringLiteral("0.1.1"));
 }
 
 void PluginMetadataTest::kcmMetadata() {

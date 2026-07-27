@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.1 — 2026-07-27
+
+- Fixed glyph rendering on scaled displays.
+
 ## 0.1.0 — 2026-07-25
 
 - Initial Plasma 6.7 Wayland implementation.
