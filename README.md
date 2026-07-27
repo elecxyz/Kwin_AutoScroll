@@ -1,36 +1,33 @@
 # KWin AutoScroll
 
-KWin AutoScroll is a work in progress binary effect for KDE Plasma 6 Wayland. It adds
-Windows-style continuous scrolling: middle-click in an application, move the
-pointer away from the anchor, and the distance and direction control scrolling
+KWin AutoScroll for KDE Plasma 6 Wayland. It adds Windows-style continuous scrolling: middle-click in an application, move the pointer away from the anchor, and the distance and direction control scrolling
 speed.
 
-Version 0.1 targets KWin 6.7 or newer. Native Wayland applications are
-supported; XWayland applications are best effort. A full Plasma X11 session is
-not supported.
+<img width="296" height="295" alt="AutoScroll_Example" src="https://github.com/user-attachments/assets/29612b93-b69e-46af-9e81-944e07ab4964" />
+<img width="490" height="295" alt="config" src="https://github.com/user-attachments/assets/6a48a036-1130-4cc3-8ff0-082f8ebf7ec5" />
+
 
 ## Quick install from a release
 
 Download the package for your distribution from the release's **Assets**
-section. Do not extract it.
+section.
 
 On Arch Linux or CachyOS, install the downloaded package with:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.0-1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.1-1-x86_64.pkg.tar.zst
 ```
 
 On Kubuntu or another Ubuntu-based system running Plasma Wayland, install the
 downloaded package with:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.0-1_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.1-1_amd64.deb
 ```
 
 The package must have been built for your exact KWin patch version. Check yours
 with `kwin_wayland --version`; the package manager will reject an incompatible
 package. The system also needs a repository that provides KWin 6.7 or newer.
-This plugin does not work in Ubuntu's default GNOME session.
 
 After installation, log out and back in. Open **System Settings → Window
 Management → Desktop Effects**, find **Auto Scroll** under Accessibility,
@@ -53,6 +50,9 @@ sudo apt remove kwin-autoscroll
 Log out and back in after removal so KWin unloads the binary plugin completely.
 
 ## Important behavior
+Version 0.1 targets KWin 6.7 or newer. Native Wayland applications are
+supported; XWayland applications are best effort. A full Plasma X11 session is
+not supported.
 
 The effect cannot ask an application whether the control beneath the pointer is
 scrollable. When enabled, an unmodified middle click anywhere in normal
