@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QPluginLoader>
 #include <QTest>
+#include <QVersionNumber>
 
 #include <config-kwin.h>
 
@@ -15,6 +16,7 @@ class PluginMetadataTest : public QObject {
 private Q_SLOTS:
   void effectMetadata();
   void kcmMetadata();
+  void supportedKWinFloor();
 };
 
 void PluginMetadataTest::effectMetadata() {
@@ -33,7 +35,7 @@ void PluginMetadataTest::effectMetadata() {
   QVERIFY(!plugin.contains(QStringLiteral("Id")));
   QCOMPARE(plugin.value(QStringLiteral("EnabledByDefault")).toBool(), false);
   QCOMPARE(plugin.value(QStringLiteral("Version")).toString(),
-           QStringLiteral("0.1.1"));
+           QStringLiteral(AUTOSCROLL_PROJECT_VERSION));
 }
 
 void PluginMetadataTest::kcmMetadata() {
@@ -41,6 +43,13 @@ void PluginMetadataTest::kcmMetadata() {
   const QJsonObject root = loader.metaData();
   QCOMPARE(root.value(QStringLiteral("IID")).toString(),
            QStringLiteral("org.kde.KPluginFactory"));
+}
+
+void PluginMetadataTest::supportedKWinFloor() {
+  const QVersionNumber buildKWin =
+      QVersionNumber::fromString(QStringLiteral(KWIN_PLUGIN_VERSION_STRING));
+  QVERIFY2(buildKWin >= QVersionNumber(6, 4, 3),
+           "The build root contains a KWin older than the supported floor");
 }
 
 QTEST_MAIN(PluginMetadataTest)

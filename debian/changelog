@@ -1,3 +1,26 @@
+kwin-autoscroll (0.1.2-2) unstable; urgency=medium
+
+  * Create overlay image items through the scene renderer on KWin 6.4-6.6
+    so the anchor and direction glyphs render with the OpenGL compositor.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Wed, 29 Jul 2026 17:50:00 +0800
+
+kwin-autoscroll (0.1.2-1) unstable; urgency=medium
+
+  * Release KWin 6.4.3-and-newer source compatibility.
+  * Add reproducible exact-version CachyOS, SteamOS, and Kubuntu builds.
+  * Preserve the exact kwin-wayland runtime dependency generated from
+    kwin-dev.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Wed, 29 Jul 2026 16:15:00 +0800
+
+kwin-autoscroll (0.1.1-2) unstable; urgency=medium
+
+  * Support building exact-version effects for KWin 6.4.3 and newer.
+  * Keep the exact kwin-wayland dependency derived from kwin-dev.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Wed, 29 Jul 2026 15:00:00 +0800
+
 kwin-autoscroll (0.1.1-1) unstable; urgency=medium
 
   * Fix glyph rendering on scaled displays.

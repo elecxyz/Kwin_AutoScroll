@@ -308,8 +308,7 @@ void AutoScrollEffect::updateVisual() {
 }
 
 qreal AutoScrollEffect::cursorScale() const {
-  if (KWin::LogicalOutput *output =
-          KWin::effects->screenAt(m_cursorPosition.toPoint())) {
+  if (auto *output = KWin::effects->screenAt(m_cursorPosition.toPoint())) {
     return output->scale();
   }
   return 1.0;

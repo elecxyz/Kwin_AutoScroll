@@ -3,7 +3,7 @@
 
 pkgname=kwin-autoscroll
 pkgver=@VERSION@
-pkgrel=1
+pkgrel=2
 pkgdesc='Windows-style middle-click continuous scrolling for KWin'
 arch=('x86_64')
 url='https://github.com/elecxyz/Kwin_AutoScroll'
@@ -11,6 +11,7 @@ license=('GPL-2.0-or-later')
 depends=('kwin=@KWIN_VERSION@' 'gcc-libs' 'glibc' 'kcmutils' 'kconfig'
          'kcoreaddons' 'qt6-base' 'qt6-svg')
 makedepends=('cmake' 'extra-cmake-modules' 'ninja' 'vulkan-headers')
+checkdepends=('appstream')
 source=("${pkgname}-${pkgver}.tar.xz")
 sha256sums=('@SHA256@')
 

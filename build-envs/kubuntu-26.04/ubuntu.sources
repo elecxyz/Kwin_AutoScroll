@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+# SPDX-License-Identifier: CC0-1.0
+
+Types: deb
+URIs: https://archive.ubuntu.com/ubuntu/
+Suites: resolute resolute-updates
+Components: main universe
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg

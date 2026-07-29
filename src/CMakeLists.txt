@@ -37,6 +37,17 @@ target_compile_definitions(autoscroll PRIVATE
     -DTRANSLATION_DOMAIN=\"kwin_autoscroll\"
 )
 
+if(KWin_VERSION VERSION_LESS "6.7.0")
+    target_compile_definitions(autoscroll PRIVATE
+        AUTOSCROLL_USE_LEGACY_IMAGE_ITEM_FACTORY
+    )
+    message(STATUS
+        "KWin ${KWin_VERSION}: creating image items through the scene renderer")
+else()
+    message(STATUS
+        "KWin ${KWin_VERSION}: creating unified image items directly")
+endif()
+
 target_link_libraries(autoscroll PRIVATE
     autoscroll_engine
     KWin::kwin

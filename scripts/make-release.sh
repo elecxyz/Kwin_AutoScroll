@@ -7,7 +7,12 @@ set -euo pipefail
 project_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 release_build="${project_root}/build-release"
 dist_dir="${project_root}/dist"
-version=0.1.1
+version=$(sed -n 's/^project(kwin-autoscroll VERSION \([^ ]*\).*/\1/p' \
+    "${project_root}/CMakeLists.txt")
+[[ -n "${version}" ]] || {
+    printf 'Unable to read the project version\n' >&2
+    exit 1
+}
 kwin_version=$(sed -n 's/^#define KWIN_PLUGIN_VERSION_STRING "\(.*\)"/\1/p' /usr/include/kwin/config-kwin.h)
 
 cmake -S "${project_root}" -B "${release_build}" -G Ninja \
@@ -21,7 +26,7 @@ cmake --build "${release_build}" --target package_source
 mkdir -p "${dist_dir}"
 archive="${dist_dir}/kwin-autoscroll-${version}.tar.xz"
 source_archive="${release_build}/kwin-autoscroll-${version}.tar.xz"
-source_date_epoch="${SOURCE_DATE_EPOCH:-1767225600}"
+source_date_epoch="${SOURCE_DATE_EPOCH:-$(git -C "${project_root}" log -1 --format=%ct)}"
 archive_stage=$(mktemp -d "${release_build}/source-stage.XXXXXX")
 trap 'rm -rf -- "${archive_stage}"' EXIT
 

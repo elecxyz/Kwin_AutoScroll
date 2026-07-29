@@ -3,11 +3,11 @@
 
 cmake_minimum_required(VERSION 3.24)
 
-project(kwin-autoscroll VERSION 0.1.1 LANGUAGES CXX)
+project(kwin-autoscroll VERSION 0.1.2 LANGUAGES CXX)
 
 set(QT_MIN_VERSION "6.7.0")
 set(KF_MIN_VERSION "6.0.0")
-set(KWIN_MIN_VERSION "6.7.0")
+set(KWIN_MIN_VERSION "6.4.3")
 
 find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})

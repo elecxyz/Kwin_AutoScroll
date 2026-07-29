@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.2 — 2026-07-29
+
+- Expanded the supported build range to KWin 6.4.3 and newer while retaining
+  exact-patch binary packages for every KWin target.
+- Made output-scale lookup compatible with the `Output *` return type used by
+  KWin 6.4/6.5 and the `LogicalOutput *` return type used by KWin 6.6 and
+  newer.
+- Fixed missing anchor and direction glyphs on KWin 6.4-6.6 by asking the
+  active scene renderer to create its backend-specific image items. KWin 6.7
+  and newer continue to use the unified image item directly.
+- Added isolated CachyOS, SteamOS 6.4.3, and Kubuntu 26.04 package builds with
+  version, plugin-IID, linkage, contents, package-manager, and linter checks.
+- Added locked target package manifests and reproducible, byte-stable release
+  artifacts without changing the existing compositor input-filter behavior.
+
 ## 0.1.1 — 2026-07-27
 
 - Fixed glyph rendering on scaled displays.

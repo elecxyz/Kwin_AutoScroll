@@ -5,6 +5,10 @@
 
 #include <scene/imageitem.h>
 #include <scene/item.h>
+#ifdef AUTOSCROLL_USE_LEGACY_IMAGE_ITEM_FACTORY
+#include <scene/itemrenderer.h>
+#include <scene/scene.h>
+#endif
 
 #include <QPainter>
 #include <QSvgRenderer>
@@ -15,6 +19,14 @@ namespace AutoScroll {
 namespace {
 constexpr qreal AnchorSize = 40.0;
 constexpr qreal CursorSize = 32.0;
+
+std::unique_ptr<KWin::ImageItem> createImageItem(KWin::Item *parent) {
+#ifdef AUTOSCROLL_USE_LEGACY_IMAGE_ITEM_FACTORY
+  return parent->scene()->renderer()->createImageItem(parent);
+#else
+  return std::make_unique<KWin::ImageItem>(parent);
+#endif
+}
 
 QImage renderSvg(const QString &resource, qreal logicalSize, qreal scale,
                  qreal rotation) {
@@ -50,14 +62,14 @@ void AutoScrollVisual::show(const QPointF &anchorPosition,
   m_scale = std::max(scale, 1.0);
   m_direction = Direction::Center;
 
-  m_anchorItem = std::make_unique<KWin::ImageItem>(m_overlayItem);
+  m_anchorItem = createImageItem(m_overlayItem);
   m_anchorItem->setImage(renderAnchor(m_scale));
   m_anchorItem->setSize(QSizeF(AnchorSize, AnchorSize));
   m_anchorItem->setPosition(m_anchorPosition -
                             QPointF(AnchorSize / 2.0, AnchorSize / 2.0));
   m_anchorItem->setZ(1000);
 
-  m_cursorItem = std::make_unique<KWin::ImageItem>(m_overlayItem);
+  m_cursorItem = createImageItem(m_overlayItem);
   m_cursorItem->setSize(QSizeF(CursorSize, CursorSize));
   m_cursorItem->setZ(1001);
   m_cursorItem->setVisible(false);

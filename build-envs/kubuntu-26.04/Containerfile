@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+FROM docker.io/library/ubuntu@sha256:7c2884fd32770fc6c173b78e0dc2278a2851d89f5447919edbc45475ac55dd6a
+
+COPY ubuntu.sources /tmp/ubuntu.sources
+
+RUN rm -f /etc/apt/apt.conf.d/docker-clean \
+    && printf 'Binary::apt::APT::Keep-Downloaded-Packages "true";\n' \
+        > /etc/apt/apt.conf.d/99keep-downloaded-packages \
+    && sed 's#https://#http://#' /tmp/ubuntu.sources > /etc/apt/sources.list.d/ubuntu.sources \
+    && rm -f /etc/apt/sources.list \
+    && apt-get -qq update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates \
+    && install -m 0644 /tmp/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources \
+    && apt-get -qq update \
+    && test "$(apt-cache policy kwin-dev | awk '/Candidate:/ {print $2}')" = "4:6.6.5-0ubuntu0.1" \
+    && test "$(apt-cache policy kwin-wayland | awk '/Candidate:/ {print $2}')" = "4:6.6.5-0ubuntu0.1" \
+    && (DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        debhelper \
+        devscripts \
+        dpkg-dev \
+        extra-cmake-modules=6.24.0-0ubuntu1 \
+        kwin-dev=4:6.6.5-0ubuntu0.1 \
+        kwin-wayland=4:6.6.5-0ubuntu0.1 \
+        libdrm-dev \
+        libkf6config-dev=6.24.0-0ubuntu1 \
+        libkf6configwidgets-dev=6.24.0-0ubuntu1 \
+        libkf6coreaddons-dev=6.24.0-0ubuntu1 \
+        libkf6i18n-dev=6.24.0-0ubuntu1 \
+        libkf6kcmutils-dev=6.24.0-0ubuntu1 \
+        libkf6widgetsaddons-dev=6.24.0-0ubuntu1 \
+        lintian \
+        ninja-build \
+        pkgconf \
+        qt6-base-dev=6.10.2+dfsg-7 \
+        qt6-svg-dev=6.10.2-2 \
+        libvulkan-dev > /tmp/builder-apt.log 2>&1 \
+        || { tail -n 100 /tmp/builder-apt.log; exit 1; }) \
+    && apt-cache policy kwin-dev kwin-wayland qt6-base-dev extra-cmake-modules

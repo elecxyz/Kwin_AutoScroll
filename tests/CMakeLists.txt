@@ -22,6 +22,15 @@ target_link_libraries(pluginmetadata_test PRIVATE KWin::kwin Qt6::Core Qt6::Test
 target_compile_definitions(pluginmetadata_test PRIVATE
     AUTOSCROLL_EFFECT_PATH=\"$<TARGET_FILE:autoscroll>\"
     AUTOSCROLL_KCM_PATH=\"$<TARGET_FILE:kwin_autoscroll_config>\"
+    AUTOSCROLL_PROJECT_VERSION=\"${PROJECT_VERSION}\"
 )
 add_dependencies(pluginmetadata_test autoscroll kwin_autoscroll_config)
 add_test(NAME pluginmetadata_test COMMAND pluginmetadata_test)
+
+set_tests_properties(
+    scrollengine_test
+    sessionstate_test
+    config_test
+    pluginmetadata_test
+    PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+)

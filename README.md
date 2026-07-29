@@ -1,194 +1,126 @@
 # KWin AutoScroll
 
-KWin AutoScroll for KDE Plasma 6 Wayland. It adds Windows-style continuous scrolling: middle-click in an application, move the pointer away from the anchor, and the distance and direction control scrolling
-speed.
+I built KWin AutoScroll out of frustration that this did not already exist on
+Plasma Wayland.
+
+I was shocked it didnt already exist.
+
+Middle-click in an application, move the pointer away from the anchor, and the
+distance and direction control the scrolling speed. Move back into the dead
+zone to pause, or click again to stop.
 
 <img width="296" height="295" alt="AutoScroll_Example" src="https://github.com/user-attachments/assets/29612b93-b69e-46af-9e81-944e07ab4964" />
 <img width="490" height="295" alt="config" src="https://github.com/user-attachments/assets/6a48a036-1130-4cc3-8ff0-082f8ebf7ec5" />
 
+## Install
 
-## Quick install from a release
+Download the package for your system from the release's **Assets** section.
+The package must match your exact KWin patch version—KWin effects are not
+universal binaries.
 
-Download the package for your distribution from the release's **Assets**
-section.
+### CachyOS
 
-On Arch Linux or CachyOS, install the downloaded package with:
-
-```sh
-sudo pacman -U ./kwin-autoscroll-0.1.1-1-x86_64.pkg.tar.zst
-```
-
-On Kubuntu or another Ubuntu-based system running Plasma Wayland, install the
-downloaded package with:
+For the current CachyOS KWin 6.7.3-1.1 package:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.1-1_amd64.deb
+sudo pacman -U ./kwin-autoscroll-0.1.2-2-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst
 ```
 
-The package must have been built for your exact KWin patch version. Check yours
-with `kwin_wayland --version`; the package manager will reject an incompatible
-package. The system also needs a repository that provides KWin 6.7 or newer.
-
-After installation, log out and back in. Open **System Settings → Window
-Management → Desktop Effects**, find **Auto Scroll** under Accessibility,
-enable it, and apply.
-
-## Quick removal
-
-Disable **Auto Scroll** in Desktop Effects first. On Arch Linux or CachyOS:
+Remove it with:
 
 ```sh
 sudo pacman -Rns kwin-autoscroll
 ```
 
-On Kubuntu or another Ubuntu-based Plasma system:
+### SteamOS / Steam Deck
+
+This package is for Valve KWin 6.4.3-1.13:
+
+Warning for SteamOS - I've not fully verified how this addon will play with Valve's input libraries or wether it plays nice with steam input. Use at your own risk I guess.
+
+```sh
+sudo steamos-readonly disable
+sudo pacman -U ./kwin-autoscroll-0.1.2-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
+sudo steamos-readonly enable
+```
+
+Remove it with:
+
+```sh
+sudo steamos-readonly disable
+sudo pacman -Rns kwin-autoscroll
+sudo steamos-readonly enable
+```
+
+SteamOS normally keeps the system image read-only. System updates may remove
+the package, and an update that changes KWin will need a newly matched build.
+
+### Kubuntu 26.04
+
+This package is for KWin `4:6.6.5-0ubuntu0.1`:
+
+```sh
+sudo apt install ./kwin-autoscroll_0.1.2-2-kubuntu26.04-kwin6.6.5_amd64.deb
+```
+
+Remove it with:
 
 ```sh
 sudo apt remove kwin-autoscroll
 ```
 
-Log out and back in after removal so KWin unloads the binary plugin completely.
+## Turn it on
 
-## Important behavior
-Version 0.1 targets KWin 6.7 or newer. Native Wayland applications are
-supported; XWayland applications are best effort. A full Plasma X11 session is
-not supported.
+After installing:
 
-The effect cannot ask an application whether the control beneath the pointer is
-scrollable. When enabled, an unmodified middle click anywhere in normal
-application content is therefore reserved for AutoScroll, including controls
-that do not scroll. Middle-click paste and open-link actions remain available
-on the desktop, panels, decorations, popups, and other excluded surfaces, but
-not in eligible application content.
+1. Log out and back in.
+2. Open **System Settings → Window Management → Desktop Effects**.
+3. Find **Auto Scroll** under Accessibility.
+4. Enable it and click **Apply**.
 
-Auto-scroll ends when you:
+The configure button lets you adjust the dead zone, maximum speed,
+acceleration curve, horizontal scrolling, and visual feedback.
 
-- click any mouse button;
-- press Escape;
-- use a physical scroll wheel;
-- leave the application window where scrolling started; or
-- close the window, lock the screen, disable the effect, or activate another
-  fullscreen KWin effect.
+## How it behaves
 
-The activating and cancelling click pairs are consumed so applications never
-receive unmatched button releases. A physical wheel event cancels auto-scroll
-and is then passed to the application.
+- Plain middle-click starts auto-scroll in normal application content.
+- Another click, Escape, or using the physical scroll wheel stops it.
+- Leaving the original window also stops it, so another application does not
+  receive the generated scrolling.
+- Native Wayland applications work best. XWayland applications are best
+  effort, and a full Plasma X11 session is not supported.
+- While AutoScroll is available in an application's content, that middle click
+  is reserved for the effect rather than middle-click paste or open-link.
 
-## Build requirements
+## Building it yourself
 
-KWin binary effects use a
-[private, versioned compositor interface](https://invent.kde.org/plasma/kwin/-/blob/v6.7.3/src/plugin.h).
-The plugin must be rebuilt against the exact KWin patch release that will load
-it.
-
-On Arch Linux or CachyOS:
+The repository can build separate packages for the three supported targets:
 
 ```sh
-sudo pacman -S --needed base-devel git cmake extra-cmake-modules ninja \
-    namcap vulkan-headers kwin
+scripts/build-target.sh cachyos
+scripts/build-target.sh steamos-6.4.3
+scripts/build-target.sh kubuntu-26.04
 ```
 
-On Debian, Kubuntu, or another Debian/Ubuntu-based Plasma system with Plasma
-6.7+ development packages:
+Or build everything:
 
 ```sh
-sudo apt install build-essential cmake extra-cmake-modules ninja-build \
-    kwin-dev libkf6config-dev libkf6configwidgets-dev \
-    libkf6coreaddons-dev libkf6i18n-dev libkf6kcmutils-dev \
-    libkf6widgetsaddons-dev qt6-base-dev qt6-svg-dev libvulkan-dev
+scripts/build-all.sh
 ```
 
-Older distributions whose `kwin-dev` is below 6.7 cannot build this release.
+Build roots, downloaded packages, reports, and finished artifacts are kept
+outside the repository under:
 
-## Build and test
-
-Always use an out-of-source build:
-
-```sh
-cmake -S . -B build -G Ninja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DBUILD_TESTING=ON \
-    -DCMAKE_INSTALL_PREFIX=/usr
-cmake --build build
-ctest --test-dir build --output-on-failure
+```text
+~/.cache/kwin-autoscroll-builds/
 ```
 
-The complete automated and disposable-session validation matrix is documented
-in [docs/TESTING.md](docs/TESTING.md). Contribution conventions are in
-[CONTRIBUTING.md](CONTRIBUTING.md).
+Those downloads are reused on later builds, so unchanged target packages do
+not need to be fetched again.
 
-To inspect the staged install without changing the system:
-
-```sh
-DESTDIR="$PWD/build/stage" cmake --install build
-find build/stage -type f
-```
-
-## Install and enable
-
-Packaging is preferred because it tracks the exact KWin dependency. For a
-direct source install:
-
-```sh
-sudo cmake --install build
-```
-
-Then open **System Settings → Window Management → Desktop Effects**, find
-**Auto Scroll** in Accessibility, enable it, and apply. Log out and back in if
-the newly installed binary effect is not listed immediately.
-
-The effect is disabled by default. Its configure button exposes:
-
-- dead-zone radius;
-- maximum scroll speed;
-- acceleration curve;
-- horizontal scrolling; and
-- anchor/directional visual feedback.
-
-The defaults are a 24-unit dead zone, 800 units/second maximum speed, and a 1.6
-curve. Values below 1.0 are supported; they make scrolling react more strongly
-just outside the dead zone, while values above 1.0 make that region gentler.
-
-## Uninstall
-
-Disable the effect first. If it was installed from an OS package, remove that
-package. A direct CMake install can be removed using the generated manifest:
-
-```sh
-sudo cmake --build build --target uninstall
-```
-
-Log out and back in after removing a loaded binary effect.
-
-## Packaging and releases
-
-- `packaging/arch/PKGBUILD` builds a local release tarball and pins KWin 6.7.3.
-- `debian/` contains Debian-family source packaging and derives an exact
-  `kwin-wayland` runtime dependency from the build environment.
-- `scripts/make-release.sh` creates a reproducible source archive and a release
-  PKGBUILD with its real SHA-256 checksum in `dist/`.
-
-Create release artifacts with:
-
-```sh
-scripts/make-release.sh
-cd dist
-makepkg --cleanbuild
-namcap PKGBUILD kwin-autoscroll-*.pkg.tar.*
-```
-
-## Troubleshooting
-
-- **The effect is missing after installation:** verify that the plugin is under
-  the Qt 6 `kwin/effects/plugins` directory and that its embedded KWin version
-  matches `kwin_wayland --version`.
-- **KWin reports a mismatched plugin version:** rebuild and reinstall after
-  every KWin update, including patch releases.
-- **Scrolling stops at the window edge:** this is intentional; Wayland routes
-  axis events to the surface under the pointer, so stopping prevents another
-  application from receiving synthetic input.
-- **An application does not scroll smoothly:** it may not support Wayland
-  continuous-axis events. XWayland behavior is application-dependent.
+The detailed build setup is in [docs/BUILD_MATRIX.md](docs/BUILD_MATRIX.md).
+Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the 0.1.2 changes
+are in [docs/RELEASE_NOTES_0.1.2.md](docs/RELEASE_NOTES_0.1.2.md).
 
 ## License
 

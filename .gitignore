@@ -4,9 +4,12 @@
 # CMake, Ninja, and test output
 /build/
 /build-*/
+!/build-envs/
 /cmake-build-*/
 /out/
 /Testing/
+/CMakeUserPresets.json
+/CMakeSettings.json
 CMakeCache.txt
 CMakeFiles/
 CTestTestfile.cmake
@@ -21,6 +24,9 @@ compile_commands.json
 *.gcno
 *.profraw
 *.profdata
+*.lcov
+/.coverage
+/coverage/
 
 # Generated Qt/KDE files when an in-source build is attempted
 ui_*.h
@@ -32,13 +38,19 @@ autoscrollconfig.h
 
 # Release and package output
 /dist/
+/artifacts/
+/.build-roots/
+/kwin-autoscroll-builds/
 /*.tar
 /*.tar.*
 /*.zip
 /*.deb
+/*.ddeb
+/*.udeb
 /*.dsc
 /*.changes
 /*.buildinfo
+/*.pkg.tar.*
 /packaging/arch/pkg/
 /packaging/arch/src/
 /packaging/arch/*.pkg.tar.*
@@ -47,18 +59,93 @@ autoscrollconfig.h
 /debian/kwin-autoscroll/
 /debian/files
 /debian/*.substvars
+/debian/*.debhelper
+/debian/*.debhelper.log
+/debian/debhelper-build-stamp
 /obj-*/
+
+# Target definitions and package locks are source. Heavy target state is not.
+/build-envs/*/chroot/
+/build-envs/*/workspace/
+/build-envs/*/artifacts/
+/build-envs/*/reports/
+/build-envs/*/package-cache/
+/build-envs/*/apt-package-cache/
+/build-envs/*/holo-keyring/
+/build-envs/*/pacman-gnupg/
+/build-envs/*/container-storage/
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+credentials.json
+credentials.*.json
+secrets.json
+secrets.*.json
+.netrc
+.npmrc
+.pypirc
+.git-credentials
+.authinfo
+.authinfo.gpg
+.ssh/
+.docker/
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+private-keys-v1.d/
+openpgp-revocs.d/
+secring.gpg
+pubring.gpg
+pubring.kbx
+trustdb.gpg
 
 # Editors and local tooling
 /.cache/
+/.venv/
+/.direnv/
+/.pytest_cache/
+/.mypy_cache/
+/.ruff_cache/
+__pycache__/
+*.py[cod]
 /.clangd/
+/.fleet/
 /.idea/
 /.vscode/
+/.zed/
 *.kdev4
+*.user
 *.kate-swp
 *.swp
 *.swo
+*.orig
+*.rej
 *~
+
+# Operating-system metadata
+.DS_Store
+._*
+.directory
+Thumbs.db
+Desktop.ini
+
+# Disposable VM and container images
+*.qcow2
+*.raw
+*.vdi
+*.vmdk
+*.iso
+*.img
 
 # Runtime diagnostics
 *.log

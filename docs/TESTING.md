@@ -22,8 +22,9 @@ discovered and that the effect uses KWin's exact versioned plugin IID.
 
 ## Manual Wayland matrix
 
-Install into a nested or disposable Plasma 6.7-or-newer Wayland session. Enable
-KWin AutoScroll under **System Settings → Window Management → Desktop Effects →
+Install into a nested or disposable Plasma 6.4.3-or-newer Wayland session
+whose exact KWin patch release matches the package. Enable KWin AutoScroll
+under **System Settings → Window Management → Desktop Effects →
 Accessibility**.
 
 For every application class below, verify activation, vertical scrolling,
@@ -50,6 +51,9 @@ Also verify:
 - Native pointer motion continues while auto-scrolling.
 - The cursor and anchor remain correctly sized while crossing mixed-DPI
   outputs, and the native cursor is restored after every cancellation path.
+- On KWin 6.4-6.6 with the OpenGL compositor, both the anchor and directional
+  glyph are visible; this specifically exercises the renderer-created image
+  item compatibility path.
 - Settings, Defaults, and Reset work, and saved settings take effect without a
   compositor restart.
 - Logout/login loads the installed plugin without KWin warnings or crashes.
