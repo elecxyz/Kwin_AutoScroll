@@ -7,9 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 The isolated builds prove compilation, exact plugin metadata, linkage, package
 contents, dependencies, and package-manager installation/removal. They do not
-prove that a live compositor handles pointer input correctly. No package was
-installed into the workstation's live KWin session, and no large VM image was
-downloaded during build-system validation.
+prove that a live compositor handles pointer input correctly.
 
 ## CachyOS
 
@@ -43,7 +41,3 @@ step because it is large and outside compilation validation.
    paying particular attention to touchpad/mouse event routing.
 4. Remove the package or restore the immutable system state after testing.
 
-A real Steam Deck is preferred. A substitute must reproduce Valve's complete
-compositor, input, and graphics stack; a build chroot alone is not a faithful
-runtime test. SteamOS updates can remove locally installed packages and any
-KWin patch update requires a newly matched build.
