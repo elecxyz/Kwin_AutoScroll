@@ -24,18 +24,30 @@ struct ActivationContext {
 };
 
 bool canActivate(const ActivationContext &context);
+bool activationModifiersMatch(Qt::KeyboardModifiers actual,
+                              Qt::KeyboardModifier required);
 
 class SessionState {
 public:
   bool isActive() const;
-  void activate();
+  bool isScrollReady() const;
+  void activate(Qt::KeyboardModifier activationModifier = Qt::NoModifier);
   bool cancel();
 
   InputDecision handleButton(Qt::MouseButton button, bool pressed);
+  void handleModifiers(Qt::KeyboardModifiers modifiers);
+  InputDecision handleAxis();
   InputDecision handleEscape(bool pressed);
 
 private:
+  void updateScrollReady();
+
   bool m_active = false;
+  bool m_scrollReady = false;
+  bool m_activationButtonReleased = false;
+  bool m_activationModifierReleased = false;
+  Qt::KeyboardModifier m_activationModifier = Qt::NoModifier;
+  bool m_wheelCancellationArmed = false;
   bool m_suppressEscapeRelease = false;
   QSet<Qt::MouseButton> m_suppressedButtons;
 };

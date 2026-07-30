@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.3 — 2026-07-30
+
+- Added an optional Control, Meta, Alt, or Shift modifier for middle-click
+  activation, allowing plain middle-click behavior to remain available to
+  browsers and other applications.
+- Delayed generated scrolling until the complete activation chord is released
+  so modifier-sensitive wheel actions such as zoom are not triggered.
+- Required two physical wheel events to cancel an active session, preventing a
+  single accidental wheel detent from stopping AutoScroll.
+- Kept unmodified middle-click activation as the default for existing users.
+
 ## 0.1.2 — 2026-07-29
 
 - Expanded the supported build range to KWin 6.4.3 and newer while retaining

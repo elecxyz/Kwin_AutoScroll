@@ -12,6 +12,12 @@ class SessionStateTest : public QObject {
 
 private Q_SLOTS:
   void activationReleaseIsSuppressed();
+  void configuredModifierMustMatchExactly();
+  void modifiedActivationWaitsForChordRelease();
+  void modifiedActivationHandlesReverseReleaseOrder();
+  void modifiedActivationTracksCurrentModifierState();
+  void secondWheelEventCancels();
+  void wheelCancellationCounterResets();
   void cancellationClickPairIsSuppressed();
   void escapePairIsSuppressed();
   void externalCancellationIsIdempotent();
@@ -23,11 +29,86 @@ void SessionStateTest::activationReleaseIsSuppressed() {
   SessionState state;
   state.activate();
   QVERIFY(state.isActive());
+  QVERIFY(state.isScrollReady());
 
   const InputDecision release = state.handleButton(Qt::MiddleButton, false);
   QVERIFY(release.consume);
   QVERIFY(!release.cancel);
   QVERIFY(state.isActive());
+  QVERIFY(state.isScrollReady());
+}
+
+void SessionStateTest::configuredModifierMustMatchExactly() {
+  QVERIFY(activationModifiersMatch(Qt::NoModifier, Qt::NoModifier));
+  QVERIFY(activationModifiersMatch(Qt::ControlModifier, Qt::ControlModifier));
+  QVERIFY(!activationModifiersMatch(Qt::NoModifier, Qt::ControlModifier));
+  QVERIFY(!activationModifiersMatch(
+      Qt::ControlModifier | Qt::ShiftModifier, Qt::ControlModifier));
+}
+
+void SessionStateTest::modifiedActivationWaitsForChordRelease() {
+  SessionState state;
+  state.activate(Qt::ControlModifier);
+  QVERIFY(state.isActive());
+  QVERIFY(!state.isScrollReady());
+
+  const InputDecision release = state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(release.consume);
+  QVERIFY(!state.isScrollReady());
+
+  state.handleModifiers(Qt::NoModifier);
+  QVERIFY(state.isScrollReady());
+}
+
+void SessionStateTest::modifiedActivationHandlesReverseReleaseOrder() {
+  SessionState state;
+  state.activate(Qt::MetaModifier);
+
+  state.handleModifiers(Qt::NoModifier);
+  QVERIFY(!state.isScrollReady());
+
+  const InputDecision release = state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(release.consume);
+  QVERIFY(state.isScrollReady());
+}
+
+void SessionStateTest::modifiedActivationTracksCurrentModifierState() {
+  SessionState state;
+  state.activate(Qt::AltModifier);
+
+  state.handleModifiers(Qt::NoModifier);
+  state.handleModifiers(Qt::AltModifier);
+  state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(!state.isScrollReady());
+
+  state.handleModifiers(Qt::NoModifier);
+  QVERIFY(state.isScrollReady());
+}
+
+void SessionStateTest::secondWheelEventCancels() {
+  SessionState state;
+  state.activate();
+
+  const InputDecision first = state.handleAxis();
+  QVERIFY(!first.consume);
+  QVERIFY(!first.cancel);
+  QVERIFY(state.isActive());
+
+  const InputDecision second = state.handleAxis();
+  QVERIFY(!second.consume);
+  QVERIFY(second.cancel);
+  QVERIFY(state.isActive());
+}
+
+void SessionStateTest::wheelCancellationCounterResets() {
+  SessionState state;
+  state.activate();
+  QVERIFY(!state.handleAxis().cancel);
+  QVERIFY(state.cancel());
+
+  state.activate();
+  QVERIFY(!state.handleAxis().cancel);
+  QVERIFY(state.handleAxis().cancel);
 }
 
 void SessionStateTest::cancellationClickPairIsSuppressed() {
@@ -74,6 +155,7 @@ void SessionStateTest::externalCancellationIsIdempotent() {
 void SessionStateTest::inactiveInputPassesThrough() {
   SessionState state;
   QVERIFY(!state.handleButton(Qt::RightButton, true).consume);
+  QVERIFY(!state.handleAxis().cancel);
   QVERIFY(!state.handleEscape(true).consume);
 }
 

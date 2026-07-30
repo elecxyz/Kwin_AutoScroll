@@ -14,17 +14,43 @@ bool canActivate(const ActivationContext &context) {
          !context.overDecoration;
 }
 
+bool activationModifiersMatch(Qt::KeyboardModifiers actual,
+                              Qt::KeyboardModifier required) {
+  return actual == Qt::KeyboardModifiers(required);
+}
+
 bool SessionState::isActive() const { return m_active; }
 
-void SessionState::activate() {
+bool SessionState::isScrollReady() const {
+  return m_active && m_scrollReady;
+}
+
+void SessionState::activate(Qt::KeyboardModifier activationModifier) {
   m_active = true;
+  m_activationModifier = activationModifier;
+  m_activationButtonReleased = activationModifier == Qt::NoModifier;
+  m_activationModifierReleased = activationModifier == Qt::NoModifier;
+  m_scrollReady = activationModifier == Qt::NoModifier;
+  m_wheelCancellationArmed = false;
   m_suppressedButtons.insert(Qt::MiddleButton);
 }
 
-bool SessionState::cancel() { return std::exchange(m_active, false); }
+bool SessionState::cancel() {
+  const bool wasActive = std::exchange(m_active, false);
+  m_scrollReady = false;
+  m_activationButtonReleased = false;
+  m_activationModifierReleased = false;
+  m_activationModifier = Qt::NoModifier;
+  m_wheelCancellationArmed = false;
+  return wasActive;
+}
 
 InputDecision SessionState::handleButton(Qt::MouseButton button, bool pressed) {
   if (!pressed && m_suppressedButtons.remove(button)) {
+    if (m_active && button == Qt::MiddleButton) {
+      m_activationButtonReleased = true;
+      updateScrollReady();
+    }
     return {.consume = true};
   }
 
@@ -34,6 +60,24 @@ InputDecision SessionState::handleButton(Qt::MouseButton button, bool pressed) {
 
   m_suppressedButtons.insert(button);
   return {.consume = true, .cancel = true};
+}
+
+void SessionState::handleModifiers(Qt::KeyboardModifiers modifiers) {
+  if (!m_active || m_activationModifier == Qt::NoModifier) {
+    return;
+  }
+  m_activationModifierReleased = !modifiers.testFlag(m_activationModifier);
+  updateScrollReady();
+}
+
+InputDecision SessionState::handleAxis() {
+  if (!m_active) {
+    return {};
+  }
+  if (std::exchange(m_wheelCancellationArmed, true)) {
+    return {.cancel = true};
+  }
+  return {};
 }
 
 InputDecision SessionState::handleEscape(bool pressed) {
@@ -51,6 +95,11 @@ InputDecision SessionState::handleEscape(bool pressed) {
 
   m_suppressEscapeRelease = true;
   return {.consume = true, .cancel = true};
+}
+
+void SessionState::updateScrollReady() {
+  m_scrollReady =
+      m_activationButtonReleased && m_activationModifierReleased;
 }
 
 } // namespace AutoScroll

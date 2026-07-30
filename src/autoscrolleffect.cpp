@@ -122,6 +122,7 @@ bool AutoScrollEffect::handlePointerMotion(KWin::PointerMotionEvent *event) {
     return false;
   }
 
+  updateSessionModifiers(event->modifiers);
   m_cursorPosition = event->position;
   if (!isStillOnTarget()) {
     cancelSession();
@@ -138,7 +139,12 @@ bool AutoScrollEffect::handlePointerButton(KWin::PointerButtonEvent *event) {
   }
 
   const bool pressed = event->state == KWin::PointerButtonState::Pressed;
+  updateSessionModifiers(event->modifiers);
+  const bool wasScrollReady = m_session.isScrollReady();
   const InputDecision decision = m_session.handleButton(event->button, pressed);
+  if (!wasScrollReady && m_session.isScrollReady()) {
+    startScrolling();
+  }
   if (decision.cancel) {
     cancelSession();
   }
@@ -146,11 +152,13 @@ bool AutoScrollEffect::handlePointerButton(KWin::PointerButtonEvent *event) {
     return true;
   }
 
+  const Qt::KeyboardModifier activationModifier =
+      configuredActivationModifier();
   if (pressed && event->button == Qt::MiddleButton &&
-      event->modifiers == Qt::NoModifier) {
+      activationModifiersMatch(event->modifiers, activationModifier)) {
     KWin::Window *window = KWin::input()->findToplevel(event->position);
     if (canActivate(window)) {
-      activate(window, event->position);
+      activate(window, event->position, activationModifier);
       return true;
     }
   }
@@ -162,13 +170,20 @@ bool AutoScrollEffect::handlePointerAxis(KWin::PointerAxisEvent *event) {
   if (event->device == m_inputDevice.get()) {
     return false;
   }
-  if (m_session.isActive()) {
+  if (event->delta == 0.0 && event->deltaV120 == 0) {
+    return false;
+  }
+
+  const InputDecision decision = m_session.handleAxis();
+  if (decision.cancel) {
     cancelSession();
   }
-  return false;
+  return decision.consume;
 }
 
 bool AutoScrollEffect::handleKeyboardKey(KWin::KeyboardKeyEvent *event) {
+  updateSessionModifiers(event->modifiers);
+
   if (event->key != Qt::Key_Escape) {
     return false;
   }
@@ -179,6 +194,22 @@ bool AutoScrollEffect::handleKeyboardKey(KWin::KeyboardKeyEvent *event) {
     cancelSession();
   }
   return decision.consume;
+}
+
+Qt::KeyboardModifier AutoScrollEffect::configuredActivationModifier() const {
+  switch (m_config->activationModifier()) {
+  case AutoScrollConfig::EnumActivationModifier::ControlModifier:
+    return Qt::ControlModifier;
+  case AutoScrollConfig::EnumActivationModifier::MetaModifier:
+    return Qt::MetaModifier;
+  case AutoScrollConfig::EnumActivationModifier::AltModifier:
+    return Qt::AltModifier;
+  case AutoScrollConfig::EnumActivationModifier::ShiftModifier:
+    return Qt::ShiftModifier;
+  case AutoScrollConfig::EnumActivationModifier::NoModifier:
+  default:
+    return Qt::NoModifier;
+  }
 }
 
 bool AutoScrollEffect::canActivate(KWin::Window *window) const {
@@ -210,8 +241,9 @@ bool AutoScrollEffect::isStillOnTarget() const {
          KWin::input()->findToplevel(m_cursorPosition) == m_targetWindow;
 }
 
-void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position) {
-  m_session.activate();
+void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position,
+                                Qt::KeyboardModifier activationModifier) {
+  m_session.activate(activationModifier);
   m_targetWindow = window;
   m_anchorPosition = position;
   m_cursorPosition = position;
@@ -226,9 +258,27 @@ void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position) {
     m_visual->show(m_anchorPosition, m_cursorPosition, cursorScale());
   }
 
+  if (m_session.isScrollReady()) {
+    startScrolling();
+  }
+  KWin::effects->addRepaintFull();
+}
+
+void AutoScrollEffect::updateSessionModifiers(
+    Qt::KeyboardModifiers modifiers) {
+  const bool wasScrollReady = m_session.isScrollReady();
+  m_session.handleModifiers(modifiers);
+  if (!wasScrollReady && m_session.isScrollReady()) {
+    startScrolling();
+  }
+}
+
+void AutoScrollEffect::startScrolling() {
+  if (!m_session.isScrollReady() || m_scrollTimer.isActive()) {
+    return;
+  }
   m_elapsedTimer.start();
   m_scrollTimer.start();
-  KWin::effects->addRepaintFull();
 }
 
 void AutoScrollEffect::cancelSession() {
@@ -261,7 +311,7 @@ void AutoScrollEffect::cancelSession() {
 }
 
 void AutoScrollEffect::scrollTick() {
-  if (!m_session.isActive() || !isStillOnTarget()) {
+  if (!m_session.isScrollReady() || !isStillOnTarget()) {
     cancelSession();
     return;
   }

@@ -15,6 +15,7 @@ class ConfigTest : public QObject {
 
 private Q_SLOTS:
   void subUnitExponentRoundTrips();
+  void activationModifierRoundTrips();
 };
 
 void ConfigTest::subUnitExponentRoundTrips() {
@@ -39,6 +40,33 @@ void ConfigTest::subUnitExponentRoundTrips() {
     reader.read();
     QCOMPARE(reader.maximumSpeed(), 500);
     QCOMPARE(reader.accelerationExponent(), 0.8);
+  }
+}
+
+void ConfigTest::activationModifierRoundTrips() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const QString path = directory.filePath(QStringLiteral("kwinrc"));
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig writer(config);
+    QCOMPARE(writer.activationModifier(),
+             AutoScrollConfig::EnumActivationModifier::NoModifier);
+    writer.setActivationModifier(
+        AutoScrollConfig::EnumActivationModifier::ControlModifier);
+    QVERIFY(writer.save());
+    config->sync();
+  }
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig reader(config);
+    reader.read();
+    QCOMPARE(reader.activationModifier(),
+             AutoScrollConfig::EnumActivationModifier::ControlModifier);
   }
 }
 

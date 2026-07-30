@@ -78,13 +78,22 @@ After installing:
 3. Find **Auto Scroll** under Accessibility.
 4. Enable it and click **Apply**.
 
-The configure button lets you adjust the dead zone, maximum speed,
-acceleration curve, horizontal scrolling, and visual feedback.
+The configure button lets you choose an optional activation modifier and
+adjust the dead zone, maximum speed, acceleration curve, horizontal scrolling,
+and visual feedback.
 
 ## How it behaves
 
-- Plain middle-click starts auto-scroll in normal application content.
-- Another click, Escape, or using the physical scroll wheel stops it.
+- By default, plain middle-click starts auto-scroll in normal application
+  content.
+- Optionally require Control, Meta, Alt, or Shift while middle-clicking. With
+  a modifier selected, plain middle-click remains available for opening
+  browser links in a new tab, closing browser tabs, or middle-click paste.
+- When using a modifier, release both the middle button and modifier before
+  moving the pointer. AutoScroll waits for the complete chord to be released
+  so generated wheel events do not become zoom or horizontal-scroll actions.
+- Another click or Escape stops it immediately. The physical scroll wheel
+  needs two events, so one accidental detent does not stop AutoScroll.
 - Leaving the original window also stops it, so another application does not
   receive the generated scrolling.
 - Native Wayland applications work best. XWayland applications are best

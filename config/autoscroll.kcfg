@@ -9,6 +9,16 @@ SPDX-License-Identifier: GPL-2.0-or-later
                           http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
     <kcfgfile arg="true"/>
     <group name="Effect-autoscroll">
+        <entry name="ActivationModifier" type="Enum">
+            <choices>
+                <choice name="NoModifier"/>
+                <choice name="ControlModifier"/>
+                <choice name="MetaModifier"/>
+                <choice name="AltModifier"/>
+                <choice name="ShiftModifier"/>
+            </choices>
+            <default>NoModifier</default>
+        </entry>
         <entry name="DeadZone" type="Int">
             <default>24</default>
             <min>4</min>

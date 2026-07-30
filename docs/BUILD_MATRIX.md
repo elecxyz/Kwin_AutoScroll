@@ -10,8 +10,8 @@ binary. KWin embeds its full upstream patch version in the effect factory IID.
 Each row below is therefore an independent package built and verified in its
 own target userspace.
 
-This snapshot was produced on 2026-07-29 from Git commit
-`da275245766353d861efeb905d175e99e3c03b40` plus the reviewed working-tree
+This snapshot was produced on 2026-07-30 from Git commit
+`6dd8df5d6b545d8920a09f6962413a869008eca8d` plus the reviewed working-tree
 changes. Machine-readable reports and checksum files live below the external
 build root; `scripts/build-target.sh` refreshes them after a successful build.
 
@@ -44,14 +44,13 @@ The default external root is
 
 | Target | Artifact relative to the external root | SHA-256 |
 |---|---|---|
-| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.2-2-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst` | `2b019d65331ef40ac20d6a297a18ae744195542804f511ce4bfa09153a240f9b` |
-| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.2-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst` | `4f4ba152e1049ce470883e614bb7f707b00d243fb6e02f9922ab7582babb63a6` |
-| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.2-2-kubuntu26.04-kwin6.6.5_amd64.deb` | `671a17e9f81e385f856c822aa8fbfe406cb1b0d98921e7d57c04da2eafe94af2` |
+| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.3-2-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst` | `e616bfcc82ca3be0e847dcd39891cebae68f62e78757fba4bcd4e2aca4d8edd4` |
+| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.3-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst` | `4faec15ca2019de70d967485841e8930e1e3819d7ebf166db08f394dacfa59cb` |
+| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.3-2-kubuntu26.04-kwin6.6.5_amd64.deb` | `91c090ef675646001fecdd648e5e2842b9d9b6f563b0c61e4bef6c6ca1b04138` |
 
-These checksums were stable across consecutive clean rebuilds with the same
-source epoch and locked roots. A new commit or deliberately revised target
-will produce a new checksum. The per-target `reports/artifact-manifest.txt`
-and adjacent `.sha256` file are the authoritative outputs of a later run. The
+The builders use a fixed source epoch and locked target roots so clean rebuilds
+remain reproducible. The per-target `reports/artifact-manifest.txt` and
+adjacent `.sha256` file are the authoritative outputs of a later run. The
 manifests also record the exact source-archive hash, source Git state, target
 versions, and builder identity.
 

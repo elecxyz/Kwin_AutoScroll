@@ -16,9 +16,9 @@ ctest --test-dir build --output-on-failure
 The unit tests cover the speed curve, dead zone, signs, diagonal motion,
 maximum-speed cap, horizontal disablement, elapsed-time integration,
 fractional deltas, axis-stop generation, activation policy, click suppression,
-Escape suppression, wheel cancellation, target changes, locking, closure, and
-teardown. `pluginmetadata_test` also verifies that both plugins can be
-discovered and that the effect uses KWin's exact versioned plugin IID.
+Escape suppression, two-event wheel cancellation, target changes, locking,
+closure, and teardown. `pluginmetadata_test` also verifies that both plugins
+can be discovered and that the effect uses KWin's exact versioned plugin IID.
 
 ## Manual Wayland matrix
 
@@ -42,12 +42,17 @@ effect:
 Also verify:
 
 - A plain middle-click activates, while modified middle-clicks pass through.
+- With each optional activation modifier selected, plain middle-clicks pass
+  through and only the exact configured modifier plus middle-click activates.
+- Modified activation does not generate scroll events until both the middle
+  button and modifier are released, in either release order.
 - Desktops, panels, decorations, popups, internal KWin UI, locked sessions,
   pointer-constrained clients, and active fullscreen effects do not activate.
 - The activating middle-button press and release never reach the client.
 - A cancellation click's complete press/release pair is consumed.
 - Escape press, repeats, and release are consumed.
-- The physical wheel event that cancels a session still reaches the client.
+- One physical wheel event leaves the session active; the second cancels it.
+  Both events still reach the client.
 - Native pointer motion continues while auto-scrolling.
 - The cursor and anchor remain correctly sized while crossing mixed-DPI
   outputs, and the native cursor is restored after every cancellation path.

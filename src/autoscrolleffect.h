@@ -62,9 +62,13 @@ public:
   bool handleKeyboardKey(KWin::KeyboardKeyEvent *event);
 
 private:
+  Qt::KeyboardModifier configuredActivationModifier() const;
   bool canActivate(KWin::Window *window) const;
   bool isStillOnTarget() const;
-  void activate(KWin::Window *window, const QPointF &position);
+  void activate(KWin::Window *window, const QPointF &position,
+                Qt::KeyboardModifier activationModifier);
+  void updateSessionModifiers(Qt::KeyboardModifiers modifiers);
+  void startScrolling();
   void cancelSession();
   void scrollTick();
   void emitFrame(const ScrollFrame &frame);

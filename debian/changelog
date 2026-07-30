@@ -1,3 +1,19 @@
+kwin-autoscroll (0.1.3-2) unstable; urgency=medium
+
+  * Require two physical wheel events to cancel AutoScroll while preserving
+    immediate click and Escape cancellation.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Thu, 30 Jul 2026 08:30:00 +0800
+
+kwin-autoscroll (0.1.3-1) unstable; urgency=medium
+
+  * Add a configurable modifier for middle-click activation so plain
+    middle-click can remain available for opening browser links and paste.
+  * Wait for the activation button and modifier to be released before
+    generating scroll events, avoiding modified-wheel actions such as zoom.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Thu, 30 Jul 2026 00:30:00 +0800
+
 kwin-autoscroll (0.1.2-2) unstable; urgency=medium
 
   * Create overlay image items through the scene renderer on KWin 6.4-6.6
