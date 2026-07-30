@@ -10,7 +10,9 @@ distance and direction control the scrolling speed. Move back into the dead
 zone to pause, or click again to stop.
 
 <img width="296" height="295" alt="AutoScroll_Example" src="https://github.com/user-attachments/assets/29612b93-b69e-46af-9e81-944e07ab4964" />
-<img width="490" height="295" alt="config" src="https://github.com/user-attachments/assets/6a48a036-1130-4cc3-8ff0-082f8ebf7ec5" />
+<img width="439" height="295" alt="auto_scroll" src="https://github.com/user-attachments/assets/d54e30e0-198f-4241-8154-65fac1fb376f" />
+
+
 
 ## Install
 
