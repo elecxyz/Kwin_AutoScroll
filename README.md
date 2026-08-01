@@ -7,7 +7,9 @@ Middle-click in an application, move the pointer away from the anchor, and the
 distance and direction control the scrolling speed. Move back into the dead
 zone to pause, or click again to stop.
 
+[auto_scroll_demo.webm](https://github.com/user-attachments/assets/aba74c5e-aab9-4371-84ad-fe67e5321b36)
 
+<img width="631" height="548" alt="Screenshot_20260802_072752" src="https://github.com/user-attachments/assets/ed35a878-a1ed-4885-b31b-4a14341f1c92" /> <img width="256" height="548" alt="Screenshot_20260802_072811" src="https://github.com/user-attachments/assets/95984c70-e530-457e-967d-b2ea094b3222" />
 
 
 ## Install
