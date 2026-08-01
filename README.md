@@ -3,14 +3,10 @@
 I built KWin AutoScroll out of frustration that this did not already exist on
 Plasma Wayland.
 
-I was shocked it didnt already exist.
-
 Middle-click in an application, move the pointer away from the anchor, and the
 distance and direction control the scrolling speed. Move back into the dead
 zone to pause, or click again to stop.
 
-<img width="296" height="295" alt="AutoScroll_Example" src="https://github.com/user-attachments/assets/29612b93-b69e-46af-9e81-944e07ab4964" />
-<img width="439" height="295" alt="auto_scroll" src="https://github.com/user-attachments/assets/d54e30e0-198f-4241-8154-65fac1fb376f" />
 
 
 
@@ -25,7 +21,7 @@ universal binaries.
 For the current CachyOS KWin 6.7.3-1.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.2-2-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.4-1-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -42,7 +38,7 @@ Warning for SteamOS - I've not fully verified how this addon will play with Valv
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.2-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.4-1-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
@@ -62,7 +58,7 @@ the package, and an update that changes KWin will need a newly matched build.
 This package is for KWin `4:6.6.5-0ubuntu0.1`:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.2-2-kubuntu26.04-kwin6.6.5_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.4-1-kubuntu26.04-kwin6.6.5_amd64.deb
 ```
 
 Remove it with:
@@ -82,7 +78,10 @@ After installing:
 
 The configure button lets you choose an optional activation modifier and
 adjust the dead zone, maximum speed, acceleration curve, horizontal scrolling,
-and visual feedback.
+visual feedback, glyph size, and visual style. The size picker scales the
+anchor and directional pointer together. Breeze Dark is the default; Breeze,
+Classic, Feather, Orbit, Circuit, and Pulse remain available as bundled
+alternatives.
 
 ## How it behaves
 
@@ -107,6 +106,17 @@ and visual feedback.
 
 The repository can build separate packages for the three supported targets:
 
+Run the complete matrix from an up-to-date Arch-family host. The Arch targets
+use clean `devtools` chroots, and the Kubuntu target uses rootless Podman:
+
+```sh
+sudo pacman -Syu --needed devtools namcap podman
+scripts/check-build-host.sh
+```
+
+The Arch builders use `sudo` to create and enter their isolated roots. The
+Kubuntu builder does not require root.
+
 ```sh
 scripts/build-target.sh cachyos
 scripts/build-target.sh steamos-6.4.3
@@ -130,8 +140,8 @@ Those downloads are reused on later builds, so unchanged target packages do
 not need to be fetched again.
 
 The detailed build setup is in [docs/BUILD_MATRIX.md](docs/BUILD_MATRIX.md).
-Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the 0.1.2 changes
-are in [docs/RELEASE_NOTES_0.1.2.md](docs/RELEASE_NOTES_0.1.2.md).
+Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the latest changes
+are in [docs/RELEASE_NOTES_0.1.4.md](docs/RELEASE_NOTES_0.1.4.md).
 
 ## License
 

@@ -16,6 +16,8 @@ class ConfigTest : public QObject {
 private Q_SLOTS:
   void subUnitExponentRoundTrips();
   void activationModifierRoundTrips();
+  void visualDefaults();
+  void visualSettingsRoundTrip();
 };
 
 void ConfigTest::subUnitExponentRoundTrips() {
@@ -67,6 +69,42 @@ void ConfigTest::activationModifierRoundTrips() {
     reader.read();
     QCOMPARE(reader.activationModifier(),
              AutoScrollConfig::EnumActivationModifier::ControlModifier);
+  }
+}
+
+void ConfigTest::visualDefaults() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const KSharedConfig::Ptr config = KSharedConfig::openConfig(
+      directory.filePath(QStringLiteral("kwinrc")), KConfig::SimpleConfig);
+  AutoScrollConfig settings(config);
+
+  QCOMPARE(settings.glyphStyle(), QStringLiteral("breeze-dark"));
+  QCOMPARE(settings.glyphSize(), 40);
+}
+
+void ConfigTest::visualSettingsRoundTrip() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const QString path = directory.filePath(QStringLiteral("kwinrc"));
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig writer(config);
+    writer.setGlyphStyle(QStringLiteral("circuit"));
+    writer.setGlyphSize(64);
+    QVERIFY(writer.save());
+    config->sync();
+  }
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig reader(config);
+    reader.read();
+    QCOMPARE(reader.glyphStyle(), QStringLiteral("circuit"));
+    QCOMPARE(reader.glyphSize(), 64);
   }
 }
 

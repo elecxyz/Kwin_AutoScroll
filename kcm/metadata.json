@@ -1,0 +1,9 @@
+{
+    "KPlugin": {
+        "Description": "Configure the KWin Auto Scroll effect",
+        "License": "GPL-2.0-or-later",
+        "Name": "Auto Scroll Configuration",
+        "Version": "0.1.4"
+    },
+    "X-DocPath": "https://github.com/elecxyz/Kwin_AutoScroll"
+}

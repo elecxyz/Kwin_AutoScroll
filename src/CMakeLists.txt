@@ -13,6 +13,14 @@ set_target_properties(autoscroll_engine PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(autoscroll_engine PUBLIC Qt6::Core Qt6::Gui)
 target_include_directories(autoscroll_engine PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
+add_library(autoscroll_visuals STATIC
+    glyphstyle.cpp
+    glyphstyle.h
+)
+set_target_properties(autoscroll_visuals PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(autoscroll_visuals PUBLIC Qt6::Core Qt6::Gui Qt6::Svg)
+target_include_directories(autoscroll_visuals PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+
 set(autoscroll_effect_sources
     autoscrolleffect.cpp
     autoscrolleffect.h
@@ -32,6 +40,9 @@ kcoreaddons_add_plugin(autoscroll
     SOURCES ${autoscroll_effect_sources}
     INSTALL_NAMESPACE "kwin/effects/plugins"
 )
+set_property(TARGET autoscroll APPEND PROPERTY AUTOGEN_TARGET_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/metadata.json"
+)
 
 target_compile_definitions(autoscroll PRIVATE
     -DTRANSLATION_DOMAIN=\"kwin_autoscroll\"
@@ -50,6 +61,7 @@ endif()
 
 target_link_libraries(autoscroll PRIVATE
     autoscroll_engine
+    autoscroll_visuals
     KWin::kwin
     KF6::ConfigGui
     KF6::CoreAddons

@@ -40,6 +40,8 @@ bool AutoScrollInputFilter::keyboardKey(KWin::KeyboardKeyEvent *event) {
 
 AutoScrollEffect::AutoScrollEffect() {
   m_config = std::make_unique<AutoScrollConfig>(KWin::effects->config());
+  m_visual =
+      std::make_unique<AutoScrollVisual>(KWin::effects->scene()->overlayItem());
   reconfigure(ReconfigureAll);
 
   m_inputDevice = std::make_unique<AutoScrollInputDevice>();
@@ -47,9 +49,6 @@ AutoScrollEffect::AutoScrollEffect() {
 
   m_inputFilter = std::make_unique<AutoScrollInputFilter>(this);
   KWin::input()->installInputEventFilter(m_inputFilter.get());
-
-  m_visual =
-      std::make_unique<AutoScrollVisual>(KWin::effects->scene()->overlayItem());
 
   m_scrollTimer.setInterval(8);
   m_scrollTimer.setTimerType(Qt::PreciseTimer);
@@ -94,6 +93,7 @@ void AutoScrollEffect::reconfigure(ReconfigureFlags) {
       .accelerationExponent = m_config->accelerationExponent(),
       .horizontalScrolling = m_config->horizontalScrolling(),
   });
+  m_visual->setAppearance(m_config->glyphStyle(), m_config->glyphSize());
 
   const bool visualFeedback = m_config->visualFeedback();
   if (m_visualFeedback != visualFeedback) {
@@ -264,8 +264,7 @@ void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position,
   KWin::effects->addRepaintFull();
 }
 
-void AutoScrollEffect::updateSessionModifiers(
-    Qt::KeyboardModifiers modifiers) {
+void AutoScrollEffect::updateSessionModifiers(Qt::KeyboardModifiers modifiers) {
   const bool wasScrollReady = m_session.isScrollReady();
   m_session.handleModifiers(modifiers);
   if (!wasScrollReady && m_session.isScrollReady()) {

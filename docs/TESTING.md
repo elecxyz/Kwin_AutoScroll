@@ -17,8 +17,10 @@ The unit tests cover the speed curve, dead zone, signs, diagonal motion,
 maximum-speed cap, horizontal disablement, elapsed-time integration,
 fractional deltas, axis-stop generation, activation policy, click suppression,
 Escape suppression, two-event wheel cancellation, target changes, locking,
-closure, and teardown. `pluginmetadata_test` also verifies that both plugins
-can be discovered and that the effect uses KWin's exact versioned plugin IID.
+closure, teardown, visual configuration persistence, style discovery, SVG
+rendering at every preset and scale, and the custom selector properties.
+`pluginmetadata_test` also verifies that both plugins can be discovered and
+that the effect uses KWin's exact versioned plugin IID.
 
 ## Manual Wayland matrix
 
@@ -56,6 +58,13 @@ Also verify:
 - Native pointer motion continues while auto-scrolling.
 - The cursor and anchor remain correctly sized while crossing mixed-DPI
   outputs, and the native cursor is restored after every cancellation path.
+- Every visual style renders its matching anchor and directional pointer at
+  16, 40, and 72 pixels over both light and dark application content.
+- The size popup previews the selected style at each actual size, and changing
+  either appearance setting updates an active session without moving its
+  anchor or restarting scrolling.
+- Turning visual feedback off disables the appearance controls without
+  discarding their values; Defaults restores Breeze Dark at 40 pixels.
 - On KWin 6.4-6.6 with the OpenGL compositor, both the anchor and directional
   glyph are visible; this specifically exercises the renderer-created image
   item compatibility path.

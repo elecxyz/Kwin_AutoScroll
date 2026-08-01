@@ -25,6 +25,10 @@ mkdir -p -- "${workspace}" "${artifacts}" "${reports}" \
     "${apt_archives}/partial" "${apt_lists}/partial"
 
 image_tag="localhost/kwin-autoscroll-builder:${target}"
+if ! podman image exists "${TARGET_BASE_IMAGE}"; then
+    printf 'Pulling pinned base image: %s\n' "${TARGET_BASE_IMAGE}"
+    podman pull "${TARGET_BASE_IMAGE}"
+fi
 podman build --pull=never --network=host --tag "${image_tag}" \
     --volume "${apt_archives}:/var/cache/apt/archives:rw" \
     --volume "${apt_lists}:/var/lib/apt/lists:rw" \

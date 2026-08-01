@@ -7,6 +7,7 @@
 
 #include <QImage>
 #include <QPointF>
+#include <QString>
 
 #include <memory>
 
@@ -22,6 +23,7 @@ public:
   explicit AutoScrollVisual(KWin::Item *overlayItem);
   ~AutoScrollVisual();
 
+  void setAppearance(const QString &styleId, int glyphSize);
   void show(const QPointF &anchorPosition, const QPointF &cursorPosition,
             qreal scale);
   void update(const QPointF &cursorPosition, Direction direction, qreal scale);
@@ -39,6 +41,8 @@ private:
   QPointF m_anchorPosition;
   QPointF m_cursorPosition;
   Direction m_direction = Direction::Center;
+  QString m_styleId = QStringLiteral("breeze-dark");
+  qreal m_anchorSize = 40.0;
   qreal m_scale = 1.0;
 };
 

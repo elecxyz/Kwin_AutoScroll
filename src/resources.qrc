@@ -4,7 +4,19 @@ SPDX-License-Identifier: GPL-2.0-or-later
 -->
 <RCC>
     <qresource prefix="/autoscroll">
-        <file alias="anchor.svg">assets/anchor.svg</file>
-        <file alias="direction.svg">assets/direction.svg</file>
+        <file alias="styles/breeze-dark/anchor.svg">assets/breeze-dark-anchor.svg</file>
+        <file alias="styles/breeze-dark/direction.svg">assets/breeze-dark-direction.svg</file>
+        <file alias="styles/breeze/anchor.svg">assets/breeze-anchor.svg</file>
+        <file alias="styles/breeze/direction.svg">assets/breeze-direction.svg</file>
+        <file alias="styles/classic/anchor.svg">assets/anchor.svg</file>
+        <file alias="styles/classic/direction.svg">assets/direction.svg</file>
+        <file alias="styles/feather/anchor.svg">assets/feather-anchor.svg</file>
+        <file alias="styles/feather/direction.svg">assets/feather-direction.svg</file>
+        <file alias="styles/orbit/anchor.svg">assets/orbit-anchor.svg</file>
+        <file alias="styles/orbit/direction.svg">assets/orbit-direction.svg</file>
+        <file alias="styles/circuit/anchor.svg">assets/circuit-anchor.svg</file>
+        <file alias="styles/circuit/direction.svg">assets/circuit-direction.svg</file>
+        <file alias="styles/pulse/anchor.svg">assets/pulse-anchor.svg</file>
+        <file alias="styles/pulse/direction.svg">assets/pulse-direction.svg</file>
     </qresource>
 </RCC>

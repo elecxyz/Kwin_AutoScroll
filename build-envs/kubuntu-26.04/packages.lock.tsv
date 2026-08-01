@@ -779,7 +779,7 @@ systemd-sysv	259.5-0ubuntu3
 sysvinit-utils	3.15-5ubuntu1
 t1utils	1.41-4build4
 tar	1.35+dfsg-4ubuntu0.2
-tzdata	2026b-0ubuntu0.26.04.1
+tzdata	2026c-0ubuntu0.26.04.1
 ubuntu-keyring	2023.11.28.1build1
 ucf	3.0052ubuntu1
 unzip	6.0-29ubuntu1

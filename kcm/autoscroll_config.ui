@@ -94,6 +94,35 @@ SPDX-License-Identifier: GPL-2.0-or-later
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="appearanceGroupBox">
+     <property name="enabled"><bool>false</bool></property>
+     <property name="title"><string>Visual appearance</string></property>
+     <layout class="QHBoxLayout" name="appearanceLayout">
+      <item alignment="Qt::AlignVCenter">
+       <widget class="QLabel" name="glyphStyleLabel">
+        <property name="text"><string>Pointer style:</string></property>
+        <property name="buddy"><cstring>kcfg_GlyphStyle</cstring></property>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignVCenter">
+       <widget class="AutoScroll::GlyphStyleComboBox" name="kcfg_GlyphStyle"/>
+      </item>
+      <item alignment="Qt::AlignVCenter">
+       <widget class="AutoScroll::GlyphSizeComboBox" name="kcfg_GlyphSize"/>
+      </item>
+      <item>
+       <spacer name="appearanceHorizontalSpacer">
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
+        <property name="sizeType"><enum>QSizePolicy::Expanding</enum></property>
+        <property name="sizeHint" stdset="0">
+         <size><width>40</width><height>20</height></size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation"><enum>Qt::Vertical</enum></property>
      <property name="sizeHint" stdset="0">
@@ -103,6 +132,29 @@ SPDX-License-Identifier: GPL-2.0-or-later
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AutoScroll::GlyphStyleComboBox</class>
+   <extends>QComboBox</extends>
+   <header>glyphselectors.h</header>
+  </customwidget>
+  <customwidget>
+   <class>AutoScroll::GlyphSizeComboBox</class>
+   <extends>QComboBox</extends>
+   <header>glyphselectors.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>kcfg_VisualFeedback</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>appearanceGroupBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel"><x>154</x><y>247</y></hint>
+    <hint type="destinationlabel"><x>154</x><y>309</y></hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

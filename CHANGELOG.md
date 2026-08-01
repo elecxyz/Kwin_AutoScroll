@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.4 — 2026-07-30
+
+- Added a KDE-style size picker for scaling the anchor and directional glyphs
+  together with a 40-pixel default.
+- Added Breeze Dark, Breeze, Classic, Feather, Orbit, Circuit, and Pulse
+  visual styles with matching configuration previews. Breeze Dark is the
+  default.
+- Applied visual style and size changes immediately.
+- Added shared rendering, configuration, resource, and selector tests for the
+  new visual system.
+
 ## 0.1.3 — 2026-07-30
 
 - Added an optional Control, Meta, Alt, or Shift modifier for middle-click

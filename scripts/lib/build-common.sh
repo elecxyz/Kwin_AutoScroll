@@ -72,7 +72,11 @@ create_source_archive() {
     epoch=${SOURCE_DATE_EPOCH:-$(git -C "${project_root}" log -1 --format=%ct)}
     file_list=$(mktemp)
     trap 'rm -f -- "${file_list}"' RETURN
-    git -C "${project_root}" ls-files -z >"${file_list}"
+    git -C "${project_root}" ls-files -z \
+        --cached --others --exclude-standard |
+        while IFS= read -r -d '' path; do
+            [[ -e "${project_root}/${path}" ]] && printf '%s\0' "${path}"
+        done >"${file_list}"
     tar -C "${project_root}" \
         --null --files-from="${file_list}" \
         --sort=name \
@@ -86,7 +90,7 @@ create_source_archive() {
 source_state() {
     local commit dirty
     commit=$(git -C "${project_root}" rev-parse HEAD)
-    if [[ -n "$(git -C "${project_root}" status --porcelain --untracked-files=no)" ]]; then
+    if [[ -n "$(git -C "${project_root}" status --porcelain)" ]]; then
         dirty='+working-tree'
     else
         dirty=''

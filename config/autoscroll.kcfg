@@ -40,5 +40,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
         <entry name="VisualFeedback" type="Bool">
             <default>true</default>
         </entry>
+        <entry name="GlyphStyle" type="String">
+            <default>breeze-dark</default>
+        </entry>
+        <entry name="GlyphSize" type="Int">
+            <default>40</default>
+            <min>16</min>
+            <max>72</max>
+        </entry>
     </group>
 </kcfg>

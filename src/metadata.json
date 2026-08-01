@@ -10,7 +10,8 @@
         "EnabledByDefault": false,
         "License": "GPL-2.0-or-later",
         "Name": "Auto Scroll",
-        "Version": "0.1.3"
+        "Version": "0.1.4"
     },
+    "X-DocPath": "https://github.com/elecxyz/Kwin_AutoScroll",
     "X-KDE-ConfigModule": "kwin_autoscroll_config"
 }

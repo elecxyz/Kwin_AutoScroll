@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 13h22l11 19-11 19H21L10 32zM32 6v9M32 49v9M6 32h7M51 32h7"
+          stroke="#07151a" stroke-width="7"/>
+    <path d="M21 13h22l11 19-11 19H21L10 32zM32 6v9M32 49v9M6 32h7M51 32h7"
+          stroke="#67e8f9" stroke-width="3"/>
+  </g>
+  <path d="M25 25h14v14H25z" fill="#07151a" stroke="#67e8f9" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="3" fill="#67e8f9"/>
+</svg>

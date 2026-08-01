@@ -1,9 +1,9 @@
 // SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QFileInfo>
 #include <QPluginLoader>
 #include <QTest>
 #include <QVersionNumber>
@@ -26,16 +26,18 @@ void PluginMetadataTest::effectMetadata() {
            QStringLiteral("org.kde.kwin.EffectPluginFactory") +
                QStringLiteral(KWIN_PLUGIN_VERSION_STRING));
 
-  const QJsonObject plugin = root.value(QStringLiteral("MetaData"))
-                                 .toObject()
-                                 .value(QStringLiteral("KPlugin"))
-                                 .toObject();
+  const QJsonObject metadata =
+      root.value(QStringLiteral("MetaData")).toObject();
+  const QJsonObject plugin =
+      metadata.value(QStringLiteral("KPlugin")).toObject();
   QCOMPARE(QFileInfo(QStringLiteral(AUTOSCROLL_EFFECT_PATH)).completeBaseName(),
            QStringLiteral("autoscroll"));
   QVERIFY(!plugin.contains(QStringLiteral("Id")));
   QCOMPARE(plugin.value(QStringLiteral("EnabledByDefault")).toBool(), false);
   QCOMPARE(plugin.value(QStringLiteral("Version")).toString(),
            QStringLiteral(AUTOSCROLL_PROJECT_VERSION));
+  QCOMPARE(metadata.value(QStringLiteral("X-DocPath")).toString(),
+           QStringLiteral("https://github.com/elecxyz/Kwin_AutoScroll"));
 }
 
 void PluginMetadataTest::kcmMetadata() {
@@ -43,6 +45,15 @@ void PluginMetadataTest::kcmMetadata() {
   const QJsonObject root = loader.metaData();
   QCOMPARE(root.value(QStringLiteral("IID")).toString(),
            QStringLiteral("org.kde.KPluginFactory"));
+
+  const QJsonObject metadata =
+      root.value(QStringLiteral("MetaData")).toObject();
+  const QJsonObject plugin =
+      metadata.value(QStringLiteral("KPlugin")).toObject();
+  QCOMPARE(plugin.value(QStringLiteral("Version")).toString(),
+           QStringLiteral(AUTOSCROLL_PROJECT_VERSION));
+  QCOMPARE(metadata.value(QStringLiteral("X-DocPath")).toString(),
+           QStringLiteral("https://github.com/elecxyz/Kwin_AutoScroll"));
 }
 
 void PluginMetadataTest::supportedKWinFloor() {

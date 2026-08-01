@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g fill="#ffffff" stroke-linejoin="round">
+    <path d="M32 5L14 31h13.1v28h9.8V31H50z"
+          stroke="#5f6266" stroke-width="2.1"/>
+  </g>
+  <path d="M32 15l-5 8h10z" fill="#da4453"/>
+</svg>

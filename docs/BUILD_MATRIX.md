@@ -11,7 +11,7 @@ Each row below is therefore an independent package built and verified in its
 own target userspace.
 
 This snapshot was produced on 2026-07-30 from Git commit
-`6dd8df5d6b545d8920a09f6962413a869008eca8d` plus the reviewed working-tree
+`041329e69e602bc810bacc6ade454f47bd57e4dd` plus the reviewed working-tree
 changes. Machine-readable reports and checksum files live below the external
 build root; `scripts/build-target.sh` refreshes them after a successful build.
 
@@ -20,21 +20,21 @@ build root; `scripts/build-target.sh` refreshes them after a successful build.
 The x86-64 workstation had `kwin 6.7.3-1.1` (upstream 6.7.3),
 `qt6-base 6.11.1-1.1`, KDE Frameworks/ECM `6.28.0-1`, glibc
 `2.43+r37+gfdf10644d6ee-2`, GCC
-`16.1.1+r346+g4e03491b401d-5`, CMake `4.4.0-2.1`, and pacman
+`16.1.1+r581+gb73ad535acaa-1`, CMake `4.4.1-1.1`, and pacman
 `7.1.0.r9.g54d9411-4`. The host-side builders were devtools `1:1.5.1-1`,
-Podman `6.0.1-1.1`, namcap `3.6.0-3`, arch-install-scripts `31-1`,
-libarchive `3.8.8-2.1`, GnuPG `2.4.9-2.1`, binutils
+Podman `6.0.2-2.1`, namcap `3.6.0-3`, arch-install-scripts `31-1`,
+libarchive `3.8.9-1.1`, GnuPG `2.4.9-2.1`, binutils
 `2.46.1+r3+g046eeeef4721-2`, GNU Make `4.4.1-3.1`, Ninja `1.13.2-3.1`,
-and pkgconf `3.0.3-1.1`.
+and pkgconf `3.0.4-1.1`.
 
 These are orchestration versions, not the compiler or libc used in release
 artifacts. Each row below was compiled wholly inside its isolated builder.
 
 | Target | Distribution / architecture | KWin package / expected IID | Qt / KDE Frameworks | glibc / compiler | Isolated builder | Result |
 |---|---|---|---|---|---|---|
-| `cachyos` | CachyOS rolling 2026-07-29 / x86_64-v3 (`x86_64` package label) | `6.7.3-1.1` / `org.kde.kwin.EffectPluginFactory6.7.3` | 6.11.1 / 6.28.0 | `2.44+r3+g0b05bc142249-1` / GCC `16.1.1+r581+gb73ad535acaa-1` | devtools root `cachyos/chroot/root`; signed CachyOS and Arch repositories | Build, 5 tests, IID, unified image-item path, linkage, contents, namcap, disposable install/remove verified |
-| `steamos-6.4.3` | SteamOS 3 Jupiter / x86_64 | Valve `6.4.3-1.13` / `org.kde.kwin.EffectPluginFactory6.4.3` | 6.9.1 / 6.16.0 | `2.41+r65+ge7c419a29575-1` / GCC `15.1.1+r7+gf36ec88aa85a-1` | devtools root `steamos-6.4.3/chroot/root`; Valve repositories and `holo-keyring 20250801-1` | Build, 5 tests, IID, renderer-factory image-item path, linkage, contents, namcap, disposable install/remove verified |
-| `kubuntu-26.04` | Kubuntu 26.04 Resolute / amd64 | `4:6.6.5-0ubuntu0.1` / `org.kde.kwin.EffectPluginFactory6.6.5` | `6.10.2+dfsg-7` / `6.24.0-0ubuntu1` | `2.43-2ubuntu2.3` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; Ubuntu image digest `sha256:7c2884fd32770fc6c173b78e0dc2278a2851d89f5447919edbc45475ac55dd6a`; builder image `21e4677f2f7bdae6ff4bf2fc7199523d99fa34ea3f76762bd332805b2f52989c` | Build, 5 tests, IID, renderer-factory image-item path, linkage, contents, lintian, disposable install/remove verified |
+| `cachyos` | CachyOS rolling 2026-07-30 / x86_64-v3 (`x86_64` package label) | `6.7.3-1.1` / `org.kde.kwin.EffectPluginFactory6.7.3` | 6.11.1 / 6.28.0 | `2.44+r3+g0b05bc142249-1` / GCC `16.1.1+r581+gb73ad535acaa-1` | devtools root `cachyos/chroot/root`; signed CachyOS and Arch repositories | Build, 7 tests, IID, unified image-item path, linkage, contents, namcap, disposable install/remove verified |
+| `steamos-6.4.3` | SteamOS 3 Jupiter / x86_64 | Valve `6.4.3-1.13` / `org.kde.kwin.EffectPluginFactory6.4.3` | 6.9.1 / 6.16.0 | `2.41+r65+ge7c419a29575-1` / GCC `15.1.1+r7+gf36ec88aa85a-1` | devtools root `steamos-6.4.3/chroot/root`; Valve repositories and `holo-keyring 20250801-1` | Build, 7 tests, IID, renderer-factory image-item path, linkage, contents, namcap, disposable install/remove verified |
+| `kubuntu-26.04` | Kubuntu 26.04 Resolute / amd64 | `4:6.6.5-0ubuntu0.1` / `org.kde.kwin.EffectPluginFactory6.6.5` | `6.10.2+dfsg-7` / `6.24.0-0ubuntu1` | `2.43-2ubuntu2.3` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; Ubuntu image digest `sha256:7c2884fd32770fc6c173b78e0dc2278a2851d89f5447919edbc45475ac55dd6a`; builder image `de1bc8831c3a701755ef5f891235034dc6aed434eb6805de9af391d811d4de4c` | Build, 7 tests, IID, renderer-factory image-item path, linkage, contents, lintian, disposable install/remove verified |
 
 ## Last validated artifacts
 
@@ -42,11 +42,11 @@ The default external root is
 `$XDG_CACHE_HOME/kwin-autoscroll-builds`, or
 `$HOME/.cache/kwin-autoscroll-builds` when `XDG_CACHE_HOME` is unset.
 
-| Target | Artifact relative to the external root | SHA-256 |
+| Target | Artifact relative to the external root | Verification record |
 |---|---|---|
-| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.3-2-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst` | `e616bfcc82ca3be0e847dcd39891cebae68f62e78757fba4bcd4e2aca4d8edd4` |
-| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.3-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst` | `4faec15ca2019de70d967485841e8930e1e3819d7ebf166db08f394dacfa59cb` |
-| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.3-2-kubuntu26.04-kwin6.6.5_amd64.deb` | `91c090ef675646001fecdd648e5e2842b9d9b6f563b0c61e4bef6c6ca1b04138` |
+| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.4-1-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh cachyos` after changing source or infrastructure. |
+| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.4-1-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh steamos-6.4.3` after changing source or infrastructure. |
+| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.4-1-kubuntu26.04-kwin6.6.5_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.04` after changing source or infrastructure. |
 
 The builders use a fixed source epoch and locked target roots so clean rebuilds
 remain reproducible. The per-target `reports/artifact-manifest.txt` and
