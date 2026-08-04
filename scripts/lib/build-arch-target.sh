@@ -27,9 +27,24 @@ pacman_config="${project_root}/build-envs/${target}/pacman.conf"
 makepkg_config="${project_root}/build-envs/${target}/makepkg.conf"
 
 if [[ "${target}" == steamos-* ]]; then
+    mapfile -t steam_repositories < <(
+        sed -n 's/^\[\([^]]*\)\]$/\1/p' "${pacman_config}" |
+            sed '/^options$/d'
+    )
+    [[ "${#steam_repositories[@]}" -gt 0 ]] ||
+        die "no SteamOS repositories found in ${pacman_config}"
+    keyring_repository=
+    for candidate in "${steam_repositories[@]}"; do
+        if [[ "${candidate}" == holo-* ]]; then
+            keyring_repository=${candidate}
+            break
+        fi
+    done
+    [[ -n "${keyring_repository}" ]] ||
+        die "no holo repository found in ${pacman_config}"
     keyring_dir="${target_dir}/holo-keyring"
     keyring_archive="${keyring_dir}/holo-keyring-${TARGET_KEYRING_VERSION}-any.pkg.tar.zst"
-    keyring_url="https://steamdeck-packages.steamos.cloud/archlinux-mirror/holo-main/os/x86_64/$(basename "${keyring_archive}")"
+    keyring_url="https://steamdeck-packages.steamos.cloud/archlinux-mirror/${keyring_repository}/os/x86_64/$(basename "${keyring_archive}")"
     mkdir -p -- "${keyring_dir}/files" "${target_dir}/pacman-gnupg"
     if [[ ! -f "${keyring_archive}" ]]; then
         curl --proto '=https' --tlsv1.2 --fail --location --show-error \
@@ -85,7 +100,7 @@ if [[ "${target}" == steamos-* ]]; then
     # the signed Valve repository databases and accepted by the target
     # keyring. Fresh roots download directly to package_cache through -c.
     declare -A steam_repository_files=()
-    for candidate in jupiter-main holo-main core-main extra-main community-main; do
+    for candidate in "${steam_repositories[@]}"; do
         database="${root_dir}/root/var/lib/pacman/sync/${candidate}.db"
         [[ -f "${database}" ]] || die "SteamOS repository database missing: ${database}"
         if ! sudo bsdtar -tf "${database}" | awk '
@@ -245,8 +260,9 @@ if [[ "${target}" == steamos-* ]]; then
     lock_file="${project_root}/build-envs/${target}/packages.lock.tsv"
     {
         printf '# package\tversion\trepository\turl\tsha256\n'
-        printf 'holo-keyring\t%s\tholo-main\t%s\t%s\n' \
-            "${TARGET_KEYRING_VERSION}" "${keyring_url}" "${TARGET_KEYRING_SHA256}"
+        printf 'holo-keyring\t%s\t%s\t%s\t%s\n' \
+            "${TARGET_KEYRING_VERSION}" "${keyring_repository}" "${keyring_url}" \
+            "${TARGET_KEYRING_SHA256}"
         for package in "${package_cache}"/*.pkg.tar.*; do
             [[ "${package}" != *.sig ]] || continue
             name=$(bsdtar -xOf "${package}" .PKGINFO | sed -n 's/^pkgname = //p' | head -1)

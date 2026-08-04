@@ -45,13 +45,13 @@ sudo pacman -Rns kwin-autoscroll
 
 ### SteamOS / Steam Deck
 
-This package is for Valve KWin 6.4.3-1.14:
+This package is for Valve KWin 6.4.3-1.13:
 
 Warning for SteamOS - I've not fully verified how this addon will play with Valve's input libraries or wether it plays nice with steam input. Use at your own risk I guess.
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.5-1-steamos-kwin6.4.3-1.14-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.5-1-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
