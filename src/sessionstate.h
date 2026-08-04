@@ -13,6 +13,11 @@ struct InputDecision {
   bool cancel = false;
 };
 
+enum class ActivationMode {
+  Toggle,
+  Hold,
+};
+
 struct ActivationContext {
   bool hasWindow = false;
   bool clientWindow = false;
@@ -21,6 +26,7 @@ struct ActivationContext {
   bool fullscreenEffectActive = false;
   bool pointerConstrained = false;
   bool overDecoration = false;
+  bool excludedApplication = false;
 };
 
 bool canActivate(const ActivationContext &context);
@@ -31,7 +37,8 @@ class SessionState {
 public:
   bool isActive() const;
   bool isScrollReady() const;
-  void activate(Qt::KeyboardModifier activationModifier = Qt::NoModifier);
+  void activate(Qt::KeyboardModifier activationModifier = Qt::NoModifier,
+                ActivationMode activationMode = ActivationMode::Toggle);
   bool cancel();
 
   InputDecision handleButton(Qt::MouseButton button, bool pressed);
@@ -44,9 +51,10 @@ private:
 
   bool m_active = false;
   bool m_scrollReady = false;
-  bool m_activationButtonReleased = false;
+  bool m_activationButtonHeld = false;
   bool m_activationModifierReleased = false;
   Qt::KeyboardModifier m_activationModifier = Qt::NoModifier;
+  ActivationMode m_activationMode = ActivationMode::Toggle;
   bool m_wheelCancellationArmed = false;
   bool m_suppressEscapeRelease = false;
   QSet<Qt::MouseButton> m_suppressedButtons;

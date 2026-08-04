@@ -23,6 +23,7 @@ private Q_SLOTS:
   void sizeSelectorUsesPresets();
   void previewStyleCanBeUpdated();
   void visualFeedbackControlsAppearanceGroup();
+  void initiationAndExclusionControlsUseExpectedLayout();
   void appearanceControlsUseOneCenteredRow();
   void kconfigDialogManagerBindsProperties();
 };
@@ -93,6 +94,21 @@ void GlyphSelectorsTest::visualFeedbackControlsAppearanceGroup() {
   QVERIFY(ui.appearanceGroupBox->isEnabled());
 }
 
+void GlyphSelectorsTest::initiationAndExclusionControlsUseExpectedLayout() {
+  QWidget widget;
+  Ui::AutoScrollConfigForm ui;
+  ui.setupUi(&widget);
+
+  int row = -1;
+  QFormLayout::ItemRole role = QFormLayout::SpanningRole;
+  ui.formLayout->getWidgetPosition(ui.kcfg_HoldToScroll, &row, &role);
+  QCOMPARE(row, 1);
+  QCOMPARE(role, QFormLayout::FieldRole);
+  QCOMPARE(ui.activationBehaviorLabel->buddy(), ui.kcfg_HoldToScroll);
+  QVERIFY(ui.verticalLayout->indexOf(ui.excludedApplicationsGroupBox) <
+          ui.verticalLayout->indexOf(ui.kcfg_VisualFeedback));
+}
+
 void GlyphSelectorsTest::appearanceControlsUseOneCenteredRow() {
   QWidget widget;
   Ui::AutoScrollConfigForm ui;
@@ -123,6 +139,9 @@ void GlyphSelectorsTest::kconfigDialogManagerBindsProperties() {
   settings.setGlyphStyle(QStringLiteral("circuit"));
   settings.setGlyphSize(64);
   settings.setVisualFeedback(false);
+  settings.setHoldToScroll(true);
+  settings.setExcludedApplications(
+      {QStringLiteral("desktop:org.mozilla.firefox")});
   QVERIFY(settings.save());
   config->sync();
 
@@ -135,19 +154,30 @@ void GlyphSelectorsTest::kconfigDialogManagerBindsProperties() {
   QCOMPARE(ui.kcfg_GlyphStyle->glyphStyle(), QStringLiteral("circuit"));
   QCOMPARE(ui.kcfg_GlyphSize->glyphSize(), 64);
   QVERIFY(!ui.appearanceGroupBox->isEnabled());
+  QVERIFY(ui.kcfg_HoldToScroll->isChecked());
+  QCOMPARE(ui.kcfg_ExcludedApplications->excludedApplications(),
+           QStringList({QStringLiteral("desktop:org.mozilla.firefox")}));
 
   ui.kcfg_GlyphStyle->setGlyphStyle(QStringLiteral("pulse"));
   ui.kcfg_GlyphSize->setGlyphSize(72);
   ui.kcfg_VisualFeedback->setChecked(true);
+  ui.kcfg_HoldToScroll->setChecked(false);
+  ui.kcfg_ExcludedApplications->setExcludedApplications(
+      {QStringLiteral("class:gamescope")});
   manager.updateSettings();
   QCOMPARE(settings.glyphStyle(), QStringLiteral("pulse"));
   QCOMPARE(settings.glyphSize(), 72);
   QVERIFY(settings.visualFeedback());
+  QVERIFY(!settings.holdToScroll());
+  QCOMPARE(settings.excludedApplications(),
+           QStringList({QStringLiteral("class:gamescope")}));
 
   manager.updateWidgetsDefault();
   QCOMPARE(ui.kcfg_GlyphStyle->glyphStyle(), QStringLiteral("breeze-dark"));
   QCOMPARE(ui.kcfg_GlyphSize->glyphSize(), 40);
   QVERIFY(ui.appearanceGroupBox->isEnabled());
+  QVERIFY(!ui.kcfg_HoldToScroll->isChecked());
+  QVERIFY(ui.kcfg_ExcludedApplications->excludedApplications().isEmpty());
 }
 
 QTEST_MAIN(GlyphSelectorsTest)

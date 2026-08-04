@@ -16,9 +16,11 @@ ctest --test-dir build --output-on-failure
 The unit tests cover the speed curve, dead zone, signs, diagonal motion,
 maximum-speed cap, horizontal disablement, elapsed-time integration,
 fractional deltas, axis-stop generation, activation policy, click suppression,
-Escape suppression, two-event wheel cancellation, target changes, locking,
-closure, teardown, visual configuration persistence, style discovery, SVG
-rendering at every preset and scale, and the custom selector properties.
+Escape suppression, toggle and hold initiation, two-event wheel cancellation,
+application-identity normalization and exclusion, target changes, locking,
+closure, teardown, configuration persistence, installed-application discovery,
+window-picker parsing, style discovery, SVG rendering at every preset and
+scale, and the custom selector properties.
 `pluginmetadata_test` also verifies that both plugins can be discovered and
 that the effect uses KWin's exact versioned plugin IID.
 
@@ -48,6 +50,20 @@ Also verify:
   through and only the exact configured modifier plus middle-click activates.
 - Modified activation does not generate scroll events until both the middle
   button and modifier are released, in either release order.
+- With click-and-hold enabled and no modifier, scrolling begins while the
+  middle button is down and stops when it is released.
+- With click-and-hold and a modifier, scrolling begins only after the modifier
+  is released while the middle button remains down. Releasing the middle
+  button first cancels without generating scrolling.
+- Add a native Wayland, XWayland, and Flatpak application through both the
+  running-window picker and installed-application chooser. Each entry survives
+  Apply and reopening the KCM, and duplicate additions are ignored.
+- In every excluded application, middle-click reaches the client normally and
+  AutoScroll does not hide the cursor, draw glyphs, or inject axis events.
+- Applying an exclusion for the active target or changing initiation mode
+  cancels the current session cleanly.
+- Exercise Steam and one Gamescope-hosted application and record whether KWin
+  exposes a per-application desktop ID or only the outer window class.
 - Desktops, panels, decorations, popups, internal KWin UI, locked sessions,
   pointer-constrained clients, and active fullscreen effects do not activate.
 - The activating middle-button press and release never reach the client.

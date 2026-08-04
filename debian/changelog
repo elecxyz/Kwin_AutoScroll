@@ -1,3 +1,12 @@
+kwin-autoscroll (0.1.5-1) unstable; urgency=medium
+
+  * Add application exclusions with running-window and installed-application
+    selectors.
+  * Add an optional click-and-hold activation mode while retaining
+    click-to-toggle as the default.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Mon, 03 Aug 2026 09:11:33 +0800
+
 kwin-autoscroll (0.1.4-1) unstable; urgency=medium
 
   * Add configurable glyph sizing with KDE-style previews.

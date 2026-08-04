@@ -13,6 +13,7 @@
 #include <QMetaObject>
 #include <QPointer>
 #include <QSet>
+#include <QStringList>
 #include <QTimer>
 
 #include <memory>
@@ -64,6 +65,7 @@ public:
 private:
   Qt::KeyboardModifier configuredActivationModifier() const;
   bool canActivate(KWin::Window *window) const;
+  bool isWindowExcluded(KWin::Window *window) const;
   bool isStillOnTarget() const;
   void activate(KWin::Window *window, const QPointF &position,
                 Qt::KeyboardModifier activationModifier);
@@ -90,6 +92,8 @@ private:
   QElapsedTimer m_elapsedTimer;
   bool m_visualFeedback = true;
   bool m_cursorHidden = false;
+  bool m_holdToScroll = false;
+  QStringList m_excludedApplications;
 };
 
 } // namespace AutoScroll

@@ -2,7 +2,7 @@
 
 This target uses Valve's official `jupiter-main`, `holo-main`, `core-main`,
 `extra-main`, and `community-main` repositories. The repository order selects
-Valve's `kwin 6.4.3-1.13`; the same repository set supplies Qt 6.9.1, KDE
+Valve's `kwin 6.4.3-1.14`; the same repository set supplies Qt 6.9.1, KDE
 Frameworks 6.16, glibc 2.41, GCC 15.1, binutils, and the rest of the complete
 build userspace.
 

@@ -34,10 +34,9 @@ step because it is large and outside compilation validation.
 ## SteamOS / Steam Deck
 
 1. Copy the SteamOS artifact to a Deck whose installed KWin is exactly Valve
-   `6.4.3-1.13`.
+   `6.4.3-1.14`.
 2. Take the normal recovery/snapshot precautions, temporarily make the
    normally read-only OS writable, and install with `pacman -U`.
 3. Run the manual matrix in Gaming Mode and Desktop Mode where applicable,
    paying particular attention to touchpad/mouse event routing.
 4. Remove the package or restore the immutable system state after testing.
-

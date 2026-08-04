@@ -11,7 +11,7 @@ bool canActivate(const ActivationContext &context) {
   return context.hasWindow && context.clientWindow &&
          !context.excludedSurface && !context.screenLocked &&
          !context.fullscreenEffectActive && !context.pointerConstrained &&
-         !context.overDecoration;
+         !context.overDecoration && !context.excludedApplication;
 }
 
 bool activationModifiersMatch(Qt::KeyboardModifiers actual,
@@ -21,16 +21,16 @@ bool activationModifiersMatch(Qt::KeyboardModifiers actual,
 
 bool SessionState::isActive() const { return m_active; }
 
-bool SessionState::isScrollReady() const {
-  return m_active && m_scrollReady;
-}
+bool SessionState::isScrollReady() const { return m_active && m_scrollReady; }
 
-void SessionState::activate(Qt::KeyboardModifier activationModifier) {
+void SessionState::activate(Qt::KeyboardModifier activationModifier,
+                            ActivationMode activationMode) {
   m_active = true;
   m_activationModifier = activationModifier;
-  m_activationButtonReleased = activationModifier == Qt::NoModifier;
+  m_activationMode = activationMode;
+  m_activationButtonHeld = true;
   m_activationModifierReleased = activationModifier == Qt::NoModifier;
-  m_scrollReady = activationModifier == Qt::NoModifier;
+  updateScrollReady();
   m_wheelCancellationArmed = false;
   m_suppressedButtons.insert(Qt::MiddleButton);
 }
@@ -38,9 +38,10 @@ void SessionState::activate(Qt::KeyboardModifier activationModifier) {
 bool SessionState::cancel() {
   const bool wasActive = std::exchange(m_active, false);
   m_scrollReady = false;
-  m_activationButtonReleased = false;
+  m_activationButtonHeld = false;
   m_activationModifierReleased = false;
   m_activationModifier = Qt::NoModifier;
+  m_activationMode = ActivationMode::Toggle;
   m_wheelCancellationArmed = false;
   return wasActive;
 }
@@ -48,7 +49,11 @@ bool SessionState::cancel() {
 InputDecision SessionState::handleButton(Qt::MouseButton button, bool pressed) {
   if (!pressed && m_suppressedButtons.remove(button)) {
     if (m_active && button == Qt::MiddleButton) {
-      m_activationButtonReleased = true;
+      m_activationButtonHeld = false;
+      if (m_activationMode == ActivationMode::Hold) {
+        m_scrollReady = false;
+        return {.consume = true, .cancel = true};
+      }
       updateScrollReady();
     }
     return {.consume = true};
@@ -98,8 +103,13 @@ InputDecision SessionState::handleEscape(bool pressed) {
 }
 
 void SessionState::updateScrollReady() {
-  m_scrollReady =
-      m_activationButtonReleased && m_activationModifierReleased;
+  if (m_activationMode == ActivationMode::Hold) {
+    m_scrollReady = m_activationButtonHeld && m_activationModifierReleased;
+    return;
+  }
+
+  m_scrollReady = m_activationModifier == Qt::NoModifier ||
+                  (!m_activationButtonHeld && m_activationModifierReleased);
 }
 
 } // namespace AutoScroll

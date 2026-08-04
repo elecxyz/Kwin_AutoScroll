@@ -130,7 +130,7 @@ ksvg	6.16.0-1	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirr
 kwallet	6.16.0-1	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/extra-main/os/x86_64/kwallet-6.16.0-1-x86_64.pkg.tar.zst	83f6c784e9264ece3f4b27cb76731fac7b55ced08fa99bcb361494b9f61acaa5
 kwayland	6.4.3-1	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/extra-main/os/x86_64/kwayland-6.4.3-1-x86_64.pkg.tar.zst	9de2a4abe7db70daa6b11993102e50578561099ba838511ba8becaac7bcfa07a
 kwidgetsaddons	6.16.0-1	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/extra-main/os/x86_64/kwidgetsaddons-6.16.0-1-x86_64.pkg.tar.zst	374df7f6c41588d51b0615494385bf410dac93bc232c7b510dc5e4675859955a
-kwin	6.4.3-1.13	jupiter-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/kwin-6.4.3-1.13-x86_64.pkg.tar.zst	4955a0d6c76209d4f16b99ceef728c99e396e21f526a221a43c9cd3640389c90
+kwin	6.4.3-1.14	jupiter-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/kwin-6.4.3-1.14-x86_64.pkg.tar.zst	80d8838097ef6adc46b56b1e5af842930f33247c5199c9c90b03ed6b82d525af
 kwindowsystem	6.16.0-1.1	holo-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/holo-main/os/x86_64/kwindowsystem-6.16.0-1.1-x86_64.pkg.tar.zst	42dce8a38693de225a3c1dcf127a181b9e0cf9208c12de629f97266f64a4aa42
 kxmlgui	6.16.0-1	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/extra-main/os/x86_64/kxmlgui-6.16.0-1-x86_64.pkg.tar.zst	6df8e4797da7caa93d27079924086a84fc3443834724ec39187c3bf790f3200d
 lame	3.100-5	extra-main	https://steamdeck-packages.steamos.cloud/archlinux-mirror/extra-main/os/x86_64/lame-3.100-5-x86_64.pkg.tar.zst	ff53f0e8fd6cb04701d6c0b5b375c4e07c162b61112a4273c606e8f6bb513797

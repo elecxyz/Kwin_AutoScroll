@@ -9,6 +9,11 @@ add_executable(sessionstate_test sessionstate_test.cpp)
 target_link_libraries(sessionstate_test PRIVATE autoscroll_engine Qt6::Test)
 add_test(NAME sessionstate_test COMMAND sessionstate_test)
 
+add_executable(applicationexclusions_test applicationexclusions_test.cpp)
+target_link_libraries(applicationexclusions_test PRIVATE autoscroll_engine
+                                                        Qt6::Test)
+add_test(NAME applicationexclusions_test COMMAND applicationexclusions_test)
+
 set(config_test_sources config_test.cpp)
 kconfig_add_kcfg_files(config_test_sources
     "${CMAKE_CURRENT_SOURCE_DIR}/../config/autoscrollconfig.kcfgc"
@@ -48,6 +53,20 @@ target_link_libraries(glyphselectors_test PRIVATE
 )
 add_test(NAME glyphselectors_test COMMAND glyphselectors_test)
 
+add_executable(applicationexclusionswidget_test
+    applicationexclusionswidget_test.cpp
+)
+target_include_directories(applicationexclusionswidget_test PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/../kcm"
+)
+target_link_libraries(applicationexclusionswidget_test PRIVATE
+    autoscroll_kcm_widgets
+    Qt6::Test
+    Qt6::Widgets
+)
+add_test(NAME applicationexclusionswidget_test
+         COMMAND applicationexclusionswidget_test)
+
 add_executable(pluginmetadata_test pluginmetadata_test.cpp)
 target_link_libraries(pluginmetadata_test PRIVATE KWin::kwin Qt6::Core Qt6::Test)
 target_compile_definitions(pluginmetadata_test PRIVATE
@@ -61,9 +80,11 @@ add_test(NAME pluginmetadata_test COMMAND pluginmetadata_test)
 set_tests_properties(
     scrollengine_test
     sessionstate_test
+    applicationexclusions_test
     config_test
     glyphstyle_test
     glyphselectors_test
+    applicationexclusionswidget_test
     pluginmetadata_test
     PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
 )

@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 add_library(autoscroll_kcm_widgets STATIC
+    applicationexclusionswidget.cpp
+    applicationexclusionswidget.h
     glyphselectors.cpp
     glyphselectors.h
 )
@@ -15,9 +17,12 @@ target_include_directories(autoscroll_kcm_widgets PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 target_link_libraries(autoscroll_kcm_widgets PUBLIC
+    autoscroll_engine
     autoscroll_visuals
+    KF6::ConfigCore
     KF6::I18n
     Qt6::Core
+    Qt6::DBus
     Qt6::Gui
     Qt6::Widgets
 )

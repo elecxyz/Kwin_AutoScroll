@@ -3,6 +3,7 @@
 
 #include "autoscrolleffect.h"
 
+#include "applicationexclusions.h"
 #include "autoscrollconfig.h"
 #include "autoscrollinputdevice.h"
 #include "autoscrollvisual.h"
@@ -86,7 +87,17 @@ AutoScrollEffect::~AutoScrollEffect() {
 bool AutoScrollEffect::isActive() const { return m_session.isActive(); }
 
 void AutoScrollEffect::reconfigure(ReconfigureFlags) {
+  const bool previousHoldToScroll = m_holdToScroll;
   m_config->read();
+  m_holdToScroll = m_config->holdToScroll();
+  m_excludedApplications =
+      normalizedApplicationExclusions(m_config->excludedApplications());
+
+  if (m_session.isActive() && (previousHoldToScroll != m_holdToScroll ||
+                               isWindowExcluded(m_targetWindow))) {
+    cancelSession();
+  }
+
   m_engine.setSettings({
       .deadZone = static_cast<qreal>(m_config->deadZone()),
       .maximumSpeed = static_cast<qreal>(m_config->maximumSpeed()),
@@ -232,7 +243,17 @@ bool AutoScrollEffect::canActivate(KWin::Window *window) const {
       .fullscreenEffectActive = KWin::effects->hasActiveFullScreenEffect(),
       .pointerConstrained = KWin::input()->pointer()->isConstrained(),
       .overDecoration = KWin::input()->pointer()->decoration() != nullptr,
+      .excludedApplication = isWindowExcluded(window),
   });
+}
+
+bool AutoScrollEffect::isWindowExcluded(KWin::Window *window) const {
+  if (!window) {
+    return false;
+  }
+  return isApplicationExcluded({.desktopFileId = window->desktopFileName(),
+                                .resourceClass = window->resourceClass()},
+                               m_excludedApplications);
 }
 
 bool AutoScrollEffect::isStillOnTarget() const {
@@ -243,7 +264,9 @@ bool AutoScrollEffect::isStillOnTarget() const {
 
 void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position,
                                 Qt::KeyboardModifier activationModifier) {
-  m_session.activate(activationModifier);
+  m_session.activate(activationModifier, m_holdToScroll
+                                             ? ActivationMode::Hold
+                                             : ActivationMode::Toggle);
   m_targetWindow = window;
   m_anchorPosition = position;
   m_cursorPosition = position;

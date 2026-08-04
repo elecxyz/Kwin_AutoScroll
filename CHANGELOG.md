@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.5 — 2026-08-03
+
+- Added an application exclusion list with a KWin running-window picker and a
+  searchable installed-application chooser.
+- Allowed excluded applications to receive their normal middle-click input
+  without AutoScroll glyphs or generated scrolling.
+- Added optional click-and-hold activation while preserving click-to-toggle as
+  the default.
+- Made modified hold activation wait for modifier release, preventing
+  generated scrolling from becoming a modified-wheel action.
+
 ## 0.1.4 — 2026-07-30
 
 - Added a KDE-style size picker for scaling the anchor and directional glyphs

@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 set(autoscroll_engine_sources
+    applicationexclusions.cpp
+    applicationexclusions.h
     scrollengine.cpp
     scrollengine.h
     sessionstate.cpp

@@ -16,6 +16,8 @@ class ConfigTest : public QObject {
 private Q_SLOTS:
   void subUnitExponentRoundTrips();
   void activationModifierRoundTrips();
+  void initiationAndExclusionDefaults();
+  void initiationAndExclusionsRoundTrip();
   void visualDefaults();
   void visualSettingsRoundTrip();
 };
@@ -69,6 +71,44 @@ void ConfigTest::activationModifierRoundTrips() {
     reader.read();
     QCOMPARE(reader.activationModifier(),
              AutoScrollConfig::EnumActivationModifier::ControlModifier);
+  }
+}
+
+void ConfigTest::initiationAndExclusionDefaults() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const KSharedConfig::Ptr config = KSharedConfig::openConfig(
+      directory.filePath(QStringLiteral("kwinrc")), KConfig::SimpleConfig);
+  AutoScrollConfig settings(config);
+
+  QVERIFY(!settings.holdToScroll());
+  QVERIFY(settings.excludedApplications().isEmpty());
+}
+
+void ConfigTest::initiationAndExclusionsRoundTrip() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const QString path = directory.filePath(QStringLiteral("kwinrc"));
+  const QStringList exclusions{QStringLiteral("desktop:org.mozilla.firefox"),
+                               QStringLiteral("class:gamescope")};
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig writer(config);
+    writer.setHoldToScroll(true);
+    writer.setExcludedApplications(exclusions);
+    QVERIFY(writer.save());
+    config->sync();
+  }
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig reader(config);
+    reader.read();
+    QVERIFY(reader.holdToScroll());
+    QCOMPARE(reader.excludedApplications(), exclusions);
   }
 }
 
