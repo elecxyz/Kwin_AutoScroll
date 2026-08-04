@@ -1,15 +1,24 @@
 # KWin AutoScroll
 
-I built KWin AutoScroll out of frustration that this did not already exist on
-Plasma Wayland.
+Kwin AutoScroll attempts to recreate the auto scrolling functionality of Windows plus a few extra nice-to-haves.
 
 Middle-click in an application, move the pointer away from the anchor, and the
 distance and direction control the scrolling speed. Move back into the dead
 zone to pause, or click again to stop.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ed35a878-a1ed-4885-b31b-4a14341f1c92" width="560" />
-  <img src="https://github.com/user-attachments/assets/95984c70-e530-457e-967d-b2ea094b3222" width="227" />
+  <img
+    src="https://github.com/user-attachments/assets/429ce648-a6e1-4a50-bcae-38c7b24ee995"
+    width="560"
+    align="top"
+    alt="Auto Scroll configuration"
+  />
+  <img
+    src="https://github.com/user-attachments/assets/ecff29ac-7647-445e-8ff1-37c6e1a763a0"
+    width="227"
+    align="top"
+    alt="Pointer style menu"
+  />
 </p>
 
 [auto_scroll_demo.webm](https://github.com/user-attachments/assets/aba74c5e-aab9-4371-84ad-fe67e5321b36)
