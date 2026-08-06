@@ -69,10 +69,11 @@ package=$(find /work -maxdepth 1 -type f -name "kwin-autoscroll_'"${debian_versi
 test -n "${package}"
 lintian --display-info --pedantic "${package}"
 depends=$(dpkg-deb -f "${package}" Depends)
-case "${depends}" in
-  *"kwin-wayland (= '"${TARGET_KWIN_PACKAGE}"')"*) ;;
-  *) printf "bad Depends: %s\n" "${depends}" >&2; exit 1 ;;
-esac
+grep -Eq "(^|,)[[:space:]]*kwin-wayland([[:space:]]*,|$)" <<<"${depends}"
+if grep -Eq "(^|,)[[:space:]]*kwin-wayland[[:space:]]*\\(" <<<"${depends}"; then
+  printf "version-constrained kwin-wayland dependency: %s\n" "${depends}" >&2
+  exit 1
+fi
 stage=$(mktemp -d)
 trap "rm -rf -- ${stage}" EXIT
 dpkg-deb -x "${package}" "${stage}"

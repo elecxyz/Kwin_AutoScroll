@@ -29,12 +29,16 @@ Download the package for your system from the release's **Assets** section.
 The package must match your exact KWin patch version—KWin effects are not
 universal binaries.
 
+The package-manager dependency is intentionally unversioned so AutoScroll
+cannot block a KWin or operating-system update. If an update changes KWin,
+install the newly matched AutoScroll build before enabling the effect again.
+
 ### CachyOS
 
-For the current CachyOS KWin 6.7.3-1.1 package:
+For the current CachyOS KWin 6.7.4-1.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.5-1-cachyos-kwin6.7.3-1.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.5-2-cachyos-kwin6.7.4-1.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -51,7 +55,7 @@ Warning for SteamOS - I've not fully verified how this addon will play with Valv
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.5-1-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.5-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
@@ -71,7 +75,7 @@ the package, and an update that changes KWin will need a newly matched build.
 This package is for KWin `4:6.6.5-0ubuntu0.1`:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.5-1-kubuntu26.04-kwin6.6.5_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.5-2-kubuntu26.04-kwin6.6.5_amd64.deb
 ```
 
 Remove it with:

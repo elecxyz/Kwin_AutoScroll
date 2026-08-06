@@ -166,7 +166,6 @@ archive="${workspace}/kwin-autoscroll-${version}.tar.xz"
 create_source_archive "${archive}"
 archive_sha=$(sha256sum "${archive}" | awk '{print $1}')
 sed -e "s/@VERSION@/${version}/g" \
-    -e "s/@KWIN_VERSION@/${root_kwin}/g" \
     -e "s/@SHA256@/${archive_sha}/g" \
     "${project_root}/packaging/arch/PKGBUILD.in" >"${workspace}/PKGBUILD"
 package_release=$(sed -n 's/^pkgrel=//p' "${workspace}/PKGBUILD")

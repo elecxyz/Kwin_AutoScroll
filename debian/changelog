@@ -1,3 +1,12 @@
+kwin-autoscroll (0.1.5-2) unstable; urgency=high
+
+  * Stop pinning the runtime KWin package so AutoScroll cannot block desktop
+    or operating-system upgrades.
+  * Keep exact KWin compatibility enforcement in build and artifact
+    verification.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Thu, 06 Aug 2026 09:36:18 +0800
+
 kwin-autoscroll (0.1.5-1) unstable; urgency=medium
 
   * Add application exclusions with running-window and installed-application

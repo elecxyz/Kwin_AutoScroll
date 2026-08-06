@@ -12,6 +12,8 @@ All notable changes to this project will be documented here.
   the default.
 - Made modified hold activation wait for modifier release, preventing
   generated scrolling from becoming a modified-wheel action.
+- Released the `0.1.5-2` packaging hotfix with unversioned KWin runtime
+  dependencies so AutoScroll cannot block desktop or operating-system updates.
 
 ## 0.1.4 — 2026-07-30
 

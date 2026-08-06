@@ -30,7 +30,7 @@ Architecture: any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
- kwin-wayland (= ${kwin:Version})
+ kwin-wayland
 Description: Windows-style middle-click continuous scrolling for KWin
  KWin AutoScroll is a Plasma 6 Wayland binary effect. A middle click creates
  an anchor, and pointer distance and direction control continuous vertical and

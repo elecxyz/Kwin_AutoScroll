@@ -23,6 +23,8 @@ window-picker parsing, style discovery, SVG rendering at every preset and
 scale, and the custom selector properties.
 `pluginmetadata_test` also verifies that both plugins can be discovered and
 that the effect uses KWin's exact versioned plugin IID.
+Package verification requires an unversioned `kwin`/`kwin-wayland` runtime
+dependency while retaining exact target-root version and plugin-IID checks.
 
 ## Manual Wayland matrix
 

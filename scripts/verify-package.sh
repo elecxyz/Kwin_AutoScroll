@@ -32,10 +32,10 @@ if [[ "${TARGET_PACKAGE_KIND}" == debian ]]; then
         "${image_tag}" bash -lc '
             set -euo pipefail
             expected_iid=$1
-            expected_kwin=$2
-            multiarch=$3
+            multiarch=$2
             depends=$(dpkg-deb -f /package.deb Depends)
-            [[ "${depends}" == *"kwin-wayland (= ${expected_kwin})"* ]]
+            grep -Eq "(^|,)[[:space:]]*kwin-wayland([[:space:]]*,|$)" <<<"${depends}"
+            ! grep -Eq "(^|,)[[:space:]]*kwin-wayland[[:space:]]*\\(" <<<"${depends}"
             stage=$(mktemp -d)
             trap "rm -rf -- ${stage}" EXIT
             dpkg-deb -x /package.deb "${stage}"
@@ -49,7 +49,7 @@ if [[ "${TARGET_PACKAGE_KIND}" == debian ]]; then
             test "${actual_iids}" = "${expected_iid}"
             readelf -d "${effect}" | grep -q "Shared library: \\[libkwin\\.so\\.6\\]"
             symbols=$(nm -D -C "${effect}")
-            case "$4" in
+            case "$3" in
                 renderer-factory)
                     grep -q "KWin::Scene::renderer() const" <<<"${symbols}"
                     ! grep -q "KWin::ImageItem::ImageItem(KWin::Item\\*)" <<<"${symbols}"
@@ -61,7 +61,7 @@ if [[ "${TARGET_PACKAGE_KIND}" == debian ]]; then
                     exit 2
                     ;;
             esac
-        ' verify "${expected_iid}" "${TARGET_KWIN_PACKAGE}" \
+        ' verify "${expected_iid}" \
         "${TARGET_MULTIARCH:?TARGET_MULTIARCH must be set for Debian targets}" \
         "${expected_image_item_mode}"
     printf 'Verified package metadata, paths, IID, and %s image items: %s\n' \
@@ -76,9 +76,12 @@ trap 'rm -rf -- "${stage}"' EXIT
 case "${TARGET_PACKAGE_KIND}" in
     arch)
         bsdtar -xpf "${package}" -C "${stage}"
-        pkg_dependency=$(bsdtar -xOf "${package}" .PKGINFO | sed -n 's/^depend = kwin=//p')
-        [[ "${pkg_dependency}" == "${TARGET_KWIN_PACKAGE}" ]] ||
-            die "kwin dependency '${pkg_dependency}' does not match '${TARGET_KWIN_PACKAGE}'"
+        package_info=$(bsdtar -xOf "${package}" .PKGINFO)
+        grep -qx 'depend = kwin' <<<"${package_info}" ||
+            die "package does not contain an unversioned kwin dependency"
+        if grep -Eq '^depend = kwin[<>=]' <<<"${package_info}"; then
+            die "package contains a version-constrained kwin dependency"
+        fi
         effect="${stage}/usr/lib/qt6/plugins/kwin/effects/plugins/autoscroll.so"
         kcm="${stage}/usr/lib/qt6/plugins/kwin/effects/configs/kwin_autoscroll_config.so"
         ;;

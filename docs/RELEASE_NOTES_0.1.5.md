@@ -29,3 +29,8 @@ such as zoom.
 The release remains source-compatible with KWin 6.4.3 and newer and includes
 separate packages for the pinned CachyOS, SteamOS 6.4.3, and Kubuntu 26.04
 targets.
+
+The `0.1.5-2` packaging hotfix removes exact runtime KWin dependencies so an
+installed AutoScroll package cannot block a desktop or operating-system
+upgrade. Exact target compatibility is still enforced when each artifact is
+built and verified.
