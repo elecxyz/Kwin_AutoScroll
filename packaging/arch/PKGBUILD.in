@@ -3,7 +3,7 @@
 
 pkgname=kwin-autoscroll
 pkgver=@VERSION@
-pkgrel=2
+pkgrel=1
 pkgdesc='Windows-style middle-click continuous scrolling for KWin'
 arch=('x86_64')
 url='https://github.com/elecxyz/Kwin_AutoScroll'

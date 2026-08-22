@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "autoscrollconfig.h"
+#include "configmigration.h"
 
+#include <KConfigGroup>
 #include <KSharedConfig>
 
 #include <QTemporaryDir>
@@ -16,6 +18,10 @@ class ConfigTest : public QObject {
 private Q_SLOTS:
   void subUnitExponentRoundTrips();
   void activationModifierRoundTrips();
+  void activationBehaviorRoundTrips();
+  void legacyHoldBehaviorMigrates();
+  void legacyToggleBehaviorMigrates();
+  void existingActivationBehaviorIsNotOverwritten();
   void initiationAndExclusionDefaults();
   void initiationAndExclusionsRoundTrip();
   void visualDefaults();
@@ -74,6 +80,87 @@ void ConfigTest::activationModifierRoundTrips() {
   }
 }
 
+void ConfigTest::activationBehaviorRoundTrips() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const QString path = directory.filePath(QStringLiteral("kwinrc"));
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig writer(config);
+    QCOMPARE(writer.activationBehavior(),
+             AutoScrollConfig::EnumActivationBehavior::Toggle);
+    writer.setActivationBehavior(
+        AutoScrollConfig::EnumActivationBehavior::Combined);
+    QVERIFY(writer.save());
+    config->sync();
+  }
+
+  {
+    const KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(path, KConfig::SimpleConfig);
+    AutoScrollConfig reader(config);
+    reader.read();
+    QCOMPARE(reader.activationBehavior(),
+             AutoScrollConfig::EnumActivationBehavior::Combined);
+  }
+}
+
+void ConfigTest::legacyHoldBehaviorMigrates() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const KSharedConfig::Ptr config = KSharedConfig::openConfig(
+      directory.filePath(QStringLiteral("kwinrc")), KConfig::SimpleConfig);
+  KConfigGroup group(config, QStringLiteral("Effect-autoscroll"));
+  group.writeEntry(QStringLiteral("HoldToScroll"), true);
+  config->sync();
+
+  migrateActivationBehavior(config);
+  AutoScrollConfig settings(config);
+  settings.read();
+  QCOMPARE(settings.activationBehavior(),
+           AutoScrollConfig::EnumActivationBehavior::Hold);
+  QVERIFY(!group.hasKey(QStringLiteral("HoldToScroll")));
+}
+
+void ConfigTest::legacyToggleBehaviorMigrates() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const KSharedConfig::Ptr config = KSharedConfig::openConfig(
+      directory.filePath(QStringLiteral("kwinrc")), KConfig::SimpleConfig);
+  KConfigGroup group(config, QStringLiteral("Effect-autoscroll"));
+  group.writeEntry(QStringLiteral("HoldToScroll"), false);
+  config->sync();
+
+  migrateActivationBehavior(config);
+  AutoScrollConfig settings(config);
+  settings.read();
+  QCOMPARE(settings.activationBehavior(),
+           AutoScrollConfig::EnumActivationBehavior::Toggle);
+  QVERIFY(!group.hasKey(QStringLiteral("HoldToScroll")));
+}
+
+void ConfigTest::existingActivationBehaviorIsNotOverwritten() {
+  QTemporaryDir directory;
+  QVERIFY(directory.isValid());
+  const KSharedConfig::Ptr config = KSharedConfig::openConfig(
+      directory.filePath(QStringLiteral("kwinrc")), KConfig::SimpleConfig);
+  KConfigGroup group(config, QStringLiteral("Effect-autoscroll"));
+  group.writeEntry(QStringLiteral("HoldToScroll"), true);
+  group.writeEntry(
+      QStringLiteral("ActivationBehavior"),
+      static_cast<int>(AutoScrollConfig::EnumActivationBehavior::Combined));
+  config->sync();
+
+  migrateActivationBehavior(config);
+  AutoScrollConfig settings(config);
+  settings.read();
+  QCOMPARE(settings.activationBehavior(),
+           AutoScrollConfig::EnumActivationBehavior::Combined);
+  QVERIFY(!group.hasKey(QStringLiteral("HoldToScroll")));
+}
+
 void ConfigTest::initiationAndExclusionDefaults() {
   QTemporaryDir directory;
   QVERIFY(directory.isValid());
@@ -82,6 +169,8 @@ void ConfigTest::initiationAndExclusionDefaults() {
   AutoScrollConfig settings(config);
 
   QVERIFY(!settings.holdToScroll());
+  QCOMPARE(settings.activationBehavior(),
+           AutoScrollConfig::EnumActivationBehavior::Toggle);
   QVERIFY(settings.excludedApplications().isEmpty());
 }
 

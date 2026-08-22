@@ -16,6 +16,7 @@ struct InputDecision {
 enum class ActivationMode {
   Toggle,
   Hold,
+  Combined,
 };
 
 struct ActivationContext {
@@ -42,6 +43,7 @@ public:
   bool cancel();
 
   InputDecision handleButton(Qt::MouseButton button, bool pressed);
+  void handleMotion(bool outsideDeadZone);
   void handleModifiers(Qt::KeyboardModifiers modifiers);
   InputDecision handleAxis();
   InputDecision handleEscape(bool pressed);
@@ -52,6 +54,7 @@ private:
   bool m_active = false;
   bool m_scrollReady = false;
   bool m_activationButtonHeld = false;
+  bool m_combinedHoldGesture = false;
   bool m_activationModifierReleased = false;
   Qt::KeyboardModifier m_activationModifier = Qt::NoModifier;
   ActivationMode m_activationMode = ActivationMode::Toggle;

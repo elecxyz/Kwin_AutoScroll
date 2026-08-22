@@ -16,7 +16,7 @@ ctest --test-dir build --output-on-failure
 The unit tests cover the speed curve, dead zone, signs, diagonal motion,
 maximum-speed cap, horizontal disablement, elapsed-time integration,
 fractional deltas, axis-stop generation, activation policy, click suppression,
-Escape suppression, toggle and hold initiation, two-event wheel cancellation,
+Escape suppression, toggle, hold, and combined initiation, two-event wheel cancellation,
 application-identity normalization and exclusion, target changes, locking,
 closure, teardown, configuration persistence, installed-application discovery,
 window-picker parsing, style discovery, SVG rendering at every preset and
@@ -52,11 +52,16 @@ Also verify:
   through and only the exact configured modifier plus middle-click activates.
 - Modified activation does not generate scroll events until both the middle
   button and modifier are released, in either release order.
-- With click-and-hold enabled and no modifier, scrolling begins while the
+- In hold-to-scroll mode without a modifier, scrolling begins while the
   middle button is down and stops when it is released.
-- With click-and-hold and a modifier, scrolling begins only after the modifier
+- In hold-to-scroll mode with a modifier, scrolling begins only after the modifier
   is released while the middle button remains down. Releasing the middle
   button first cancels without generating scrolling.
+- In combined mode, releasing the middle button without leaving the dead zone
+  creates a toggled session. Moving outside the dead zone while holding and
+  then releasing stops the session, even after returning to the dead zone.
+- With combined mode and a modifier, verify both the click and hold gestures
+  in both modifier/button release orders without any modified-wheel actions.
 - Add a native Wayland, XWayland, and Flatpak application through both the
   running-window picker and installed-application chooser. Each entry survives
   Apply and reopening the KCM, and duplicate additions are ignored.

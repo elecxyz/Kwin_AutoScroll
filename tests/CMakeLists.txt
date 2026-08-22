@@ -19,6 +19,9 @@ kconfig_add_kcfg_files(config_test_sources
     "${CMAKE_CURRENT_SOURCE_DIR}/../config/autoscrollconfig.kcfgc"
 )
 add_executable(config_test ${config_test_sources})
+target_include_directories(config_test PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+)
 target_link_libraries(config_test PRIVATE KF6::ConfigGui Qt6::Test)
 add_test(NAME config_test COMMAND config_test)
 

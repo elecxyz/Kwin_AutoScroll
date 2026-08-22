@@ -241,17 +241,17 @@ sudo sha256sum "${root_dir}/root"/var/lib/pacman/sync/*.db |
     printf 'status=build, tests, IID, linkage, contents, namcap, install/remove verified\n'
 } >"${reports}/artifact-manifest.txt"
 
-declare -A cached_versions=()
+declare -A cached_packages=()
 for package in "${package_cache}"/*.pkg.tar.*; do
     [[ -f "${package}" && "${package}" != *.sig ]] || continue
     name=$(bsdtar -xOf "${package}" .PKGINFO |
         sed -n 's/^pkgname = //p' | head -1)
     package_version=$(bsdtar -xOf "${package}" .PKGINFO |
         sed -n 's/^pkgver = //p' | head -1)
-    cached_versions["${name}"]=${package_version}
+    cached_packages["${name}"$'\t'"${package_version}"]=1
 done
 while read -r name installed_version; do
-    [[ "${cached_versions["${name}"]:-}" == "${installed_version}" ]] ||
+    [[ -n "${cached_packages["${name}"$'\t'"${installed_version}"]:-}" ]] ||
         die "${target} input package is absent from the external cache: ${name} ${installed_version}"
 done < <(sudo arch-nspawn "${root_dir}/root" pacman -Q)
 

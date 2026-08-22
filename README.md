@@ -29,16 +29,23 @@ Download the package for your system from the release's **Assets** section.
 The package must match your exact KWin patch version—KWin effects are not
 universal binaries.
 
+Check the installed package before choosing an asset:
+
+```sh
+pacman -Q kwin                  # CachyOS or SteamOS
+dpkg-query -W kwin-wayland     # Kubuntu
+```
+
 The package-manager dependency is intentionally unversioned so AutoScroll
 cannot block a KWin or operating-system update. If an update changes KWin,
 install the newly matched AutoScroll build before enabling the effect again.
 
 ### CachyOS
 
-For the current CachyOS KWin 6.7.4-1.1 package:
+For the current CachyOS KWin 6.7.4-5.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.5-2-cachyos-kwin6.7.4-1.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.4-5.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -49,15 +56,19 @@ sudo pacman -Rns kwin-autoscroll
 
 ### SteamOS / Steam Deck
 
-This package is for Valve KWin 6.4.3-1.13:
+This package is for Valve KWin 6.4.3-1.15:
 
-Warning for SteamOS - I've not fully verified how this addon will play with Valve's input libraries or wether it plays nice with steam input. Use at your own risk I guess.
+Warning for SteamOS: this effect has not been fully runtime-tested with
+Valve's input libraries or Steam Input. Use it with care.
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.5-2-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.15-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
+
+SteamOS systems still on KWin `6.4.3-1.13` should instead use the preserved
+`kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.13-x86_64.pkg.tar.zst` asset.
 
 Remove it with:
 
@@ -72,11 +83,14 @@ the package, and an update that changes KWin will need a newly matched build.
 
 ### Kubuntu 26.04
 
-This package is for KWin `4:6.6.5-0ubuntu0.1`:
+This package is for KWin `4:6.6.6-0ubuntu0.1`:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.5-2-kubuntu26.04-kwin6.6.5_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.6-1-kubuntu26.04-kwin6.6.6_amd64.deb
 ```
+
+Kubuntu systems still on KWin `4:6.6.5-0ubuntu0.1` should instead use the
+preserved `kwin-autoscroll_0.1.6-1-kubuntu26.04-kwin6.6.5_amd64.deb` asset.
 
 Remove it with:
 
@@ -93,29 +107,36 @@ After installing:
 3. Find **Auto Scroll** under Accessibility.
 4. Enable it and click **Apply**.
 
-The configure button lets you choose an optional activation modifier,
-click-to-toggle or click-and-hold behavior, and applications AutoScroll should
-leave untouched. You can also adjust the dead zone, maximum speed,
-acceleration curve, horizontal scrolling, visual feedback, glyph size, and
-visual style. The size picker scales the anchor and directional pointer
-together. Breeze Dark is the default; Breeze, Classic, Feather, Orbit,
-Circuit, and Pulse remain available as bundled alternatives.
+The configure button lets you choose an optional activation modifier and one
+of three activation behaviors: click to toggle, hold to scroll, or combined
+Windows-style click-or-hold. You can also select applications AutoScroll
+should leave untouched and adjust the dead zone, maximum speed, acceleration
+curve, horizontal scrolling, visual feedback, glyph size, and visual style.
+The size picker scales the anchor and directional pointer together. Breeze
+Dark is the default; Breeze, Classic, Feather, Orbit, Circuit, and Pulse
+remain available as bundled alternatives.
 
 ## How it behaves
 
-- By default, plain middle-click toggles auto-scroll in normal application
-  content. Enable **Click and hold to auto-scroll** to stop as soon as the
-  middle button is released.
+- **Click to toggle** remains the default: release the middle button and click
+  again to stop. **Hold to scroll** stops whenever the middle button is
+  released.
+- **Click or hold (Windows-style)** keeps AutoScroll toggled when the middle
+  button is released inside the dead zone. Moving outside the dead zone while
+  holding changes that activation into a hold gesture, and releasing the
+  middle button then stops it. Returning to the dead zone does not change the
+  gesture back into a toggle.
 - Optionally require Control, Meta, Alt, or Shift while middle-clicking. With
   a modifier selected, plain middle-click remains available for opening
   browser links in a new tab, closing browser tabs, or middle-click paste.
 - In toggle mode with a modifier, release both the middle button and modifier
   before moving the pointer. In hold mode, keep the middle button down and
-  release the modifier. Both modes avoid generating modifier-sensitive wheel
-  actions such as zoom.
-- Another click or Escape stops toggle mode immediately; releasing the middle
-  button stops hold mode. The physical scroll wheel needs two events, so one
-  accidental detent does not stop AutoScroll.
+  release the modifier. Combined mode follows whichever gesture you perform.
+  All three modes avoid generating modifier-sensitive wheel actions such as
+  zoom.
+- Another click or Escape stops a toggled session immediately; releasing the
+  middle button stops hold and combined-hold gestures. The physical scroll
+  wheel needs two events, so one accidental detent does not stop AutoScroll.
 - Add applications to **Excluded applications** by selecting a running window
   or choosing an installed application. Excluded applications receive normal
   middle clicks and never receive AutoScroll-generated scrolling.
@@ -166,7 +187,7 @@ not need to be fetched again.
 
 The detailed build setup is in [docs/BUILD_MATRIX.md](docs/BUILD_MATRIX.md).
 Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the latest changes
-are in [docs/RELEASE_NOTES_0.1.5.md](docs/RELEASE_NOTES_0.1.5.md).
+are in [docs/RELEASE_NOTES_0.1.6.md](docs/RELEASE_NOTES_0.1.6.md).
 
 ## License
 

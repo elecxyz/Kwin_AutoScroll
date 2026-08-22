@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.6 — 2026-08-22
+
+- Added a third, Windows-style combined activation mode: release within the
+  dead zone to keep scrolling toggled, or move outside the dead zone while
+  holding the middle button and release it to stop.
+- Preserved the original click-to-toggle and hold-to-scroll modes as separate
+  choices.
+- Migrated existing hold-to-scroll preferences to the new three-mode setting
+  without changing their behavior.
+
 ## 0.1.5 — 2026-08-03
 
 - Added an application exclusion list with a KWin running-window picker and a

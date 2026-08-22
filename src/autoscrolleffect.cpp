@@ -7,6 +7,7 @@
 #include "autoscrollconfig.h"
 #include "autoscrollinputdevice.h"
 #include "autoscrollvisual.h"
+#include "configmigration.h"
 
 #include <core/output.h>
 #include <effect/effecthandler.h>
@@ -40,7 +41,9 @@ bool AutoScrollInputFilter::keyboardKey(KWin::KeyboardKeyEvent *event) {
 }
 
 AutoScrollEffect::AutoScrollEffect() {
-  m_config = std::make_unique<AutoScrollConfig>(KWin::effects->config());
+  const KSharedConfig::Ptr config = KWin::effects->config();
+  migrateActivationBehavior(config);
+  m_config = std::make_unique<AutoScrollConfig>(config);
   m_visual =
       std::make_unique<AutoScrollVisual>(KWin::effects->scene()->overlayItem());
   reconfigure(ReconfigureAll);
@@ -87,13 +90,13 @@ AutoScrollEffect::~AutoScrollEffect() {
 bool AutoScrollEffect::isActive() const { return m_session.isActive(); }
 
 void AutoScrollEffect::reconfigure(ReconfigureFlags) {
-  const bool previousHoldToScroll = m_holdToScroll;
+  const ActivationMode previousActivationMode = m_activationMode;
   m_config->read();
-  m_holdToScroll = m_config->holdToScroll();
+  m_activationMode = configuredActivationMode();
   m_excludedApplications =
       normalizedApplicationExclusions(m_config->excludedApplications());
 
-  if (m_session.isActive() && (previousHoldToScroll != m_holdToScroll ||
+  if (m_session.isActive() && (previousActivationMode != m_activationMode ||
                                isWindowExcluded(m_targetWindow))) {
     cancelSession();
   }
@@ -140,6 +143,9 @@ bool AutoScrollEffect::handlePointerMotion(KWin::PointerMotionEvent *event) {
     return false;
   }
 
+  m_session.handleMotion(
+      m_engine.directionForOffset(m_cursorPosition - m_anchorPosition) !=
+      Direction::Center);
   updateVisual();
   return false;
 }
@@ -223,6 +229,18 @@ Qt::KeyboardModifier AutoScrollEffect::configuredActivationModifier() const {
   }
 }
 
+ActivationMode AutoScrollEffect::configuredActivationMode() const {
+  switch (m_config->activationBehavior()) {
+  case AutoScrollConfig::EnumActivationBehavior::Hold:
+    return ActivationMode::Hold;
+  case AutoScrollConfig::EnumActivationBehavior::Combined:
+    return ActivationMode::Combined;
+  case AutoScrollConfig::EnumActivationBehavior::Toggle:
+  default:
+    return ActivationMode::Toggle;
+  }
+}
+
 bool AutoScrollEffect::canActivate(KWin::Window *window) const {
   const bool excludedSurface =
       window &&
@@ -264,9 +282,7 @@ bool AutoScrollEffect::isStillOnTarget() const {
 
 void AutoScrollEffect::activate(KWin::Window *window, const QPointF &position,
                                 Qt::KeyboardModifier activationModifier) {
-  m_session.activate(activationModifier, m_holdToScroll
-                                             ? ActivationMode::Hold
-                                             : ActivationMode::Toggle);
+  m_session.activate(activationModifier, m_activationMode);
   m_targetWindow = window;
   m_anchorPosition = position;
   m_cursorPosition = position;

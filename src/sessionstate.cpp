@@ -29,6 +29,7 @@ void SessionState::activate(Qt::KeyboardModifier activationModifier,
   m_activationModifier = activationModifier;
   m_activationMode = activationMode;
   m_activationButtonHeld = true;
+  m_combinedHoldGesture = false;
   m_activationModifierReleased = activationModifier == Qt::NoModifier;
   updateScrollReady();
   m_wheelCancellationArmed = false;
@@ -39,6 +40,7 @@ bool SessionState::cancel() {
   const bool wasActive = std::exchange(m_active, false);
   m_scrollReady = false;
   m_activationButtonHeld = false;
+  m_combinedHoldGesture = false;
   m_activationModifierReleased = false;
   m_activationModifier = Qt::NoModifier;
   m_activationMode = ActivationMode::Toggle;
@@ -50,7 +52,9 @@ InputDecision SessionState::handleButton(Qt::MouseButton button, bool pressed) {
   if (!pressed && m_suppressedButtons.remove(button)) {
     if (m_active && button == Qt::MiddleButton) {
       m_activationButtonHeld = false;
-      if (m_activationMode == ActivationMode::Hold) {
+      if (m_activationMode == ActivationMode::Hold ||
+          (m_activationMode == ActivationMode::Combined &&
+           m_combinedHoldGesture)) {
         m_scrollReady = false;
         return {.consume = true, .cancel = true};
       }
@@ -65,6 +69,13 @@ InputDecision SessionState::handleButton(Qt::MouseButton button, bool pressed) {
 
   m_suppressedButtons.insert(button);
   return {.consume = true, .cancel = true};
+}
+
+void SessionState::handleMotion(bool outsideDeadZone) {
+  if (m_active && m_activationMode == ActivationMode::Combined &&
+      m_activationButtonHeld && outsideDeadZone) {
+    m_combinedHoldGesture = true;
+  }
 }
 
 void SessionState::handleModifiers(Qt::KeyboardModifiers modifiers) {
@@ -105,6 +116,11 @@ InputDecision SessionState::handleEscape(bool pressed) {
 void SessionState::updateScrollReady() {
   if (m_activationMode == ActivationMode::Hold) {
     m_scrollReady = m_activationButtonHeld && m_activationModifierReleased;
+    return;
+  }
+
+  if (m_activationMode == ActivationMode::Combined) {
+    m_scrollReady = m_activationModifierReleased;
     return;
   }
 

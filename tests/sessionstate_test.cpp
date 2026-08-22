@@ -19,6 +19,10 @@ private Q_SLOTS:
   void holdActivationStopsOnMiddleRelease();
   void modifiedHoldWaitsForModifierRelease();
   void modifiedHoldReleasedEarlyNeverScrolls();
+  void combinedClickToggles();
+  void combinedHoldStopsOnMiddleRelease();
+  void combinedHoldClassificationIsSticky();
+  void modifiedCombinedSupportsClickAndHold();
   void secondWheelEventCancels();
   void wheelCancellationCounterResets();
   void cancellationClickPairIsSuppressed();
@@ -130,6 +134,57 @@ void SessionStateTest::modifiedHoldReleasedEarlyNeverScrolls() {
   state.handleModifiers(Qt::NoModifier);
   QVERIFY(!state.isActive());
   QVERIFY(!state.isScrollReady());
+}
+
+void SessionStateTest::combinedClickToggles() {
+  SessionState state;
+  state.activate(Qt::NoModifier, ActivationMode::Combined);
+  state.handleMotion(false);
+
+  const InputDecision release = state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(release.consume);
+  QVERIFY(!release.cancel);
+  QVERIFY(state.isActive());
+  QVERIFY(state.isScrollReady());
+}
+
+void SessionStateTest::combinedHoldStopsOnMiddleRelease() {
+  SessionState state;
+  state.activate(Qt::NoModifier, ActivationMode::Combined);
+  state.handleMotion(true);
+
+  const InputDecision release = state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(release.consume);
+  QVERIFY(release.cancel);
+  QVERIFY(state.isActive());
+  QVERIFY(!state.isScrollReady());
+}
+
+void SessionStateTest::combinedHoldClassificationIsSticky() {
+  SessionState state;
+  state.activate(Qt::NoModifier, ActivationMode::Combined);
+  state.handleMotion(true);
+  state.handleMotion(false);
+
+  const InputDecision release = state.handleButton(Qt::MiddleButton, false);
+  QVERIFY(release.cancel);
+}
+
+void SessionStateTest::modifiedCombinedSupportsClickAndHold() {
+  SessionState clickState;
+  clickState.activate(Qt::ControlModifier, ActivationMode::Combined);
+  QVERIFY(!clickState.isScrollReady());
+  QVERIFY(!clickState.handleButton(Qt::MiddleButton, false).cancel);
+  clickState.handleModifiers(Qt::NoModifier);
+  QVERIFY(clickState.isScrollReady());
+
+  SessionState holdState;
+  holdState.activate(Qt::MetaModifier, ActivationMode::Combined);
+  QVERIFY(!holdState.isScrollReady());
+  holdState.handleModifiers(Qt::NoModifier);
+  QVERIFY(holdState.isScrollReady());
+  holdState.handleMotion(true);
+  QVERIFY(holdState.handleButton(Qt::MiddleButton, false).cancel);
 }
 
 void SessionStateTest::secondWheelEventCancels() {

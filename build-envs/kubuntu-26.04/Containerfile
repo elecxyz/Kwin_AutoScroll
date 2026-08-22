@@ -14,8 +14,8 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
     && DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends ca-certificates \
     && install -m 0644 /tmp/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get -qq update \
-    && test "$(apt-cache policy kwin-dev | awk '/Candidate:/ {print $2}')" = "4:6.6.5-0ubuntu0.1" \
-    && test "$(apt-cache policy kwin-wayland | awk '/Candidate:/ {print $2}')" = "4:6.6.5-0ubuntu0.1" \
+    && test "$(apt-cache policy kwin-dev | awk '/Candidate:/ {print $2}')" = "4:6.6.6-0ubuntu0.1" \
+    && test "$(apt-cache policy kwin-wayland | awk '/Candidate:/ {print $2}')" = "4:6.6.6-0ubuntu0.1" \
     && (DEBIAN_FRONTEND=noninteractive apt-get -qq install -y --no-install-recommends \
         build-essential \
         cmake \
@@ -23,8 +23,8 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean \
         devscripts \
         dpkg-dev \
         extra-cmake-modules=6.24.0-0ubuntu1 \
-        kwin-dev=4:6.6.5-0ubuntu0.1 \
-        kwin-wayland=4:6.6.5-0ubuntu0.1 \
+        kwin-dev=4:6.6.6-0ubuntu0.1 \
+        kwin-wayland=4:6.6.6-0ubuntu0.1 \
         libdrm-dev \
         libkf6config-dev=6.24.0-0ubuntu1 \
         libkf6configwidgets-dev=6.24.0-0ubuntu1 \

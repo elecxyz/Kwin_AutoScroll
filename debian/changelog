@@ -1,3 +1,12 @@
+kwin-autoscroll (0.1.6-1) unstable; urgency=medium
+
+  * Add separate click-to-toggle, hold-to-scroll, and combined Windows-style
+    activation modes.
+  * Migrate the previous hold-to-scroll preference without changing existing
+    users' behavior.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Sat, 22 Aug 2026 12:00:00 +0800
+
 kwin-autoscroll (0.1.5-2) unstable; urgency=high
 
   * Stop pinning the runtime KWin package so AutoScroll cannot block desktop

@@ -4,6 +4,7 @@
 #include "autoscroll_config.h"
 
 #include "autoscrollconfig.h"
+#include "configmigration.h"
 
 #include <KPluginFactory>
 
@@ -20,8 +21,10 @@ AutoScrollEffectConfig::AutoScrollEffectConfig(QObject *parent,
                                                const KPluginMetaData &data)
     : KCModule(parent, data) {
   m_ui.setupUi(widget());
-  m_config = std::make_unique<AutoScrollConfig>(
-      KSharedConfig::openConfig(QStringLiteral("kwinrc")));
+  const KSharedConfig::Ptr config =
+      KSharedConfig::openConfig(QStringLiteral("kwinrc"));
+  migrateActivationBehavior(config);
+  m_config = std::make_unique<AutoScrollConfig>(config);
   m_config->read();
   addConfig(m_config.get(), widget());
 

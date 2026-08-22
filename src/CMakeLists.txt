@@ -30,6 +30,7 @@ set(autoscroll_effect_sources
     autoscrollinputdevice.h
     autoscrollvisual.cpp
     autoscrollvisual.h
+    configmigration.h
     main.cpp
     resources.qrc
 )

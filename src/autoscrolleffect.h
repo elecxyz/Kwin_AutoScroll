@@ -64,6 +64,7 @@ public:
 
 private:
   Qt::KeyboardModifier configuredActivationModifier() const;
+  ActivationMode configuredActivationMode() const;
   bool canActivate(KWin::Window *window) const;
   bool isWindowExcluded(KWin::Window *window) const;
   bool isStillOnTarget() const;
@@ -92,7 +93,7 @@ private:
   QElapsedTimer m_elapsedTimer;
   bool m_visualFeedback = true;
   bool m_cursorHidden = false;
-  bool m_holdToScroll = false;
+  ActivationMode m_activationMode = ActivationMode::Toggle;
   QStringList m_excludedApplications;
 };
 

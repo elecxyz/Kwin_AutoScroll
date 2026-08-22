@@ -40,15 +40,17 @@ SPDX-License-Identifier: GPL-2.0-or-later
      <item row="1" column="0">
       <widget class="QLabel" name="activationBehaviorLabel">
        <property name="text"><string>Activation behavior:</string></property>
-       <property name="buddy"><cstring>kcfg_HoldToScroll</cstring></property>
+       <property name="buddy"><cstring>kcfg_ActivationBehavior</cstring></property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QCheckBox" name="kcfg_HoldToScroll">
-       <property name="text"><string>Click and hold to auto-scroll</string></property>
+      <widget class="QComboBox" name="kcfg_ActivationBehavior">
        <property name="toolTip">
-        <string>Keep the middle button held while scrolling. When an activation modifier is configured, release the modifier first; releasing the middle button stops AutoScroll.</string>
+        <string>Combined mode toggles after a click, but stops on release when the pointer leaves the dead zone while the middle button is held.</string>
        </property>
+       <item><property name="text"><string>Click to toggle</string></property></item>
+       <item><property name="text"><string>Hold to scroll</string></property></item>
+       <item><property name="text"><string>Click or hold (Windows-style)</string></property></item>
       </widget>
      </item>
      <item row="2" column="0">
