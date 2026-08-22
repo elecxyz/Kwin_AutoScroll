@@ -1,0 +1,3 @@
+# The unmodified GPLv2 license text contains the FSF address current when the
+# license was published. Altering that canonical text would be inappropriate.
+addFilter(r"incorrect-fsf-address")

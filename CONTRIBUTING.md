@@ -16,8 +16,8 @@ Contributions are welcome.
    clang-format --dry-run --Werror src/*.{h,cpp} tests/*.cpp kcm/*.{h,cpp}
    ```
 
-5. For packaging changes, run `namcap` on Arch artifacts and `lintian` on
-   Debian artifacts.
+5. For packaging changes, run `namcap` on Arch artifacts, `lintian` on Debian
+   artifacts, and `rpmlint` on Fedora binary and source RPMs.
 
 KWin does not provide binary compatibility for effects. Any use of newly added
 KWin APIs must update the minimum supported version and the distribution

@@ -11,6 +11,8 @@ All notable changes to this project will be documented here.
   choices.
 - Migrated existing hold-to-scroll preferences to the new three-mode setting
   without changing their behavior.
+- Added a Fedora 44 RPM and source RPM built against KWin `6.7.4-2.fc44`, with
+  locked dependencies, RPM linting, and disposable installation verification.
 
 ## 0.1.5 — 2026-08-03
 

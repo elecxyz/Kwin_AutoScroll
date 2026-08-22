@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2026 KWin AutoScroll contributors
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+FROM registry.fedoraproject.org/fedora@sha256:803417012471cde7ce5b94a87ce77afeda61ec6b052467f2499c677aecc041a7
+
+RUN dnf -y --setopt=install_weak_deps=False --setopt=keepcache=True install \
+        appstream \
+        binutils \
+        cmake \
+        cpio \
+        extra-cmake-modules-6.29.0-1.fc44 \
+        findutils \
+        gcc-16.2.1-2.fc44 \
+        gcc-c++-16.2.1-2.fc44 \
+        glibc-2.43-8.fc44 \
+        glibc-langpack-en \
+        gzip \
+        kf6-kcmutils-devel-6.29.0-1.fc44 \
+        kf6-kconfig-devel-6.29.0-1.fc44 \
+        kf6-kconfigwidgets-devel-6.29.0-1.fc44 \
+        kf6-kcoreaddons-devel-6.29.0-1.fc44 \
+        kf6-ki18n-devel-6.29.0-1.fc44 \
+        kf6-kwidgetsaddons-devel-6.29.0-1.fc44 \
+        kwin-6.7.4-2.fc44 \
+        kwin-devel-6.7.4-2.fc44 \
+        libdrm-devel \
+        libepoxy-devel \
+        ninja-build \
+        pkgconf-pkg-config \
+        qt6-qtbase-devel-6.11.1-1.fc44 \
+        qt6-qtsvg-devel-6.11.1-1.fc44 \
+        rpm-build \
+        rpmdevtools \
+        rpmlint \
+        tar \
+        vulkan-headers \
+        xz \
+    && test "$(rpm -q --qf '%{VERSION}-%{RELEASE}' kwin)" = "6.7.4-2.fc44" \
+    && test "$(rpm -q --qf '%{VERSION}-%{RELEASE}' kwin-devel)" = "6.7.4-2.fc44" \
+    && test "$(rpm -q --qf '%{VERSION}-%{RELEASE}' qt6-qtbase-devel)" = "6.11.1-1.fc44" \
+    && test "$(rpm -q --qf '%{VERSION}-%{RELEASE}' extra-cmake-modules)" = "6.29.0-1.fc44"

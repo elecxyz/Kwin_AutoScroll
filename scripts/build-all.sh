@@ -8,7 +8,7 @@ project_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 args=("$@")
 failures=()
 
-for target in cachyos steamos-6.4.3 kubuntu-26.04; do
+for target in cachyos steamos-6.4.3 kubuntu-26.04 fedora-44; do
     printf '\n===== Building %s =====\n' "${target}"
     if ! "${project_root}/scripts/build-target.sh" "${args[@]}" "${target}"; then
         failures+=("${target}")

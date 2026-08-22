@@ -35,6 +35,7 @@ artifacts. Each row below was compiled wholly inside its isolated builder.
 | `cachyos` | CachyOS rolling 2026-08-22 / x86_64-v3 (`x86_64` package label) | `6.7.4-5.1` / `org.kde.kwin.EffectPluginFactory6.7.4` | 6.11.1 / 6.29.0 | `2.44+r24+g16be1518495f-1` / GCC `16.2.1+r23+gd564253eb6c8-1` | devtools root `cachyos/chroot/root`; signed CachyOS and Arch repositories | Build, 9 tests, IID, unified image-item path, linkage, contents, namcap, disposable install/remove verified |
 | `steamos-6.4.3` | SteamOS 3.8 / x86_64 | Valve `6.4.3-1.15` / `org.kde.kwin.EffectPluginFactory6.4.3` | 6.9.1 / 6.16.0 | `2.41+r65+ge7c419a29575-1` / GCC `15.1.1+r7+gf36ec88aa85a-1` | devtools root `steamos-6.4.3/chroot/root`; Valve's versioned 3.8 repositories and `holo-keyring 20250801-1` | Build, 9 tests, IID, renderer-factory image-item path, linkage, contents, namcap, disposable install/remove verified |
 | `kubuntu-26.04` | Kubuntu 26.04 Resolute / amd64 | `4:6.6.6-0ubuntu0.1` / `org.kde.kwin.EffectPluginFactory6.6.6` | `6.10.2+dfsg-7` / `6.24.0-0ubuntu1` | `2.43-2ubuntu2.3` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; Ubuntu image digest `sha256:7c2884fd32770fc6c173b78e0dc2278a2851d89f5447919edbc45475ac55dd6a`; builder image `f12e9346074106ced950473d0f997ca0e9f9ceb29692b7e61c6cefd5ead54b26` | Build, 9 tests, IID, renderer-factory image-item path, linkage, contents, lintian, disposable install/remove verified |
+| `fedora-44` | Fedora KDE 44 / x86_64 | `6.7.4-2.fc44` / `org.kde.kwin.EffectPluginFactory6.7.4` | `6.11.1-1.fc44` / `6.29.0-1.fc44` | `2.43-8.fc44` / GCC `16.2.1-2.fc44` | rootless Podman; Fedora image digest `sha256:803417012471cde7ce5b94a87ce77afeda61ec6b052467f2499c677aecc041a7`; builder image `83a4dfc82e5154d6673f78ede0c653e7c3fb6258eb84f613b156cd587ee20e1e` | Build, 9 tests, IID, unified image-item path, linkage, contents, rpmlint, disposable install/remove verified |
 
 ## Last validated artifacts
 
@@ -47,6 +48,7 @@ The default external root is
 | `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.4-5.1-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh cachyos` after changing source or infrastructure. |
 | `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.15-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh steamos-6.4.3` after changing source or infrastructure. |
 | `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.6-1-kubuntu26.04-kwin6.6.6_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.04` after changing source or infrastructure. |
+| `fedora-44` | `fedora-44/artifacts/kwin-autoscroll-0.1.6-2.fc44.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-44` after changing source or infrastructure. |
 
 Two transitional 0.1.6 artifacts are retained for systems that have not yet
 received the latest distribution update:
@@ -76,6 +78,9 @@ versions, and builder identity.
   package set. Its external cache contains all 394 matching archives and
   signatures. Repository database checksums are written to the external report
   directory.
+- `build-envs/fedora-44/packages.lock.tsv` records all 788 packages in the
+  digest-pinned RPM builder. Its external DNF cache retains the downloaded
+  repository metadata and package archives used by later rebuilds.
 - `target.env`, the isolated pacman configurations, and the digest-pinned
   Containerfile are the target definitions. Every builder rejects a KWin
   header or package version that differs from its definition.

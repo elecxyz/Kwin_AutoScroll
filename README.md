@@ -34,6 +34,7 @@ Check the installed package before choosing an asset:
 ```sh
 pacman -Q kwin                  # CachyOS or SteamOS
 dpkg-query -W kwin-wayland     # Kubuntu
+rpm -q kwin                     # Fedora KDE
 ```
 
 The package-manager dependency is intentionally unversioned so AutoScroll
@@ -98,6 +99,27 @@ Remove it with:
 sudo apt remove kwin-autoscroll
 ```
 
+### Fedora KDE 44
+
+This package is for Fedora 44 KWin `6.7.4-2.fc44`:
+
+```sh
+sudo dnf install ./kwin-autoscroll-0.1.6-2.fc44.x86_64.rpm
+```
+
+Remove it with:
+
+```sh
+sudo dnf remove kwin-autoscroll
+```
+
+Fedora Kinoite can layer the same RPM, followed by a reboot:
+
+```sh
+sudo rpm-ostree install ./kwin-autoscroll-0.1.6-2.fc44.x86_64.rpm
+systemctl reboot
+```
+
 ## Turn it on
 
 After installing:
@@ -150,10 +172,11 @@ remain available as bundled alternatives.
 
 ## Building it yourself
 
-The repository can build separate packages for the three supported targets:
+The repository can build separate packages for the four supported targets:
 
 Run the complete matrix from an up-to-date Arch-family host. The Arch targets
-use clean `devtools` chroots, and the Kubuntu target uses rootless Podman:
+use clean `devtools` chroots, while the Kubuntu and Fedora targets use rootless
+Podman:
 
 ```sh
 sudo pacman -Syu --needed devtools namcap podman
@@ -161,12 +184,13 @@ scripts/check-build-host.sh
 ```
 
 The Arch builders use `sudo` to create and enter their isolated roots. The
-Kubuntu builder does not require root.
+Kubuntu and Fedora builders do not require root.
 
 ```sh
 scripts/build-target.sh cachyos
 scripts/build-target.sh steamos-6.4.3
 scripts/build-target.sh kubuntu-26.04
+scripts/build-target.sh fedora-44
 ```
 
 Or build everything:

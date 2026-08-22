@@ -10,7 +10,7 @@ source "${project_root}/scripts/lib/build-common.sh"
 
 usage() {
     printf 'Usage: %s [--root ABSOLUTE_PATH] TARGET\n' "${0##*/}"
-    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04\n'
+    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, fedora-44\n'
 }
 
 build_root=$(default_build_root)
@@ -52,6 +52,9 @@ case "${TARGET_PACKAGE_KIND}" in
         ;;
     debian)
         exec "${project_root}/scripts/lib/build-debian-target.sh" "${target}" "${build_root}"
+        ;;
+    rpm)
+        exec "${project_root}/scripts/lib/build-rpm-target.sh" "${target}" "${build_root}"
         ;;
     *)
         die "unsupported package kind: ${TARGET_PACKAGE_KIND}"

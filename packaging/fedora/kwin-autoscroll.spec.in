@@ -1,0 +1,56 @@
+Name:           kwin-autoscroll
+Version:        @VERSION@
+Release:        2%{?dist}
+Summary:        Windows-style middle-click continuous scrolling for KWin
+
+License:        GPL-2.0-or-later
+URL:            https://github.com/elecxyz/Kwin_AutoScroll
+Source0:        https://github.com/elecxyz/Kwin_AutoScroll/releases/download/v%{version}/%{name}-%{version}.tar.xz
+
+BuildRequires:  appstream
+BuildRequires:  cmake >= 3.24
+BuildRequires:  extra-cmake-modules >= 6.0
+BuildRequires:  gcc-c++
+BuildRequires:  kf6-kcmutils-devel
+BuildRequires:  kf6-kconfig-devel
+BuildRequires:  kf6-kconfigwidgets-devel
+BuildRequires:  kf6-kcoreaddons-devel
+BuildRequires:  kf6-ki18n-devel
+BuildRequires:  kf6-kwidgetsaddons-devel
+BuildRequires:  kwin-devel >= 6.4.3
+BuildRequires:  libdrm-devel
+BuildRequires:  libepoxy-devel
+BuildRequires:  ninja-build
+BuildRequires:  pkgconf-pkg-config
+BuildRequires:  qt6-qtbase-devel >= 6.7
+BuildRequires:  qt6-qtsvg-devel
+BuildRequires:  vulkan-headers
+Requires:       kwin
+
+%description
+KWin AutoScroll is a Plasma 6 Wayland binary effect. A middle click creates
+an anchor, and pointer distance and direction control continuous vertical and
+horizontal scrolling.
+
+%prep
+%autosetup
+
+%build
+%cmake -DBUILD_TESTING=ON
+%cmake_build
+
+%check
+%ctest
+
+%install
+%cmake_install
+
+%files
+%license LICENSE
+%doc CHANGELOG.md README.md docs/RELEASE_NOTES_0.1.6.md
+%{_libdir}/qt6/plugins/kwin/effects/plugins/autoscroll.so
+%{_libdir}/qt6/plugins/kwin/effects/configs/kwin_autoscroll_config.so
+
+%changelog
+* Sat Aug 22 2026 elecxyz <elecxyz@users.noreply.github.com> - 0.1.6-2
+- Add Fedora KDE packaging for KWin AutoScroll 0.1.6.

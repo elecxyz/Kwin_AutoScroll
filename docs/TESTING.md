@@ -25,6 +25,8 @@ scale, and the custom selector properties.
 that the effect uses KWin's exact versioned plugin IID.
 Package verification requires an unversioned `kwin`/`kwin-wayland` runtime
 dependency while retaining exact target-root version and plugin-IID checks.
+The Fedora target additionally runs `rpmlint` against both the source and
+binary RPMs and performs a disposable DNF installation and RPM removal.
 
 ## Manual Wayland matrix
 

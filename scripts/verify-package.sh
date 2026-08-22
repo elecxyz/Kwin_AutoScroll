@@ -69,6 +69,53 @@ if [[ "${TARGET_PACKAGE_KIND}" == debian ]]; then
     exit 0
 fi
 
+if [[ "${TARGET_PACKAGE_KIND}" == rpm ]]; then
+    require_command podman
+    package=$(realpath "${package}")
+    image_tag="localhost/kwin-autoscroll-builder:${target}"
+    podman image exists "${image_tag}" ||
+        die "build the pinned ${target} image before verifying RPM packages"
+    podman run --rm --network=none \
+        --volume "${package}:/package.rpm:ro" \
+        "${image_tag}" bash -lc '
+            set -euo pipefail
+            expected_iid=$1
+            image_item_mode=$2
+            requirements=$(rpm -qp --requires /package.rpm)
+            grep -qx "kwin" <<<"${requirements}"
+            ! grep -Eq "^kwin[[:space:]]*[<>=]" <<<"${requirements}"
+            stage=$(mktemp -d)
+            trap "rm -rf -- ${stage}" EXIT
+            cd "${stage}"
+            rpm2cpio /package.rpm | cpio -idm --quiet
+            effect="${stage}/usr/lib64/qt6/plugins/kwin/effects/plugins/autoscroll.so"
+            kcm="${stage}/usr/lib64/qt6/plugins/kwin/effects/configs/kwin_autoscroll_config.so"
+            test -f "${effect}"
+            test -f "${kcm}"
+            actual_iids=$(strings -a "${effect}" |
+                sed -n "s/^.*\\(org\\.kde\\.kwin\\.EffectPluginFactory[0-9][0-9.]*\\).*$/\\1/p" |
+                sort -u)
+            test "${actual_iids}" = "${expected_iid}"
+            readelf -d "${effect}" | grep -q "Shared library: \\[libkwin\\.so\\.6\\]"
+            symbols=$(nm -D -C "${effect}")
+            case "${image_item_mode}" in
+                renderer-factory)
+                    grep -q "KWin::Scene::renderer() const" <<<"${symbols}"
+                    ! grep -q "KWin::ImageItem::ImageItem(KWin::Item\\*)" <<<"${symbols}"
+                    ;;
+                unified)
+                    grep -q "KWin::ImageItem::ImageItem(KWin::Item\\*)" <<<"${symbols}"
+                    ;;
+                *)
+                    exit 2
+                    ;;
+            esac
+        ' verify "${expected_iid}" "${expected_image_item_mode}"
+    printf 'Verified RPM metadata, paths, IID, and %s image items: %s\n' \
+        "${expected_image_item_mode}" "${expected_iid}"
+    exit 0
+fi
+
 require_command nm
 stage=$(mktemp -d)
 trap 'rm -rf -- "${stage}"' EXIT

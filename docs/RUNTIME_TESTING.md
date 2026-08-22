@@ -31,6 +31,17 @@ prove that a live compositor handles pointer input correctly.
 Obtaining the installation image is intentionally a separate, user-approved
 step because it is large and outside compilation validation.
 
+## Fedora KDE 44
+
+1. Create a Fedora KDE 44 VM or disposable snapshot and confirm `kwin` is
+   exactly `6.7.4-2.fc44`.
+2. Install the matching `.rpm` with DNF, log into Plasma Wayland, and run the
+   complete matrix in [TESTING.md](TESTING.md).
+3. Repeat the install as an RPM-OSTree package layer in a disposable Fedora
+   Kinoite deployment and reboot into that deployment.
+4. Capture the journal and KWin output, remove the package or package layer,
+   and discard the environment.
+
 ## SteamOS / Steam Deck
 
 1. Copy the SteamOS artifact to a Deck whose installed KWin is exactly Valve

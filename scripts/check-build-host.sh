@@ -10,13 +10,13 @@ source "${project_root}/scripts/lib/build-common.sh"
 
 usage() {
     printf 'Usage: %s [TARGET...]\n' "${0##*/}"
-    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04\n'
+    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, fedora-44\n'
     printf 'With no targets, checks the host for the complete build matrix.\n'
 }
 
 targets=("$@")
 if ((${#targets[@]} == 0)); then
-    targets=(cachyos steamos-6.4.3 kubuntu-26.04)
+    targets=(cachyos steamos-6.4.3 kubuntu-26.04 fedora-44)
 fi
 
 declare -A required=()
@@ -41,7 +41,7 @@ for target in "${targets[@]}"; do
                 required["${command}"]=1
             done
             ;;
-        debian)
+        debian|rpm)
             needs_podman=true
             for command in cmp diff podman sha256sum; do
                 required["${command}"]=1
