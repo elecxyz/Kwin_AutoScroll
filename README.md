@@ -8,7 +8,7 @@ zone to pause, or click again to stop.
 
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/429ce648-a6e1-4a50-bcae-38c7b24ee995"
+    src="https://github.com/user-attachments/assets/e8c63462-66ae-4c92-ac35-2cb60e1c6927"
     width="560"
     align="top"
     alt="Auto Scroll configuration"
