@@ -1,3 +1,10 @@
+kwin-autoscroll (0.1.7-1) unstable; urgency=medium
+
+  * Rebuild for Kubuntu 26.04 KWin 6.6.6.
+  * Include updated source and target compatibility notes.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Thu, 24 Sep 2026 12:00:00 +0800
+
 kwin-autoscroll (0.1.6-1) unstable; urgency=medium
 
   * Add separate click-to-toggle, hold-to-scroll, and combined Windows-style

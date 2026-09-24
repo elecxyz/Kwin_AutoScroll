@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 pkgname=kwin-autoscroll
-pkgver=0.1.6
+pkgver=0.1.7
 pkgrel=1
 pkgdesc='Windows-style middle-click continuous scrolling for KWin'
 arch=('x86_64')

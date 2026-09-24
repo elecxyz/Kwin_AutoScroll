@@ -46,7 +46,7 @@ install the newly matched AutoScroll build before enabling the effect again.
 For the current CachyOS KWin 6.7.5-1.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.7-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -64,7 +64,7 @@ Valve's input libraries or Steam Input. Use it with care.
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.7-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
@@ -87,7 +87,7 @@ the package, and an update that changes KWin will need a newly matched build.
 This package is for KWin `4:6.6.6-0ubuntu0.1`:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.6-1-kubuntu26.04-kwin6.6.6_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.7-1-kubuntu26.04-kwin6.6.6_amd64.deb
 ```
 
 Kubuntu systems still on KWin `4:6.6.5-0ubuntu0.1` should instead use the
@@ -104,7 +104,7 @@ sudo apt remove kwin-autoscroll
 This package is for Fedora 44 KWin `6.7.5-1.fc44`:
 
 ```sh
-sudo dnf install ./kwin-autoscroll-0.1.6-3.fc44.x86_64.rpm
+sudo dnf install ./kwin-autoscroll-0.1.7-1.fc44.x86_64.rpm
 ```
 
 Remove it with:
@@ -116,7 +116,7 @@ sudo dnf remove kwin-autoscroll
 Fedora Kinoite can layer the same RPM, followed by a reboot:
 
 ```sh
-sudo rpm-ostree install ./kwin-autoscroll-0.1.6-3.fc44.x86_64.rpm
+sudo rpm-ostree install ./kwin-autoscroll-0.1.7-1.fc44.x86_64.rpm
 systemctl reboot
 ```
 
@@ -211,7 +211,7 @@ not need to be fetched again.
 
 The detailed build setup is in [docs/BUILD_MATRIX.md](docs/BUILD_MATRIX.md).
 Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the latest changes
-are in [docs/RELEASE_NOTES_0.1.6.md](docs/RELEASE_NOTES_0.1.6.md).
+are in [docs/RELEASE_NOTES_0.1.7.md](docs/RELEASE_NOTES_0.1.7.md).
 
 ## License
 

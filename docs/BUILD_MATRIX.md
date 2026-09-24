@@ -10,10 +10,9 @@ binary. KWin embeds its full upstream patch version in the effect factory IID.
 Each row below is therefore an independent package built and verified in its
 own target userspace.
 
-This snapshot was produced on 2026-09-24 from Git commit
-`125ef34` plus the reviewed working-tree
-changes. Machine-readable reports and checksum files live below the external
-build root; `scripts/build-target.sh` refreshes them after a successful build.
+This snapshot was produced on 2026-09-24. Machine-readable reports and checksum
+files live below the external build root; `scripts/build-target.sh` refreshes
+them after a successful build and records the exact source commit.
 
 ## CachyOS host inventory
 
@@ -45,10 +44,10 @@ The default external root is
 
 | Target | Artifact relative to the external root | Verification record |
 |---|---|---|
-| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh cachyos` after changing source or infrastructure. |
-| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh steamos-6.4.3` after changing source or infrastructure. |
-| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.6-1-kubuntu26.04-kwin6.6.6_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.04` after changing source or infrastructure. |
-| `fedora-44` | `fedora-44/artifacts/kwin-autoscroll-0.1.6-3.fc44.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-44` after changing source or infrastructure. |
+| `cachyos` | `cachyos/artifacts/kwin-autoscroll-0.1.7-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh cachyos` after changing source or infrastructure. |
+| `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.7-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh steamos-6.4.3` after changing source or infrastructure. |
+| `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.7-1-kubuntu26.04-kwin6.6.6_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.04` after changing source or infrastructure. |
+| `fedora-44` | `fedora-44/artifacts/kwin-autoscroll-0.1.7-1.fc44.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-44` after changing source or infrastructure. |
 
 Two transitional 0.1.6 artifacts are retained for systems that have not yet
 received the latest distribution update:

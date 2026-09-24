@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.7 — 2026-09-24
+
+- Rebuilt the CachyOS and Fedora 44 packages against KWin 6.7.5, the SteamOS
+  package against Valve KWin 6.4.3-1.16, and the Kubuntu 26.04 package against
+  KWin 6.6.6.
+- Refreshed locked build environments and corrected the source archive to
+  include the target definitions and package lock files.
+- No change to AutoScroll's activation behavior from 0.1.6.
+
 ## 0.1.6 — 2026-08-22
 
 - Added a third, Windows-style combined activation mode: release within the
