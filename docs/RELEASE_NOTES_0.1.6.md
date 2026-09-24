@@ -32,8 +32,8 @@ new choice.
 ## Packages
 
 The release includes separately built and verified packages for CachyOS KWin
-6.7.4-5.1, SteamOS KWin 6.4.3-1.15, Kubuntu 26.04 KWin
-4:6.6.6-0ubuntu0.1, and Fedora 44 KWin 6.7.4-2.fc44. The Fedora target produces
+6.7.5-1.1, SteamOS KWin 6.4.3-1.16, Kubuntu 26.04 KWin
+4:6.6.6-0ubuntu0.1, and Fedora 44 KWin 6.7.5-1.fc44. The Fedora target produces
 both a binary RPM and source RPM. Runtime KWin dependencies remain unversioned
 so the plugin cannot block operating-system upgrades.
 

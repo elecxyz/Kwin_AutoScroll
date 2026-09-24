@@ -43,10 +43,10 @@ install the newly matched AutoScroll build before enabling the effect again.
 
 ### CachyOS
 
-For the current CachyOS KWin 6.7.4-5.1 package:
+For the current CachyOS KWin 6.7.5-1.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.4-5.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.6-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -57,14 +57,14 @@ sudo pacman -Rns kwin-autoscroll
 
 ### SteamOS / Steam Deck
 
-This package is for Valve KWin 6.4.3-1.15:
+This package is for Valve KWin 6.4.3-1.16:
 
 Warning for SteamOS: this effect has not been fully runtime-tested with
 Valve's input libraries or Steam Input. Use it with care.
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.15-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.6-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
@@ -101,10 +101,10 @@ sudo apt remove kwin-autoscroll
 
 ### Fedora KDE 44
 
-This package is for Fedora 44 KWin `6.7.4-2.fc44`:
+This package is for Fedora 44 KWin `6.7.5-1.fc44`:
 
 ```sh
-sudo dnf install ./kwin-autoscroll-0.1.6-2.fc44.x86_64.rpm
+sudo dnf install ./kwin-autoscroll-0.1.6-3.fc44.x86_64.rpm
 ```
 
 Remove it with:
@@ -116,7 +116,7 @@ sudo dnf remove kwin-autoscroll
 Fedora Kinoite can layer the same RPM, followed by a reboot:
 
 ```sh
-sudo rpm-ostree install ./kwin-autoscroll-0.1.6-2.fc44.x86_64.rpm
+sudo rpm-ostree install ./kwin-autoscroll-0.1.6-3.fc44.x86_64.rpm
 systemctl reboot
 ```
 

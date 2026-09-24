@@ -1,6 +1,6 @@
 Name:           kwin-autoscroll
 Version:        @VERSION@
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Windows-style middle-click continuous scrolling for KWin
 
 License:        GPL-2.0-or-later

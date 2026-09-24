@@ -13,6 +13,8 @@ All notable changes to this project will be documented here.
   without changing their behavior.
 - Added a Fedora 44 RPM and source RPM built against KWin `6.7.4-2.fc44`, with
   locked dependencies, RPM linting, and disposable installation verification.
+- Refreshed the CachyOS and Fedora packages for KWin 6.7.5 and the SteamOS
+  package for Valve's `6.4.3-1.16` build.
 
 ## 0.1.5 — 2026-08-03
 

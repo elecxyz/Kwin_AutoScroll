@@ -12,7 +12,7 @@ prove that a live compositor handles pointer input correctly.
 ## CachyOS
 
 1. Create a disposable user account or snapshot and start a nested KWin
-   Wayland session with the same `kwin 6.7.4-5.1` package.
+   Wayland session with the same `kwin 6.7.5-1.1` package.
 2. Install the CachyOS artifact only inside that disposable environment.
 3. Run the application and cancellation matrix in [TESTING.md](TESTING.md),
    including mixed-DPI cursor scaling and XWayland best-effort behavior.
@@ -34,7 +34,7 @@ step because it is large and outside compilation validation.
 ## Fedora KDE 44
 
 1. Create a Fedora KDE 44 VM or disposable snapshot and confirm `kwin` is
-   exactly `6.7.4-2.fc44`.
+   exactly `6.7.5-1.fc44`.
 2. Install the matching `.rpm` with DNF, log into Plasma Wayland, and run the
    complete matrix in [TESTING.md](TESTING.md).
 3. Repeat the install as an RPM-OSTree package layer in a disposable Fedora
@@ -45,7 +45,7 @@ step because it is large and outside compilation validation.
 ## SteamOS / Steam Deck
 
 1. Copy the SteamOS artifact to a Deck whose installed KWin is exactly Valve
-   `6.4.3-1.15` from the SteamOS 3.8 repositories.
+   `6.4.3-1.16` from the SteamOS 3.8 repositories.
 2. Take the normal recovery/snapshot precautions, temporarily make the
    normally read-only OS writable, and install with `pacman -U`.
 3. Run the manual matrix in Gaming Mode and Desktop Mode where applicable,

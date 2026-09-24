@@ -53,7 +53,9 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_SOURCE_GENERATOR "TXZ")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION}")
 set(CPACK_SOURCE_IGNORE_FILES
-    "/build[^/]*/"
+    "/build/"
+    "/build-dev/"
+    "/build-release/"
     "/dist/"
     "/\\\\.git/"
     "/packaging/arch/(pkg|src)/"
