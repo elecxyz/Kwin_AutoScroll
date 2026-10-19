@@ -21,6 +21,8 @@ application-identity normalization and exclusion, target changes, locking,
 closure, teardown, configuration persistence, installed-application discovery,
 window-picker parsing, style discovery, SVG rendering at every preset and
 scale, and the custom selector properties.
+`inputdevice_test` verifies both axes and stop events against the actual KWin
+signal signature, including the autoscroll flag on KWin 6.8.
 `pluginmetadata_test` also verifies that both plugins can be discovered and
 that the effect uses KWin's exact versioned plugin IID.
 Package verification requires an unversioned `kwin`/`kwin-wayland` runtime
@@ -93,6 +95,10 @@ Also verify:
 - On KWin 6.4-6.6 with the OpenGL compositor, both the anchor and directional
   glyph are visible; this specifically exercises the renderer-created image
   item compatibility path.
+- On KWin 6.8, test with the built-in mouse scroll-button feature disabled
+  so the activation gestures do not overlap. Verify native cursor restoration
+  after stopping either axis, returning to the dead zone, and all cancellation
+  paths; the new autoscroll flag affects KWin cursor handling.
 - Settings, Defaults, and Reset work, and saved settings take effect without a
   compositor restart.
 - Logout/login loads the installed plugin without KWin warnings or crashes.

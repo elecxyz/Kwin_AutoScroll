@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.8 — 2026-10-19
+
+- Adapt scroll events to KWin 6.8's new autoscroll flag, selecting the signal
+  signature at compile time to retain compatibility with older KWin releases.
+- Add regression coverage for horizontal, vertical, and axis-stop event payloads.
+- Update the CachyOS target to KWin 6.8.0 with Qt 6.12 and Frameworks 6.31.
+- Add a Kubuntu 26.10 package for KWin 6.7.5 alongside the 26.04 LTS package.
+- Retain the SteamOS 3.8, Kubuntu 26.04, and Fedora 44 KWin targets.
+- Place source release outputs in a directory named for the release version.
+
 ## 0.1.7 — 2026-09-24
 
 - Rebuilt the CachyOS and Fedora 44 packages against KWin 6.7.5, the SteamOS

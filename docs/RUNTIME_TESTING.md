@@ -12,7 +12,7 @@ prove that a live compositor handles pointer input correctly.
 ## CachyOS
 
 1. Create a disposable user account or snapshot and start a nested KWin
-   Wayland session with the same `kwin 6.7.5-1.1` package.
+   Wayland session with the same `kwin 6.8.0-1.1` package.
 2. Install the CachyOS artifact only inside that disposable environment.
 3. Run the application and cancellation matrix in [TESTING.md](TESTING.md),
    including mixed-DPI cursor scaling and XWayland best-effort behavior.
@@ -30,6 +30,11 @@ prove that a live compositor handles pointer input correctly.
 
 Obtaining the installation image is intentionally a separate, user-approved
 step because it is large and outside compilation validation.
+
+## Kubuntu 26.10
+
+Repeat the Kubuntu VM procedure with Kubuntu 26.10 and exactly
+`kwin-wayland 4:6.7.5-0ubuntu1`, using the matching 26.10 package.
 
 ## Fedora KDE 44
 

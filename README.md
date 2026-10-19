@@ -43,10 +43,10 @@ install the newly matched AutoScroll build before enabling the effect again.
 
 ### CachyOS
 
-For the current CachyOS KWin 6.7.5-1.1 package:
+For the current CachyOS KWin 6.8.0-1.1 package:
 
 ```sh
-sudo pacman -U ./kwin-autoscroll-0.1.7-1-cachyos-kwin6.7.5-1.1-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.8-1-cachyos-kwin6.8.0-1.1-x86_64.pkg.tar.zst
 ```
 
 Remove it with:
@@ -64,7 +64,7 @@ Valve's input libraries or Steam Input. Use it with care.
 
 ```sh
 sudo steamos-readonly disable
-sudo pacman -U ./kwin-autoscroll-0.1.7-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst
+sudo pacman -U ./kwin-autoscroll-0.1.8-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst
 sudo steamos-readonly enable
 ```
 
@@ -87,7 +87,7 @@ the package, and an update that changes KWin will need a newly matched build.
 This package is for KWin `4:6.6.6-0ubuntu0.1`:
 
 ```sh
-sudo apt install ./kwin-autoscroll_0.1.7-1-kubuntu26.04-kwin6.6.6_amd64.deb
+sudo apt install ./kwin-autoscroll_0.1.8-1-kubuntu26.04-kwin6.6.6_amd64.deb
 ```
 
 Kubuntu systems still on KWin `4:6.6.5-0ubuntu0.1` should instead use the
@@ -99,12 +99,22 @@ Remove it with:
 sudo apt remove kwin-autoscroll
 ```
 
+### Kubuntu 26.10
+
+This package is for KWin `4:6.7.5-0ubuntu1`:
+
+```sh
+sudo apt install ./kwin-autoscroll_0.1.8-1-kubuntu26.10-kwin6.7.5_amd64.deb
+```
+
+Remove it with `sudo apt remove kwin-autoscroll`.
+
 ### Fedora KDE 44
 
 This package is for Fedora 44 KWin `6.7.5-1.fc44`:
 
 ```sh
-sudo dnf install ./kwin-autoscroll-0.1.7-1.fc44.x86_64.rpm
+sudo dnf install ./kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm
 ```
 
 Remove it with:
@@ -116,7 +126,7 @@ sudo dnf remove kwin-autoscroll
 Fedora Kinoite can layer the same RPM, followed by a reboot:
 
 ```sh
-sudo rpm-ostree install ./kwin-autoscroll-0.1.7-1.fc44.x86_64.rpm
+sudo rpm-ostree install ./kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm
 systemctl reboot
 ```
 
@@ -172,7 +182,7 @@ remain available as bundled alternatives.
 
 ## Building it yourself
 
-The repository can build separate packages for the four supported targets:
+The repository can build separate packages for the five supported targets:
 
 Run the complete matrix from an up-to-date Arch-family host. The Arch targets
 use clean `devtools` chroots, while the Kubuntu and Fedora targets use rootless
@@ -190,6 +200,7 @@ Kubuntu and Fedora builders do not require root.
 scripts/build-target.sh cachyos
 scripts/build-target.sh steamos-6.4.3
 scripts/build-target.sh kubuntu-26.04
+scripts/build-target.sh kubuntu-26.10
 scripts/build-target.sh fedora-44
 ```
 
@@ -206,12 +217,15 @@ outside the repository under:
 ~/.cache/kwin-autoscroll-builds/
 ```
 
+Release assets are collected in `dist/0.1.8/`. `scripts/make-release.sh` creates
+the source archive and PKGBUILD in the version-specific `dist/` folder.
+
 Those downloads are reused on later builds, so unchanged target packages do
 not need to be fetched again.
 
 The detailed build setup is in [docs/BUILD_MATRIX.md](docs/BUILD_MATRIX.md).
 Testing notes are in [docs/TESTING.md](docs/TESTING.md), and the latest changes
-are in [docs/RELEASE_NOTES_0.1.7.md](docs/RELEASE_NOTES_0.1.7.md).
+are in [docs/RELEASE_NOTES_0.1.8.md](docs/RELEASE_NOTES_0.1.8.md).
 
 ## License
 

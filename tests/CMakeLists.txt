@@ -70,6 +70,16 @@ target_link_libraries(applicationexclusionswidget_test PRIVATE
 add_test(NAME applicationexclusionswidget_test
          COMMAND applicationexclusionswidget_test)
 
+add_executable(inputdevice_test
+    inputdevice_test.cpp
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/autoscrollinputdevice.cpp"
+)
+target_include_directories(inputdevice_test PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+)
+target_link_libraries(inputdevice_test PRIVATE KWin::kwin Qt6::Test)
+add_test(NAME inputdevice_test COMMAND inputdevice_test)
+
 add_executable(pluginmetadata_test pluginmetadata_test.cpp)
 target_link_libraries(pluginmetadata_test PRIVATE KWin::kwin Qt6::Core Qt6::Test)
 target_compile_definitions(pluginmetadata_test PRIVATE
@@ -88,6 +98,7 @@ set_tests_properties(
     glyphstyle_test
     glyphselectors_test
     applicationexclusionswidget_test
+    inputdevice_test
     pluginmetadata_test
     PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
 )

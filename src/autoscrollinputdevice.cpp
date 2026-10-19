@@ -4,9 +4,37 @@
 #include "autoscrollinputdevice.h"
 
 namespace AutoScroll {
+namespace {
+
+template <typename Device>
+void emitScroll(Device *device, KWin::PointerAxis axis, qreal delta,
+                std::chrono::microseconds timestamp) {
+  // KWin 6.8 adds an autoscroll flag. Detect the signature so older releases
+  // and distribution backports use the API provided by their own headers.
+  if constexpr (requires {
+                  device->pointerAxisChanged(
+                      axis, delta, 0, KWin::PointerAxisSource::Continuous,
+                      false, true, timestamp, device);
+                }) {
+    Q_EMIT device->pointerAxisChanged(
+        axis, delta, 0, KWin::PointerAxisSource::Continuous, false, true,
+        timestamp, device);
+  } else {
+    Q_EMIT device->pointerAxisChanged(
+        axis, delta, 0, KWin::PointerAxisSource::Continuous, false, timestamp,
+        device);
+  }
+}
+
+} // namespace
 
 AutoScrollInputDevice::AutoScrollInputDevice(QObject *parent)
     : KWin::InputDevice(parent) {}
+
+void AutoScrollInputDevice::scroll(KWin::PointerAxis axis, qreal delta,
+                                  std::chrono::microseconds timestamp) {
+  emitScroll(this, axis, delta, timestamp);
+}
 
 QString AutoScrollInputDevice::name() const {
   return QStringLiteral("KWin AutoScroll virtual pointer");

@@ -47,11 +47,14 @@ horizontal scrolling.
 
 %files
 %license LICENSE
-%doc CHANGELOG.md README.md docs/RELEASE_NOTES_0.1.7.md
+%doc CHANGELOG.md README.md docs/RELEASE_NOTES_0.1.8.md
 %{_libdir}/qt6/plugins/kwin/effects/plugins/autoscroll.so
 %{_libdir}/qt6/plugins/kwin/effects/configs/kwin_autoscroll_config.so
 
 %changelog
+* Mon Oct 19 2026 elecxyz <elecxyz@users.noreply.github.com> - 0.1.8-1
+- Support KWin 6.8 while retaining older KWin APIs.
+
 * Thu Sep 24 2026 elecxyz <elecxyz@users.noreply.github.com> - 0.1.7-1
 - Rebuild for Fedora 44 KWin 6.7.5.
 

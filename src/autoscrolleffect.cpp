@@ -366,19 +366,15 @@ void AutoScrollEffect::emitFrame(const ScrollFrame &frame) {
   const auto timestamp = currentTimestamp();
 
   if (frame.horizontalActive || frame.horizontalStopped) {
-    Q_EMIT m_inputDevice->pointerAxisChanged(
+    m_inputDevice->scroll(
         KWin::PointerAxis::Horizontal,
-        frame.horizontalActive ? frame.horizontalDelta : 0.0, 0,
-        KWin::PointerAxisSource::Continuous, false, timestamp,
-        m_inputDevice.get());
+        frame.horizontalActive ? frame.horizontalDelta : 0.0, timestamp);
     emitted = true;
   }
   if (frame.verticalActive || frame.verticalStopped) {
-    Q_EMIT m_inputDevice->pointerAxisChanged(
+    m_inputDevice->scroll(
         KWin::PointerAxis::Vertical,
-        frame.verticalActive ? frame.verticalDelta : 0.0, 0,
-        KWin::PointerAxisSource::Continuous, false, timestamp,
-        m_inputDevice.get());
+        frame.verticalActive ? frame.verticalDelta : 0.0, timestamp);
     emitted = true;
   }
   if (emitted) {

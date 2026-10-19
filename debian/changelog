@@ -1,3 +1,10 @@
+kwin-autoscroll (0.1.8-1) unstable; urgency=medium
+
+  * Support KWin 6.8 axis events while retaining older KWin compatibility.
+  * Add a separate Kubuntu 26.10 build alongside Kubuntu 26.04 LTS.
+
+ -- elecxyz <elecxyz@users.noreply.github.com>  Mon, 19 Oct 2026 12:00:00 +0800
+
 kwin-autoscroll (0.1.7-1) unstable; urgency=medium
 
   * Rebuild for Kubuntu 26.04 KWin 6.6.6.

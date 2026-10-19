@@ -13,6 +13,9 @@ class AutoScrollInputDevice : public KWin::InputDevice {
 public:
   explicit AutoScrollInputDevice(QObject *parent = nullptr);
 
+  void scroll(KWin::PointerAxis axis, qreal delta,
+              std::chrono::microseconds timestamp);
+
   QString name() const override;
   bool isEnabled() const override;
   void setEnabled(bool enabled) override;

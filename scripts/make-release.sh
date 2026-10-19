@@ -6,13 +6,13 @@ set -euo pipefail
 
 project_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 release_build="${project_root}/build-release"
-dist_dir="${project_root}/dist"
 version=$(sed -n 's/^project(kwin-autoscroll VERSION \([^ ]*\).*/\1/p' \
     "${project_root}/CMakeLists.txt")
 [[ -n "${version}" ]] || {
     printf 'Unable to read the project version\n' >&2
     exit 1
 }
+dist_dir="${project_root}/dist/${version}"
 kwin_version=$(sed -n 's/^#define KWIN_PLUGIN_VERSION_STRING "\(.*\)"/\1/p' /usr/include/kwin/config-kwin.h)
 
 cmake -S "${project_root}" -B "${release_build}" -G Ninja \
