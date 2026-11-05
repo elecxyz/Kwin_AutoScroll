@@ -10,8 +10,9 @@ binary. KWin embeds its full upstream patch version in the effect factory IID.
 Each row below is therefore an independent package built and verified in its
 own target userspace.
 
-The 0.1.8 target definitions were checked on 2026-10-19. Machine-readable
-reports and checksum files live below the external build root;
+The Fedora 44 and 45 target definitions were refreshed on 2026-11-05 for
+KWin 6.8.2. The other 0.1.8 targets retain their 2026-10-19 definitions.
+Machine-readable reports and checksum files live below the external build root;
 `scripts/build-target.sh` records the exact source commit and verifies every
 package inside its target userspace.
 
@@ -21,13 +22,16 @@ package inside its target userspace.
 | `steamos-6.4.3` | SteamOS 3.8 / x86_64 | Valve `6.4.3-1.16` / `org.kde.kwin.EffectPluginFactory6.4.3` | 6.9.1 / 6.16.0 | `2.41+r65+ge7c419a29575-1` / GCC `15.1.1+r7+gf36ec88aa85a-1` | devtools root `steamos-6.4.3/chroot/root`; Valve's versioned 3.8 repositories and `holo-keyring 20250801-1` | Build, 10 tests, IID, renderer-factory image-item path, linkage, contents, namcap, disposable install/remove verified |
 | `kubuntu-26.04` | Kubuntu 26.04 Resolute / amd64 | `4:6.6.6-0ubuntu0.1` / `org.kde.kwin.EffectPluginFactory6.6.6` | `6.10.2+dfsg-7` / `6.24.0-0ubuntu1` | `2.43-2ubuntu2.4` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; digest-pinned Ubuntu image | Build, 10 tests, IID, renderer-factory image-item path, linkage, contents, lintian, disposable install/remove verified |
 | `kubuntu-26.10` | Kubuntu 26.10 Stonking / amd64 | `4:6.7.5-0ubuntu1` / `org.kde.kwin.EffectPluginFactory6.7.5` | `6.11.2+dfsg-4ubuntu2` / `6.29.0-0ubuntu1` (ECM) | `2.44-1ubuntu2` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; digest-pinned Ubuntu image | Build, 10 tests, IID, unified image-item path, linkage, contents, lintian, disposable install/remove verified |
-| `fedora-44` | Fedora KDE 44 / x86_64 | `6.7.5-1.fc44` / `org.kde.kwin.EffectPluginFactory6.7.5` | `6.11.2-2.fc44` / `6.30.0-1.fc44` | `2.43-8.fc44` / GCC `16.2.1-2.fc44` | rootless Podman; digest-pinned Fedora image | Build, 10 tests, IID, unified image-item path, linkage, contents, rpmlint, disposable install/remove verified |
+| `fedora-44` | Fedora KDE 44 / x86_64 | `6.8.2-3.fc44` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc44` / `6.31.0-1.fc44` | `2.43-9.fc44` / GCC `16.2.1-3.fc44` | rootless Podman; digest-pinned Fedora image | See the per-target build report and artifact manifest described below |
+| `fedora-45` | Fedora KDE 45 / x86_64 | `6.8.2-3.fc45` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc45` / `6.31.0-1.fc45` | `2.44-2.fc45` / GCC `16.2.1-3.fc45` | rootless Podman; digest-pinned Fedora image | See the per-target build report and artifact manifest described below |
 
 ## Release artifacts
 
-The release set is collected in `dist/0.1.8/`, including source archive,
-PKGBUILD, Fedora source RPM, and `SHA256SUMS`. Earlier releases remain in
-their own folders.
+The original release set remains in `dist/0.1.8/`, including source archive,
+PKGBUILD, Fedora source RPM, and `SHA256SUMS`. The refreshed Fedora 44 and 45
+binary and source RPMs are collected in `dist/0.1.8-fedora-kwin6.8.2/` with
+their own checksums. The original Fedora 44 package for KWin 6.7.5 remains
+available in `dist/0.1.8/`.
 
 The default external root is
 `$XDG_CACHE_HOME/kwin-autoscroll-builds`, or
@@ -39,7 +43,8 @@ The default external root is
 | `steamos-6.4.3` | `steamos-6.4.3/artifacts/kwin-autoscroll-0.1.8-1-steamos-kwin6.4.3-1.16-x86_64.pkg.tar.zst` | Rebuild with `scripts/build-target.sh steamos-6.4.3` after changing source or infrastructure. |
 | `kubuntu-26.04` | `kubuntu-26.04/artifacts/kwin-autoscroll_0.1.8-1-kubuntu26.04-kwin6.6.6_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.04` after changing source or infrastructure. |
 | `kubuntu-26.10` | `kubuntu-26.10/artifacts/kwin-autoscroll_0.1.8-1-kubuntu26.10-kwin6.7.5_amd64.deb` | Rebuild with `scripts/build-target.sh kubuntu-26.10`. |
-| `fedora-44` | `fedora-44/artifacts/kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-44` after changing source or infrastructure. |
+| `fedora-44` | `fedora-44/artifacts/kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-44` after changing source or infrastructure. |
+| `fedora-45` | `fedora-45/artifacts/kwin-autoscroll-0.1.8-2.fc45.x86_64.rpm` and matching `.src.rpm` | Rebuild with `scripts/build-target.sh fedora-45` after changing source or infrastructure. |
 
 Two transitional 0.1.6 artifacts are retained for systems that have not yet
 received the latest distribution update:
@@ -68,8 +73,9 @@ versions, and builder identity.
 - `build-envs/cachyos/packages.lock.tsv` records the complete clean-root
   package set. Its external cache contains matching archives and signatures.
   Repository database checksums are written to the external report directory.
-- `build-envs/fedora-44/packages.lock.tsv` records the package set in the
-  digest-pinned RPM builder. Its external DNF cache retains the downloaded
+- `build-envs/fedora-44/packages.lock.tsv` and
+  `build-envs/fedora-45/packages.lock.tsv` record each package set in its
+  digest-pinned RPM builder. Their external DNF caches retain the downloaded
   repository metadata and package archives used by later rebuilds.
 - `target.env`, the isolated pacman configurations, and the digest-pinned
   Containerfile are the target definitions. Every builder rejects a KWin

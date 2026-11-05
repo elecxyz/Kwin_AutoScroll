@@ -10,7 +10,7 @@ source "${project_root}/scripts/lib/build-common.sh"
 
 usage() {
     printf 'Usage: %s [--root ABSOLUTE_PATH] TARGET\n' "${0##*/}"
-    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, kubuntu-26.10, fedora-44\n'
+    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, kubuntu-26.10, fedora-44, fedora-45\n'
 }
 
 build_root=$(default_build_root)

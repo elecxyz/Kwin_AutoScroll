@@ -1,6 +1,6 @@
 Name:           kwin-autoscroll
 Version:        @VERSION@
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Windows-style middle-click continuous scrolling for KWin
 
 License:        GPL-2.0-or-later
@@ -52,6 +52,9 @@ horizontal scrolling.
 %{_libdir}/qt6/plugins/kwin/effects/configs/kwin_autoscroll_config.so
 
 %changelog
+* Thu Nov 05 2026 elecxyz <elecxyz@users.noreply.github.com> - 0.1.8-2
+- Rebuild for KWin 6.8.2 on Fedora 44 and Fedora 45.
+
 * Mon Oct 19 2026 elecxyz <elecxyz@users.noreply.github.com> - 0.1.8-1
 - Support KWin 6.8 while retaining older KWin APIs.
 

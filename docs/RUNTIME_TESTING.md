@@ -39,13 +39,21 @@ Repeat the Kubuntu VM procedure with Kubuntu 26.10 and exactly
 ## Fedora KDE 44
 
 1. Create a Fedora KDE 44 VM or disposable snapshot and confirm `kwin` is
-   exactly `6.7.5-1.fc44`.
+   exactly `6.8.2-3.fc44`.
 2. Install the matching `.rpm` with DNF, log into Plasma Wayland, and run the
    complete matrix in [TESTING.md](TESTING.md).
 3. Repeat the install as an RPM-OSTree package layer in a disposable Fedora
    Kinoite deployment and reboot into that deployment.
 4. Capture the journal and KWin output, remove the package or package layer,
    and discard the environment.
+
+## Fedora KDE 45
+
+Repeat the Fedora VM and Kinoite procedures with Fedora 45 and exactly
+`kwin 6.8.2-3.fc45`, using the matching `.fc45` RPM. On both Fedora versions,
+exercise the KWin 6.8 scroll-event and cursor-restoration checks in
+[TESTING.md](TESTING.md). Live compositor input behavior must be tested
+separately from the automated builds.
 
 ## SteamOS / Steam Deck
 

@@ -111,10 +111,10 @@ Remove it with `sudo apt remove kwin-autoscroll`.
 
 ### Fedora KDE 44
 
-This package is for Fedora 44 KWin `6.7.5-1.fc44`:
+This package is for Fedora 44 KWin `6.8.2-3.fc44`:
 
 ```sh
-sudo dnf install ./kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm
+sudo dnf install ./kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm
 ```
 
 Remove it with:
@@ -126,7 +126,27 @@ sudo dnf remove kwin-autoscroll
 Fedora Kinoite can layer the same RPM, followed by a reboot:
 
 ```sh
-sudo rpm-ostree install ./kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm
+sudo rpm-ostree install ./kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm
+systemctl reboot
+```
+
+Fedora 44 systems still on KWin `6.7.5-1.fc44` should keep the earlier
+`kwin-autoscroll-0.1.8-1.fc44.x86_64.rpm` package from `dist/0.1.8/`.
+
+### Fedora KDE 45
+
+This package is for Fedora 45 KWin `6.8.2-3.fc45`:
+
+```sh
+sudo dnf install ./kwin-autoscroll-0.1.8-2.fc45.x86_64.rpm
+```
+
+Remove it with `sudo dnf remove kwin-autoscroll`.
+
+Fedora Kinoite 45 can layer its matching RPM, followed by a reboot:
+
+```sh
+sudo rpm-ostree install ./kwin-autoscroll-0.1.8-2.fc45.x86_64.rpm
 systemctl reboot
 ```
 
@@ -182,7 +202,7 @@ remain available as bundled alternatives.
 
 ## Building it yourself
 
-The repository can build separate packages for the five supported targets:
+The repository can build separate packages for the six supported targets:
 
 Run the complete matrix from an up-to-date Arch-family host. The Arch targets
 use clean `devtools` chroots, while the Kubuntu and Fedora targets use rootless
@@ -202,6 +222,7 @@ scripts/build-target.sh steamos-6.4.3
 scripts/build-target.sh kubuntu-26.04
 scripts/build-target.sh kubuntu-26.10
 scripts/build-target.sh fedora-44
+scripts/build-target.sh fedora-45
 ```
 
 Or build everything:
@@ -217,8 +238,11 @@ outside the repository under:
 ~/.cache/kwin-autoscroll-builds/
 ```
 
-Release assets are collected in `dist/0.1.8/`. `scripts/make-release.sh` creates
-the source archive and PKGBUILD in the version-specific `dist/` folder.
+The original release assets are collected in `dist/0.1.8/`. The Fedora 44 and
+45 rebuilds for KWin 6.8.2 are collected separately in
+`dist/0.1.8-fedora-kwin6.8.2/`, including binary and source RPMs and SHA-256
+checksums. `scripts/make-release.sh` creates the source archive and PKGBUILD
+in the version-specific `dist/` folder.
 
 Those downloads are reused on later builds, so unchanged target packages do
 not need to be fetched again.

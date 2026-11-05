@@ -10,13 +10,13 @@ source "${project_root}/scripts/lib/build-common.sh"
 
 usage() {
     printf 'Usage: %s [TARGET...]\n' "${0##*/}"
-    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, kubuntu-26.10, fedora-44\n'
+    printf 'Targets: cachyos, steamos-6.4.3, kubuntu-26.04, kubuntu-26.10, fedora-44, fedora-45\n'
     printf 'With no targets, checks the host for the complete build matrix.\n'
 }
 
 targets=("$@")
 if ((${#targets[@]} == 0)); then
-    targets=(cachyos steamos-6.4.3 kubuntu-26.04 kubuntu-26.10 fedora-44)
+    targets=(cachyos steamos-6.4.3 kubuntu-26.04 kubuntu-26.10 fedora-44 fedora-45)
 fi
 
 declare -A required=()

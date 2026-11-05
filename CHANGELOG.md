@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented here.
 
+## 0.1.8 Fedora packaging refresh — 2026-11-05
+
+- Rebuild Fedora 44 against KWin `6.8.2-3.fc44`.
+- Add a Fedora 45 target for KWin `6.8.2-3.fc45`.
+- Keep AutoScroll at 0.1.8 and increment the Fedora RPM release to `2`.
+- Collect the new Fedora binary and source RPMs separately in
+  `dist/0.1.8-fedora-kwin6.8.2/`, preserving the earlier release artifacts.
+
 ## 0.1.8 — 2026-10-19
 
 - Adapt scroll events to KWin 6.8's new autoscroll flag, selecting the signal
