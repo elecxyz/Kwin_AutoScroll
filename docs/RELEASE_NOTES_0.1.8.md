@@ -55,7 +55,7 @@ sudo dnf install ./kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm
 
 Remove it with `sudo dnf remove kwin-autoscroll`.
 
-Fedora Kinoite can layer the same RPM, then reboot:
+Fedora Kinoite 44 can layer the same RPM, then reboot:
 
 ```sh
 sudo rpm-ostree install ./kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm
@@ -92,6 +92,18 @@ packages target KWin 6.8.2 and are not suitable for KWin 6.7.5.
 
 Earlier verified 0.1.6 assets for SteamOS KWin `6.4.3-1.13` and Kubuntu KWin
 `4:6.6.5-0ubuntu0.1` remain suitable only for systems still on those versions.
+
+### Fedora build validation
+
+The Fedora 44 and 45 RPMs were built on 5 November 2026 from source commit
+`35db39d`. Each build passed all 10 automated tests, plugin version and
+library-dependency checks, and installation/removal in its matching Fedora
+container. RPM lint checks passed for both binary and source packages.
+
+The separate Fedora output folder contains both binary RPMs, both source
+RPMs, and `SHA256SUMS`. Live Plasma Wayland behavior and Kinoite package
+layering still require the manual checks in
+[RUNTIME_TESTING.md](RUNTIME_TESTING.md).
 
 ### SteamOS note
 

@@ -22,8 +22,8 @@ package inside its target userspace.
 | `steamos-6.4.3` | SteamOS 3.8 / x86_64 | Valve `6.4.3-1.16` / `org.kde.kwin.EffectPluginFactory6.4.3` | 6.9.1 / 6.16.0 | `2.41+r65+ge7c419a29575-1` / GCC `15.1.1+r7+gf36ec88aa85a-1` | devtools root `steamos-6.4.3/chroot/root`; Valve's versioned 3.8 repositories and `holo-keyring 20250801-1` | Build, 10 tests, IID, renderer-factory image-item path, linkage, contents, namcap, disposable install/remove verified |
 | `kubuntu-26.04` | Kubuntu 26.04 Resolute / amd64 | `4:6.6.6-0ubuntu0.1` / `org.kde.kwin.EffectPluginFactory6.6.6` | `6.10.2+dfsg-7` / `6.24.0-0ubuntu1` | `2.43-2ubuntu2.4` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; digest-pinned Ubuntu image | Build, 10 tests, IID, renderer-factory image-item path, linkage, contents, lintian, disposable install/remove verified |
 | `kubuntu-26.10` | Kubuntu 26.10 Stonking / amd64 | `4:6.7.5-0ubuntu1` / `org.kde.kwin.EffectPluginFactory6.7.5` | `6.11.2+dfsg-4ubuntu2` / `6.29.0-0ubuntu1` (ECM) | `2.44-1ubuntu2` / GCC metapackage `4:15.2.0-5ubuntu1` | rootless Podman; digest-pinned Ubuntu image | Build, 10 tests, IID, unified image-item path, linkage, contents, lintian, disposable install/remove verified |
-| `fedora-44` | Fedora KDE 44 / x86_64 | `6.8.2-3.fc44` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc44` / `6.31.0-1.fc44` | `2.43-9.fc44` / GCC `16.2.1-3.fc44` | rootless Podman; digest-pinned Fedora image | See the per-target build report and artifact manifest described below |
-| `fedora-45` | Fedora KDE 45 / x86_64 | `6.8.2-3.fc45` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc45` / `6.31.0-1.fc45` | `2.44-2.fc45` / GCC `16.2.1-3.fc45` | rootless Podman; digest-pinned Fedora image | See the per-target build report and artifact manifest described below |
+| `fedora-44` | Fedora KDE 44 / x86_64 | `6.8.2-3.fc44` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc44` / `6.31.0-1.fc44` | `2.43-9.fc44` / GCC `16.2.1-3.fc44` | rootless Podman; digest-pinned Fedora image | Build, 10 tests, IID, unified image-item path, linkage, contents, rpmlint, disposable install/remove verified |
+| `fedora-45` | Fedora KDE 45 / x86_64 | `6.8.2-3.fc45` / `org.kde.kwin.EffectPluginFactory6.8.2` | `6.11.2-3.fc45` / `6.31.0-1.fc45` | `2.44-2.fc45` / GCC `16.2.1-3.fc45` | rootless Podman; digest-pinned Fedora image | Build, 10 tests, IID, unified image-item path, linkage, contents, rpmlint, disposable install/remove verified |
 
 ## Release artifacts
 
@@ -32,6 +32,12 @@ PKGBUILD, Fedora source RPM, and `SHA256SUMS`. The refreshed Fedora 44 and 45
 binary and source RPMs are collected in `dist/0.1.8-fedora-kwin6.8.2/` with
 their own checksums. The original Fedora 44 package for KWin 6.7.5 remains
 available in `dist/0.1.8/`.
+
+Both Fedora rebuilds completed on 2026-11-05 from source commit `35db39d`.
+Each passed 10 tests and the package checks listed above. The recorded
+source archive SHA-256 is
+`f7d5b5311924cfc708702e113512d696a4e1bcae822a27317bd061e9c3b0ad25`
+for both builds. The collected `SHA256SUMS` covers all four RPMs.
 
 The default external root is
 `$XDG_CACHE_HOME/kwin-autoscroll-builds`, or

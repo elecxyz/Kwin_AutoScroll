@@ -41,6 +41,12 @@ The package-manager dependency is intentionally unversioned so AutoScroll
 cannot block a KWin or operating-system update. If an update changes KWin,
 install the newly matched AutoScroll build before enabling the effect again.
 
+The **5 November 2026 Fedora refresh** adds [Fedora KDE 45 and Kinoite
+45](#fedora-kde-45) and rebuilds [Fedora 44](#fedora-kde-44) for KWin 6.8.2.
+AutoScroll remains at **0.1.8**, with Fedora RPM build number **2**. See the
+[release notes](docs/RELEASE_NOTES_0.1.8.md) for the package list and validation
+results.
+
 ### CachyOS
 
 For the current CachyOS KWin 6.8.0-1.1 package:
@@ -123,7 +129,7 @@ Remove it with:
 sudo dnf remove kwin-autoscroll
 ```
 
-Fedora Kinoite can layer the same RPM, followed by a reboot:
+Fedora Kinoite 44 can layer the same RPM, followed by a reboot:
 
 ```sh
 sudo rpm-ostree install ./kwin-autoscroll-0.1.8-2.fc44.x86_64.rpm

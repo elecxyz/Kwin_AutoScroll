@@ -27,8 +27,19 @@ signal signature, including the autoscroll flag on KWin 6.8.
 that the effect uses KWin's exact versioned plugin IID.
 Package verification requires an unversioned `kwin`/`kwin-wayland` runtime
 dependency while retaining exact target-root version and plugin-IID checks.
-The Fedora target additionally runs `rpmlint` against both the source and
-binary RPMs and performs a disposable DNF installation and RPM removal.
+Both Fedora targets additionally run `rpmlint` against the source and binary
+RPMs and perform a disposable DNF installation and RPM removal.
+
+On 5 November 2026, the Fedora 44 and Fedora 45 builds of AutoScroll 0.1.8
+passed all 10 automated tests in each target environment, against KWin
+`6.8.2-3.fc44` and `6.8.2-3.fc45` respectively. Their build reports also
+verified plugin IID, linkage, package contents, RPM linting, and installation
+and removal. The binary and source RPMs are collected in
+`dist/0.1.8-fedora-kwin6.8.2/`.
+
+These checks do not exercise a live compositor. Manual Wayland input testing
+and Fedora Kinoite deployment testing remain pending; follow
+[RUNTIME_TESTING.md](RUNTIME_TESTING.md) for those procedures.
 
 ## Manual Wayland matrix
 
